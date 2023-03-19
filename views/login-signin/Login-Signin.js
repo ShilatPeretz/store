@@ -13,3 +13,21 @@ $("#login-form-link").click(function () {
   $("#login-form-link").addClass("active");
   $("#signup-form-link").removeClass("active");
 });
+
+$("form.signup").submit((e) => {
+  e.preventDefault();
+  const username = $(".signup .username").val();
+  const password = $(".signup .password").val();
+  const email = $(".signup .email").val();
+
+  const newUser = { username, password, email };
+
+  $.ajax({
+    url: "http://localhost:3000/users",
+    method: "post",
+    data: newUser,
+    dataType: "json",
+  });
+
+  console.log();
+});
