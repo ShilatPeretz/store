@@ -20,12 +20,34 @@ $("form.signup").submit((e) => {
   const password = $(".signup .password").val();
   const email = $(".signup .email").val();
 
-  const newUser = { username, password, email };
+  const newUser = { username, email, password };
 
-  $.ajax({
-    url: "http://localhost:3000/users",
+  const response = $.ajax({
+    url: "http://localhost:3000/users/signup",
     method: "post",
     data: newUser,
+    dataType: "json",
+  });
+
+  const data = response.json();
+  if (data.message) {
+    alert(data.message);
+  }
+
+  console.log();
+});
+
+$("form.login").submit((e) => {
+  e.preventDefault();
+  const email = $(".login .email").val();
+  const password = $(".login .password").val();
+
+  const User = { email, password };
+
+  $.ajax({
+    url: "http://localhost:3000/users/login",
+    method: "get",
+    data: User,
     dataType: "json",
   });
 
