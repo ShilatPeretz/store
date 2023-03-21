@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shop Page</title>
+    <meta charset="utf-8">
+
+	<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Maven+Pro&display=swap');
+		.container {
+            display: flex;
+            gap: 5px;
+            
+            flex-wrap: wrap;
+            position: relative;
+            width: 100%;
+            justify-content: space-evenly;
+        }
+
+        .filter-and-grid
+        {
+            display: flex;
+        }
+
+		.product {
+			
+			margin-bottom: 30px;
+			border: 1px solid #ff0000;
+			padding: 10px 10px 0 10px;
+			box-sizing: border-box;
+            width: 20%;
+
+            padding-bottom: 5px;
+            min-width: 10%;
+            
+            
+
+		}
+        @media only screen and (max-width: 1500px)
+        {
+            .product
+            {
+                min-width: 220px;
+            }
+        }
+
+		.product img {
+			width: 100%;
+			height: 45%;
+			margin-bottom: 10px;
+		}
+
+		.filter {
+            position: static;
+            float: right;
+            flex-wrap: nowrap;
+
+			min-width: 300px;
+			margin-right: 7px;
+			padding: 20px 0 20px 20px;
+			
+			border: 1px solid #ddd;
+            
+            height: 600px;
+            box-sizing: border-box;
+            
+		}
+
+		.filter h2 {
+			font-size: 16px;
+			margin-top: 0;
+		}
+
+		.filter ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.filter li {
+			margin-bottom: 10px;
+		}
+
+		.filter label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		.filter input[type="checkbox"] {
+			margin-right: 5px;
+		}
+        .add-to-cart-btn
+        {
+
+            display: block;
+            margin: auto;
+            border-radius:100px;
+            border:none;
+            font-size:0.8em;
+            background:#0652DD;
+            cursor:pointer;
+            position: relative;
+            height:2em;
+            width:8em;
+            transition:transform 0.1s;
+            font-family: 'Quicksand', sans-serif;
+            color: #fff;
+            
+        }
+        .add-to-cart-btn:hover
+        {
+            transform:scale(1.1);
+            
+        }
+        .product:hover
+        {
+            cursor: pointer;
+        }
+        .product:hover .add-to-cart-btn
+        {
+            display: inline-block;
+        }
+        .price-p
+        {
+            margin-top: 5px;
+            display:inline-flex;
+        }
+        .price-container
+        {
+            flex-wrap: nowrap;
+        }
+	</style>
+</head>
+<body style="min-width: 940px;">
+    <div class="filter-and-grid">
+        <div class="filter">
+            <h2>Filter by:</h2>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox" name="color" value="red">
+                        Red
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="color" value="blue">
+                        Blue
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="color" value="green">
+                        Green
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="size" value="small">
+                        Small
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="size" value="medium">
+                        Medium
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="size" value="large">
+                        Large
+                    </label>
+                </li>
+                <li>
+                    <div class="price-container">
+                        <label for="price">Price:</label>
+                        <input type="range" id="price" name="price" min="0" max="100" step="10" value="50">
+                        <span style="float:left;">$0</span>
+                        <span>$100</span>
+                    </div>
+                    
+                </li>
+            </ul>
+            <button>Apply Filters</button>
+        </div>
+        <div class="container">
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+    
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 2">
+                <h3>Product 2</h3>
+                <p style="margin-bottom: 0;">Description of product 2</p>
+                <p class="price-p">$24.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 3" >
+                <h3>Product 3</h3>
+                <p style="margin-bottom: 0;">Description of product 3</p>
+                <p class="price-p">$29.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <!-- Repeat the above product divs for each product -->
+          </div>
+          
+            
+    
+        </div>
+    </div>
+    
+	
+</body>
+</html>    
