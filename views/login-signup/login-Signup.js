@@ -22,19 +22,16 @@ $("form.signup").submit((e) => {
 
   const newUser = { username, email, password };
 
-  const response = $.ajax({
+  $.ajax({
     url: "http://localhost:3000/users/signup",
     method: "post",
     data: newUser,
     dataType: "json",
+  }).done((data) => {
+    if (data._id) {
+      alert("Created Succesfully");
+    }
   });
-
-  const data = response.json();
-  if (data.message) {
-    alert(data.message);
-  }
-
-  console.log();
 });
 
 $("form.login").submit((e) => {

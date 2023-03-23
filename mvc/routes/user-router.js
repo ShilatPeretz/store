@@ -1,18 +1,8 @@
 const { Router } = require("express");
 const userRouter = Router();
-const costumerController = require("../controllers/costumers");
+const UserController = require("../controllers/users-controller");
 
-userRouter.post("/signup", (req, res) => {
-  const response = costumerController;
-
-  if (response) {
-    res.json({ message: "User signed successfully" });
-  }
-  res.json({
-    message:
-      "User couldn't be signed. \ntry change the users name \nor check if an account with that email already exists",
-  });
-});
+userRouter.post("/signup", UserController.createUser);
 
 userRouter.get("/login", (req, res) => {
   console.log(req.body);

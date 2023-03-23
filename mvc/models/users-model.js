@@ -1,8 +1,6 @@
-const { json } = require("express");
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const costumer = new Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -17,12 +15,10 @@ const costumer = new Schema({
   },
   orders: {
     type: Array,
-    required: false,
   },
-  ismanager: {
+  isAdmin: {
     type: Boolean,
-    required: false,
   },
 });
 
-module.exports = mongoose.model("Costumers", costumer);
+module.exports = mongoose.model("Users", UserSchema);
