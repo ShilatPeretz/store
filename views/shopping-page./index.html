@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html style="font-size: 100%;">
+<head>
+	<title>Shop Page</title>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Maven+Pro&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Maven+Pro&family=Nunito:ital,wght@0,400;1,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Inter:wght@300;400&family=Maven+Pro&family=Nunito:ital,wght@0,400;1,300&display=swap');
+        .filter {
+            position:sticky;
+            float: right;
+            flex-wrap: nowrap;
+            top: 0;
+            min-width: 300px;
+            margin-right: 7px;
+            padding: 20px 0 20px 20px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            height: 600px;
+		}
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            justify-content: space-between;
+            margin-top: 100px;
+        }
+        
+        .filter-and-grid
+        {
+            display: flex;
+        }
+
+		.product {
+			
+			margin-bottom: 30px;
+			
+			
+			padding-left: 7px;
+            width: 32%;
+            border-radius: 5px;
+            
+            box-sizing: border-box;
+            position: relative;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+		}
+        
+
+		.product img {
+			width: 100%;
+			height: 100%;
+			margin-bottom: 10px;
+            border-radius: 2px;
+            object-fit: cover;
+            
+		}
+        @media only screen and (max-width: 1200px)
+        {
+            .product
+            {
+                width: 48%;
+            }
+            
+        }
+
+		
+
+		.filter h2 {
+			font-size: 16px;
+			margin-top: 0;
+		}
+
+		.filter ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.filter li {
+			margin-bottom: 10px;
+		}
+
+		.filter label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		.filter input[type="checkbox"] {
+			margin-right: 5px;
+		}
+        .add-to-cart-btn
+        {
+            opacity: 0;
+            border-radius:100px;
+            border:none;
+            font-size:1em;
+            background:#0652DD;
+            cursor:pointer;
+            height:2em;
+            width:8em;
+            transition:transform 0.2s;
+            transition: opacity 0.15s;
+            font-family: 'Quicksand', sans-serif;
+            color: #fff;
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+            left: 35%;
+        }
+        .add-to-cart-btn:hover
+        {
+            transform:scale(1.1);
+            
+        }
+        .product:hover
+        {
+            cursor: pointer;
+        }
+        .product:hover .add-to-cart-btn
+        {
+            opacity: 1;
+        }
+        .price-p
+        {
+            margin-top: 5px;
+            display:inline;
+            position: absolute;
+            bottom: 0;
+            font-size: 1.4vw;
+            margin-bottom: 3px;
+            color: #443d3d;
+            font-family: 'Nunito', sans-serif;
+            left: 8px;
+        }
+        .product p:not(.price-p)
+        {
+            font-size: 1.45vw;
+            font-family: 'Nunito', sans-serif;
+            margin-top: 5px;
+            position: absolute;
+            top: 65%;
+            color: #ddd;
+        }
+        .product h3
+        {
+            position: absolute;
+            font-family: 'Nunito', sans-serif;
+            font-size: 2vw;
+            margin: 0;
+            color: #0652DD;
+            top: 0;
+            
+        }
+        @media only screen and (max-width: 1200px)
+        {
+            .price-p
+            {
+                font-size: 1.5rem;
+            }
+            .product p:not(.price-p)
+            {
+                font-size: 1.45rem;
+            }
+            .product h3
+            {
+                font-size: 1.8rem;
+            }
+            
+        }
+        .price-container
+        {
+            flex-wrap: nowrap;
+            
+        }
+        .search-bar-container
+        {
+            position:absolute;
+            width: 50%;
+            
+            margin-top: 20px;
+            height: 40px;
+            left:600px;
+            display:flex
+            
+            
+        }
+        .btn:link,
+        .btn:visited {
+            text-transform: uppercase;
+            text-decoration: none;
+            
+            display: inline-block;
+            border-radius: 100px;
+            transition: all .2s;
+            height: 45px;
+            font-size: 15px;
+            width: 100px;
+            padding-top: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active, .add-to-cart-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white {
+            background-color: #fff;
+            color: #777;
+        }
+
+
+        
+                    
+	</style>
+</head>
+<body style="min-width: 1000px;">
+    <div class="search-bar-container">
+        <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search">
+        <div class="text-box">
+            <a href="#" class="btn btn-white btn-animate">search</a>
+        </div>
+        
+    </div>
+    <div class="filter-and-grid">
+        <div class="filter">
+            <h2>Filter by:</h2>
+            <ul class="list-group">
+                <label style="text-decoration: underline;" class="form-check-label">Colors:</label>
+                
+                <div class="form-check">
+                    
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Red</label>
+                    </li>
+                </div>
+                <div class="form-check">
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Green</label>
+                    </li>
+                </div>
+                <div class="form-check">
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Blue</label>
+                    </li>
+                </div>
+                <label style="text-decoration: underline;" class="form-check-label">Size:</label>
+                <div class="form-check">
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Small</label>
+                    </li>
+                </div>
+                <div class="form-check">
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Medium</label>
+                    </li>
+                </div>
+                <div class="form-check">
+                    <li>
+                        <input class="form-check-input" type="checkbox" name="color" value="red">
+                        <label class="form-check-label">Large</label>
+                    </li>
+                </div>
+                
+                
+                <li>
+                    <div class="price-container">
+                        <label for="price">Price:</label>
+                        
+                        
+                        <span>$</span>
+                        <input type="range" id="price" name="price" min="0" max="100" step="10" value="50" oninput="this.nextElementSibling.value = this.value">
+                        <output style="float:left;">50</output>
+                        
+                        <span>$100</span>
+                    </div>
+                    
+                </li>
+            </ul>
+            <button class="btn btn-secondary btn-sm">Apply Filters</button>
+        </div>
+        <div class="container">
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+    
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p style="margin-bottom: 0;">Description of product 1</p>
+                <p class="price-p">$19.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 2">
+                <h3>Product 2</h3>
+                <p style="margin-bottom: 0;">Description of product 2</p>
+                <p class="price-p">$24.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            <div class="product">
+                <img src="tree-736885_960_720.jpg" alt="Product 3" >
+                <h3>Product 3</h3>
+                <p style="margin-bottom: 0;">Description of product 3</p>
+                <p class="price-p">$29.99</p>
+                <button class="add-to-cart-btn">Add to cart</button>
+            </div>
+            
+          </div>
+          
+            
+    
+        </div>
+    </div>
+    
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>    
