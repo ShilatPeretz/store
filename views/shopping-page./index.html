@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html style="font-size: 100%;">
+<html style="font-size: 100%;overflow-x:hidden">
 <head>
 	<title>Shop Page</title>
-    <meta charset="utf-8">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-	<style>
+	
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Maven+Pro&display=swap');
 		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Maven+Pro&family=Nunito:ital,wght@0,400;1,300&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Inter:wght@300;400&family=Maven+Pro&family=Nunito:ital,wght@0,400;1,300&display=swap');
@@ -13,10 +14,10 @@
             float: right;
             flex-wrap: nowrap;
             top: 0;
-            min-width: 300px;
-            margin-right: 7px;
-            padding: 20px 0 20px 20px;
-            border: 1px solid #ddd;
+			min-width: 300px;
+			margin-right: 7px;
+			padding: 20px 0 20px 20px;
+			border: 1px solid #ddd;
             box-sizing: border-box;
             height: 600px;
 		}
@@ -28,6 +29,7 @@
             height: 100%;
             justify-content: space-between;
             margin-top: 100px;
+            max-width: 100%;
         }
         
         .filter-and-grid
@@ -41,7 +43,7 @@
 			
 			
 			padding-left: 7px;
-            width: 32%;
+            width: 33%;
             border-radius: 5px;
             
             box-sizing: border-box;
@@ -59,7 +61,7 @@
             object-fit: cover;
             
 		}
-        @media only screen and (max-width: 1200px)
+        @media only screen and (max-width: 1100px)
         {
             .product
             {
@@ -100,11 +102,11 @@
             opacity: 0;
             border-radius:100px;
             border:none;
-            font-size:1em;
+            font-size:0.9em;
             background:#0652DD;
             cursor:pointer;
             height:2em;
-            width:8em;
+            width:7em;
             transition:transform 0.2s;
             transition: opacity 0.15s;
             font-family: 'Quicksand', sans-serif;
@@ -158,19 +160,19 @@
             top: 0;
             
         }
-        @media only screen and (max-width: 1200px)
+        @media only screen and (max-width: 1100px)
         {
             .price-p
             {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
             }
             .product p:not(.price-p)
             {
-                font-size: 1.45rem;
+                font-size: 1.3rem;
             }
             .product h3
             {
-                font-size: 1.8rem;
+                font-size: 1.7rem;
             }
             
         }
@@ -219,12 +221,57 @@
             color: #777;
         }
 
-
-        
+        .cart-container
+        {
+            position: sticky;
+            top: 3px;
+            float: right;
+            margin-top: 25px;
+            right: 35px;
+            
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            
+        }
+        .cart-container:hover
+        {
+            cursor: pointer;
+            
+        }
+        .cart-container:hover .cart-content
+        {
+            display: block;
+        }
+        .cart-content
+        {
+            position: absolute;
+            right: -25px;
+            top: 20px;
+            display: none;
+        }
                     
 	</style>
+    
 </head>
-<body style="min-width: 1000px;">
+<body style="min-width: 930px;">
+    <div class="cart-container">
+        <svg style="z-index:3;background-color:white;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bag-dash" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+        </svg>
+        <div class="cart-content">
+            <ul class="list-group" style="font-size: 0.8rem;width: 150px;">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+            </ul>
+        </div>
+    </div>
+    
+
     <div class="search-bar-container">
         <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search">
         <div class="text-box">
@@ -284,10 +331,10 @@
                         
                         
                         <span>$</span>
-                        <input type="range" id="price" name="price" min="0" max="100" step="10" value="50" oninput="this.nextElementSibling.value = this.value">
-                        <output style="float:left;">50</output>
+                        <input type="range" id="price" name="price" min="0" max="1000" step="1" value="500" oninput="this.nextElementSibling.value = this.value">
+                        <output style="float:left;">500</output>
                         
-                        <span>$100</span>
+                        <span>$1000</span>
                     </div>
                     
                 </li>
@@ -360,13 +407,12 @@
                 <button class="add-to-cart-btn">Add to cart</button>
             </div>
             
-          </div>
-          
-            
-    
-        </div>
+        </div>  
     </div>
+
     
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 </html>    
