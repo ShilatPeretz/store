@@ -1,5 +1,10 @@
 $(".signup").hide();
 
+//return to home page
+$(".exit").click(function () {
+  window.location.href = "/";
+});
+
 $("#signup-form-link").click(function () {
   $(".login").fadeOut(100);
   $(".signup").delay(100).fadeIn(100);
@@ -39,14 +44,17 @@ $("form.login").submit((e) => {
   const email = $(".login .email").val();
   const password = $(".login .password").val();
 
-  const User = { email, password };
+  const user = { email, password };
 
   $.ajax({
     url: "http://localhost:3000/users/login",
-    method: "get",
-    data: User,
+    method: "post",
+    data: user,
     dataType: "json",
+  }).done((data) => {
+    if (data._id) {
+      alert("Logged in Succesfully");
+      window.location.href = "/";
+    }
   });
-
-  console.log();
 });

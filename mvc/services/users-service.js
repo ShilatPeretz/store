@@ -12,7 +12,12 @@ const createUser = async (username, email, password) => {
 };
 
 const getUsers = async () => {
-  return await User.find({});
+  return await User.find();
+};
+
+const login = async (email, password) => {
+  console.log({ email, password });
+  return await User.findOne({ email, password });
 };
 
 const getUserById = async (id) => {
@@ -20,14 +25,14 @@ const getUserById = async (id) => {
 };
 
 const updateUser = async (id, username, email, password) => {
-  const User = await getUserById(id);
-  if (!User) return null;
+  const user = await getUserById(id);
+  if (!user) return null;
 
-  User.username = username;
-  User.email = email;
-  User.password = password;
-  await User.save();
-  return User;
+  user.username = username;
+  user.email = email;
+  user.password = password;
+  await user.save();
+  return user;
 };
 
 const deleteUser = async (id) => {
@@ -44,4 +49,5 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
+  login,
 };

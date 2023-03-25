@@ -1,7 +1,7 @@
 body {
-  background-color: #1cbb9b;
+  background-color: #afdff0;
   display: grid;
-  place-items: center;
+  place-items: end;
 }
 
 .connect-div {

@@ -9,6 +9,15 @@ const createUser = async (req, res) => {
   res.json(newUser);
 };
 
+const loginUser = async (req, res) => {
+  console.log(req.body);
+  const user = await usersService.login(req.body.email, req.body.password);
+  if (!user) {
+    return res.json({ message: "Wrong credentials" });
+  }
+  res.json({ message: "Logged in successfully", user });
+};
+
 const getUsers = async (req, res) => {
   const Users = await usersService.getUsers();
   res.json(Users);
@@ -48,9 +57,10 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  createUser: createUser,
+  createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  loginUser,
 };
