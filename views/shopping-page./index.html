@@ -21,6 +21,7 @@
             box-sizing: border-box;
             height: 600px;
 		}
+        html, body { height: 100%; width: 100%; margin: 0; }
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -28,13 +29,15 @@
             width: 100%;
             height: 100%;
             justify-content: space-between;
-            margin-top: 100px;
+            
             max-width: 100%;
         }
         
         .filter-and-grid
         {
             display: flex;
+            position: relative;
+            top: 40px;
         }
 
 		.product {
@@ -224,7 +227,7 @@
         }
 
         .btn:active, .add-to-cart-btn:active {
-            transform: translateY(-2px);
+            
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
@@ -239,12 +242,10 @@
             
             float: right;
             
-            right: 35px;
             
             display: flex;
             flex-direction: column;
             z-index: 2;
-            right: 60px;
             align-self: flex-end;
         }
         svg:hover
@@ -318,13 +319,15 @@
         {
             margin-top: 30px;
             display: flex;
-            
+            float: right;
             flex-direction: column;
             flex-wrap: wrap;
-            align-content: flex-end;
-            justify-content: space-evenly;
+            justify-content: space-around;
+            gap: 30px;
+            position: relative;
+            transform: translateX(-200%);
             height: 50px;
-            
+            z-index: 2;
 
         }
         .submit-btn {
@@ -364,7 +367,33 @@
             transform: translateY(0);
         }
 
-
+        .type-selector
+        {
+            position: relative;
+            width: 5.3%;
+            min-width: 85px;
+            margin-left: 5px;
+            margin-right: 5px;
+            left: 300px;
+            top: 35px;
+            display: inline-flex;
+            cursor: pointer;
+        }
+        
+        .type-selector:hover .image-layer
+        {
+            opacity: 0.4;
+        }
+        .image-layer
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.2s;
+            background-color: rgb(66, 63, 63);
+        }
 	</style>
     
 </head>
@@ -723,7 +752,17 @@
           </div>
         </div>
     </div>
-    <div class="top-nav-bar">
+    <div class="top-nav-bar" >
+        <div class="dropdown" >
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Sort By
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Price Low to High</a></li>
+              <li><a class="dropdown-item" href="#">Price High to Low</a></li>
+              <li><a class="dropdown-item active" href="#">Rate</a></li>
+            </ul>
+        </div>
         <div class="cart-container">
             
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-dash" viewBox="0 0 16 16">
@@ -747,17 +786,41 @@
             </div>
             
         </div>
-        <div class="dropdown" >
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Sort By
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Price Low to High</a></li>
-              <li><a class="dropdown-item" href="#">Price High to Low</a></li>
-              <li><a class="dropdown-item active" href="#">Rate</a></li>
-            </ul>
-        </div>
+        
     </div>
+    <div class="type-selector">
+        <img src="opt1.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt2.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt3.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt4.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt5.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt6.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt7.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    <div class="type-selector">
+        <img src="opt8.jpeg" style="width: 100%;min-width: 90px;">
+        <div class="image-layer"></div>
+    </div>
+    
     
     <div class="filter-and-grid">
         <div class="filter" style="user-select: none;">
