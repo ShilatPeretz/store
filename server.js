@@ -23,7 +23,7 @@ app.use(express.json()); // parses json format
 app.use(express.urlencoded({ extended: true })); // parses form-data format
 
 // try to match request to files in 'views' folder
-app.use(express.static("views"));
+app.use(express.static("./mvc/views"));
 
 app.use("/users", userRouter);
 app.use("/account", accountRouter);
