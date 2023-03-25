@@ -30,7 +30,6 @@
             justify-content: space-between;
             margin-top: 100px;
             max-width: 100%;
-			/**/
         }
         
         .filter-and-grid
@@ -118,12 +117,13 @@
             position: absolute;
             right: 0;
             bottom: 10px;
-            left: 35%;
+            left:50%;
+            transform: translateX(-50%);
         }
         
         .add-to-cart-btn:hover
         {
-            transform:scale(1.1);
+            color: #777;
             
         }
         
@@ -283,51 +283,88 @@
         }
 
 
-    .checkout-btn {
-        background-color: #222;
-        border-radius: 4px;
-        border-style: none;
-        box-sizing: border-box;
-        color: #fff;
-        cursor: pointer;
-        display: inline-block;
-        font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1;
-        margin: 0;
-        max-width: none;
-        min-height: 44px;
-        min-width: 10px;
-        outline: none;
-        overflow: hidden;
-        padding: 9px 20px 8px;
-        position: relative;
-        text-align: center;
-        text-transform: none;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        width: 100%;
-    }
-
-.button-31:hover,
-.button-31:focus {
-  opacity: .75;
-}
+        .checkout-btn {
+            background-color: #222;
+            border-radius: 4px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            margin: 0;
+            max-width: none;
+            min-height: 44px;
+            min-width: 10px;
+            outline: none;
+            overflow: hidden;
+            padding: 9px 20px 8px;
+            position: relative;
+            text-align: center;
+            text-transform: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 100%;
+        }
         .checkout-btn:active
         {
             transform: translateY(1px);
         }
         .top-nav-bar
         {
+            margin-top: 30px;
             display: flex;
-            align-items: center;
-            flex-direction: row-reverse ;
+            
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-end;
+            justify-content: space-evenly;
             height: 50px;
-            align-content: center;
+            
 
         }
+        .submit-btn {
+            background-color: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: .25rem;
+            box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+            transition: all 250ms;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            
+        }
+
+        .submit-btn:hover,
+        .submit-btn:focus {
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            background-color: #F0F0F1;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+            color: rgba(0, 0, 0, 0.65);
+            transform: translateY(0);
+        }
+
+
 	</style>
     
 </head>
@@ -341,7 +378,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form>
+              <form action="/action_page.php" autocomplete="off">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="firstName">First name</label>
@@ -368,7 +405,7 @@
                   
                 <div class="mb-3">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                    <input type="email" class="form-control" id="address" placeholder="1234 Main St" required="">
                     <div class="invalid-feedback">
                       Please enter your shipping address.
                     </div>
@@ -637,7 +674,7 @@
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="zip">Zip</label>
-                      <input type="text" class="form-control" id="zip" placeholder="" required="">
+                      <input type="text" class="form-control" id="zip" placeholder="" required="" maxlength="12">
                       <div class="invalid-feedback">
                         Zip code required.
                       </div>
@@ -671,24 +708,25 @@
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="cc-expiration">CVV</label>
-                      <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                      <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" maxlength="3">
                       <div class="invalid-feedback">
                         Security code required
                       </div>
                     </div>
                 </div>
-              </form>
+                <div class="modal-footer">
+                    <input class="submit-btn" type="submit">
+                </div>
+            </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+            
           </div>
         </div>
     </div>
     <div class="top-nav-bar">
         <div class="cart-container">
             
-            <svg xmlns="http://www.w3.org/2000/svg"width="20" height="20" fill="currentColor" class="bi bi-bag-dash" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag-dash" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
                 <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
             </svg>
@@ -706,21 +744,23 @@
                     </li>
                 </ul>
                 
-            </div>  
-        </div>
-        
-    
-        <div class="search-bar-container">
-            <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search">
-            <div class="text-box">
-                <a href="#" class="btn btn-white btn-animate">search</a>
             </div>
             
+        </div>
+        <div class="dropdown" >
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Sort By
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Price Low to High</a></li>
+              <li><a class="dropdown-item" href="#">Price High to Low</a></li>
+              <li><a class="dropdown-item active" href="#">Rate</a></li>
+            </ul>
         </div>
     </div>
     
     <div class="filter-and-grid">
-        <div class="filter">
+        <div class="filter" style="user-select: none;">
             <h2>Filter by:</h2>
             <ul class="list-group">
                 <label style="text-decoration: underline;" class="form-check-label">Colors:</label>
@@ -728,46 +768,46 @@
                 <div class="form-check">
                     
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Red</label>
+                        <input class="form-check-input" type="checkbox" name="color" id="red">
+                        <label for="red" class="form-check-label">Red</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Green</label>
+                        <input id = "green" class="form-check-input" type="checkbox" name="color" >
+                        <label for="green" class="form-check-label">Green</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Blue</label>
+                        <input id = "blue" class="form-check-input" type="checkbox" name="color" >
+                        <label for="blue" class="form-check-label">Blue</label>
                     </li>
                 </div>
                 <label style="text-decoration: underline;" class="form-check-label">Size:</label>
                 <div class="form-check">
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Small</label>
+                        <input id = "small" class="form-check-input" type="checkbox" name="color" >
+                        <label for="small" class="form-check-label">Small</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Medium</label>
+                        <input id = "medium" class="form-check-input" type="checkbox" name="color" >
+                        <label for="medium" class="form-check-label">Medium</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input class="form-check-input" type="checkbox" name="color" value="red">
-                        <label class="form-check-label">Large</label>
+                        <input id = "large" class="form-check-input" type="checkbox" name="color" >
+                        <label for="large" class="form-check-label">Large</label>
                     </li>
                 </div>
                 
                 
                 <li>
                     <div class="price-container">
-                        <label for="price">Price:</label>
+                        <label for="price">Price: (Starting From)</label>
                         
                         
                         <span>$</span>
@@ -781,6 +821,7 @@
             </ul>
             <button class="btn btn-secondary btn-sm">Apply Filters</button>
         </div>
+        
         <div class="container">
             <div class="product">
                 <div class="product-description">
