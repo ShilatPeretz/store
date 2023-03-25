@@ -6,8 +6,6 @@ userRouter.post("/signup", UserController.createUser);
 
 userRouter.post("/login", UserController.loginUser);
 
-userRouter.get("/exit", (req, res) => {
-  res.redirect("http://localhost:3000/home-page.html");
-});
+userRouter.post("/changeUser", UserController.updateUser);
 
 module.exports = userRouter;

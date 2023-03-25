@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
+    default: false,
   },
 });
 
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("users", UserSchema);

@@ -33,7 +33,7 @@ const getProductById = async (id) => {
 };
 
 const getProductsByCategory = async (category) => {
-  return await Product.findByCategory(category);
+  return await Product.find({ category: category });
 };
 
 //alert change
@@ -61,6 +61,15 @@ const updateProduct = async (
   return product;
 };
 
+const updateProductStock = async (id, num) => {
+  const product = await getProductById(id);
+  if (!product) return null;
+
+  product.stock = product.stock - num;
+  await product.save();
+  return product;
+};
+
 //alert change
 const deleteProduct = async (id) => {
   const Product = await getProductById(id);
@@ -76,5 +85,6 @@ module.exports = {
   getProductsByCategory,
   getProducts,
   updateProduct,
+  updateProductStock,
   deleteProduct,
 };

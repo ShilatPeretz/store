@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  ordernum: {
-    type: Number,
-    required: true,
-  },
   date: {
     type: Date,
+    default: Date.now(),
     required: true,
   },
   userID: {

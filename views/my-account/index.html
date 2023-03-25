@@ -20,13 +20,13 @@
         <div class="logo-box">My account</div>
         <ul>
           <li>
-            <a href="#"><i class="home"></i>Home</a>
+            <a href="#" id="home">Home</a>
           </li>
           <li>
-            <a href="#"><i class="details"></i>Details</a>
+            <a href="#" id="details">Details</a>
           </li>
           <li>
-            <a href="#"><i class="orders"></i> Orders</a>
+            <a href="#" id="orders">Orders</a>
           </li>
         </ul>
       </div>
@@ -35,35 +35,24 @@
     <section class="section-details">
       <h1>Update account details</h1>
       <br />
-      <form>
+      <form class="changedetails">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">User name</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" />
+          <label class="form-label">User name</label>
+          <input type="text" class="form-control username-input" />
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Email address</label
-            >
+            <label class="form-label">Email address</label>
             <input
               type="email"
-              class="form-control"
-              id="exampleInputEmail1"
+              class="form-control email-input"
               aria-describedby="emailHelp"
             />
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
+            <label class="form-label">Password</label>
+            <input type="text" class="form-control password-input" />
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">
-          Change account details
-        </button>
+        <button class="btn btn-primary">Change account details</button>
       </form>
     </section>
 

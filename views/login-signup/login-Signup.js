@@ -33,8 +33,11 @@ $("form.signup").submit((e) => {
     data: newUser,
     dataType: "json",
   }).done((data) => {
+    console.log(data.message);
     if (data._id) {
       alert("Created Succesfully");
+    } else {
+      alert(data.message);
     }
   });
 });
@@ -55,6 +58,6 @@ $("form.login").submit((e) => {
     if (data._id) {
       alert("Logged in Succesfully");
       window.location.href = "/";
-    }
-  });
+    }
+  });
 });

@@ -16,8 +16,15 @@ const getUsers = async () => {
 };
 
 const login = async (email, password) => {
-  console.log({ email, password });
   return await User.findOne({ email, password });
+};
+
+const findUserName = async (username) => {
+  return await User.findOne({ username });
+};
+
+const findUserEmail = async (email) => {
+  return await User.findOne({ email });
 };
 
 const getUserById = async (id) => {
@@ -28,6 +35,7 @@ const updateUser = async (id, username, email, password) => {
   const user = await getUserById(id);
   if (!user) return null;
 
+  //check if user name or email don't exist
   user.username = username;
   user.email = email;
   user.password = password;
@@ -45,6 +53,8 @@ const deleteUser = async (id) => {
 
 module.exports = {
   createUser,
+  findUserName,
+  findUserEmail,
   getUserById,
   getUsers,
   updateUser,
