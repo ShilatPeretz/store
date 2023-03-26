@@ -24,6 +24,12 @@ const getProductsByCategory = async (req, res) => {
   res.json(Products);
 };
 
+const NumberOfProductsByCategory = async (req, res) => {
+  const NumByCategory = await productsServices.NumberOfProductsByCategory();
+  console.log(NumByCategory);
+  res.json(NumByCategory);
+};
+
 const getProductById = async (req, res) => {
   const Product = await productsServices.getProductById(req.params.id);
   if (!Product) {
@@ -103,6 +109,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   createProduct,
+  NumberOfProductsByCategory,
   getProducts,
   getProductsByCategory,
   getProductById,

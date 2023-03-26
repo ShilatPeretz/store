@@ -36,6 +36,17 @@ const getProductsByCategory = async (category) => {
   return await Product.find({ category: category });
 };
 
+const NumberOfProductsByCategory = async () => {
+  return await Product.aggregate([
+    {
+      $group: {
+        _id: "$category",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+};
+
 //alert change
 const updateProduct = async (
   id,
@@ -81,6 +92,7 @@ const deleteProduct = async (id) => {
 
 module.exports = {
   createProduct,
+  NumberOfProductsByCategory,
   getProductById,
   getProductsByCategory,
   getProducts,

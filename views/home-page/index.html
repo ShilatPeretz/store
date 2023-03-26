@@ -26,10 +26,12 @@
             <input id="nav-toggle" type="checkbox">
             <div class="logo"><img src="images/logo_shlusy.png" alt="logo" style="height: 100px;"></div>
             <ul class="links">
-                <li><a href="#Home">Home</a></li>
-                <li><a href="#Products">Products</a></li>
-                <li><a href="#About">About</a></li>
-                <li><a href="#">Admin</a></li>
+                <li><a class="home" href="http://localhost:3000/home-page/">Home</a></li>
+                <!-- where to go while pressing products-->
+                <li><a class="products" href="#Products">Products</a></li>
+                <!-- where to go while pressing about-->
+                <li><a class="about" href="#About">About</a></li>
+                <li><a class="admin" href="http://localhost:3000/admin/">Admin</a></li>
                 <li><a href="#Help">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-bag-check" viewBox="0 0 16 16">
@@ -39,7 +41,7 @@
                                 d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
                         </svg>
                     </a></li>
-                <li><a href="#">Log In</a></li>
+                <li><a class="login" href="http://localhost:3000/login-signup">Log In</a></li>
             </ul>
             <label for="nav-toggle" class="icon-burger">
                 <div class="line"></div>
@@ -270,6 +272,11 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <!-- bootstrap -->
+    <!-- nav bar -->
+    <script src="nav-bar.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </body>
 
 </html>

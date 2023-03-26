@@ -6,6 +6,6 @@ userRouter.post("/signup", UserController.createUser);
 
 userRouter.post("/login", UserController.loginUser);
 
-userRouter.post("/changeUser", UserController.updateUser);
+userRouter.post("/change", UserController.updateUser);
 
 module.exports = userRouter;
