@@ -1,14 +1,14 @@
 var salesData = [
-  { year: "2000", Qty: 2 },
-  { year: "2001", Qty: 4 },
-  { year: "2002", Qty: 8 },
-  { year: "2003", Qty: 6 },
-  { year: "2004", Qty: 7 },
-  { year: "2005", Qty: 3 },
-  { year: "2006", Qty: 12 },
+  { year: "2000", Qty: 1000 },
+  { year: "2001", Qty: 2330 },
+  { year: "2002", Qty: 4540 },
+  { year: "2003", Qty: 1239 },
+  { year: "2004", Qty: 4349 },
+  { year: "2005", Qty: 7039 },
+  { year: "2006", Qty: 1035 },
 ];
 
-var svg = d3.select("#svg2");
+var svg = d3.select("#svg");
 
 var padding = { top: 20, right: 30, bottom: 30, left: 50 };
 

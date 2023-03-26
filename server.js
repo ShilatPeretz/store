@@ -5,6 +5,7 @@ const app = express();
 const userRouter = require("./mvc/routes/user-router");
 const accountRouter = require("./mvc/routes/my-account");
 const productRouter = require("./mvc/routes/product-router");
+const locationtRouter = require("./mvc/routes/location-router");
 //**********
 const newLocal = require("custom-env");
 newLocal.env(process.env.NODE_ENV, "./config");
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true })); // parses form-data format
 // try to match request to files in 'views' folder
 app.use(express.static("views"));
 
+app.use("/location", locationtRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/account", accountRouter);

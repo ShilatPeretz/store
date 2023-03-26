@@ -61,37 +61,3 @@ $("form.login").submit((e) => {
     }
   });
 });
-var salesData = [
-  { category: "short shirts", Qty: 1000 },
-  { category: "long shirts", Qty: 2330 },
-  { category: "short pants", Qty: 4540 },
-  { category: "long pants", Qty: 1239 },
-  { category: "skirts", Qty: 4349 },
-  { category: "jackets", Qty: 7039 },
-  { category: "hoodies", Qty: 1035 },
-  { category: "swimming suits", Qty: 1035 },
-];
-
-$("#login-form-link").click(() => {
-  console.log("in");
-  const description = "bbb";
-  const category = "skirts";
-  const color = "red";
-  const size = ["xs", "m"];
-  const price = 20;
-  const img = "bbb";
-  const stock = 2600;
-
-  const user = { description, category, color, size, price, img, stock };
-
-  $.ajax({
-    url: "http://localhost:3000/products/createproduct",
-    method: "post",
-    data: user,
-    dataType: "json",
-  }).done((data) => {
-    if (data._id) {
-      alert("****************");
-    }
-  });
-});
