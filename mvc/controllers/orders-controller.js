@@ -23,6 +23,11 @@ const getOrders = async (req, res) => {
   res.json(orders);
 };
 
+const getAvgOrdersPerMonth = async (req, res) => {
+  const orders = await OrdersServices.getAvgOrdersPerMonth();
+  res.json(orders);
+};
+
 const getOrdersByUser = async (req, res) => {
   const orders = await OrdersServices.getOrdersByUser(req.body.userID);
   res.json(orders);
@@ -72,7 +77,8 @@ module.exports = {
   getOrdersByUser,
   getOrders,
   getOrderById,
-  getOrder,
+  getOrders,
   updateOrder,
   deleteOrder,
+  getAvgOrdersPerMonth,
 };

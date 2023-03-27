@@ -1,19 +1,50 @@
 var salesData = [
-  { year: "2000", Qty: 1000 },
-  { year: "2001", Qty: 2330 },
-  { year: "2002", Qty: 4540 },
-  { year: "2003", Qty: 1239 },
-  { year: "2004", Qty: 4349 },
-  { year: "2005", Qty: 7039 },
-  { year: "2006", Qty: 1035 },
+  { year: "January", count: 10 },
+  { year: "February", count: 22 },
+  { year: "March", count: 34 },
+  { year: "April", count: 12 },
+  { year: "May", count: 14 },
+  { year: "June", count: 27 },
+  { year: "July", count: 10 },
+  { year: "August", count: 10 },
+  { year: "September", count: 10 },
+  { year: "October", count: 10 },
+  { year: "November", count: 10 },
+  { year: "December", count: 10 },
 ];
-
+//******************************************************************************************** */
+//var tmp = [];
+//const extractData = () => {
+//$.ajax({
+//url: "http://localhost:3000/products/percategory", ->rteurn the right data
+//    method: "get",
+//}).done((data) => {
+//tmp = JSON.parse(JSON.stringify(data));
+//console.log(tmp);
+//});
+//};
+//extractData();
+//
+//console.log(tmp);
+//******************************************************************************************* */
 var svg = d3.select("#svg2");
 
-var padding = { top: 20, right: 30, bottom: 30, left: 50 };
+var padding = { top: 10, right: 20, bottom: 30, left: 55 };
 
-//will return multiple colors
-var colors = d3.schemeCategory10;
+var colors = [
+  "#FFF4E0",
+  "#FFBF9B",
+  "#B46060",
+  "#4D4D4D",
+  "#FFF4E0",
+  "#FFBF9B",
+  "#B46060",
+  "#4D4D4D",
+  "#FFF4E0",
+  "#FFBF9B",
+  "#B46060",
+  "#4D4D4D",
+];
 
 var chartArea = {
   width: parseInt(svg.style("width")) - padding.left - padding.right,
@@ -26,7 +57,7 @@ var yScale = d3
   .domain([
     0,
     d3.max(salesData, function (d, i) {
-      return d.Qty;
+      return d.count;
     }),
   ])
   .range([chartArea.height, 0])
@@ -67,6 +98,13 @@ var yAxis = svg
 //callimg the function and passing the selection
 yAxisFn(yAxis);
 
+//add lines to graph behind the rectangles
+var grid = svg
+  .append("g")
+  .attr("class", "grid")
+  .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+  .call(d3.axisLeft(yScale).tickSize(-chartArea.width).tickFormat(""));
+
 //define rectangle group
 var rectGrp = svg
   .append("g")
@@ -84,13 +122,13 @@ rectGrp
   .append("rect")
   .attr("width", xScale.bandwidth())
   .attr("height", function (d, i) {
-    return chartArea.height - yScale(d.Qty);
+    return chartArea.height - yScale(d.count);
   })
   .attr("x", function (d, i) {
     return xScale(d.year);
   })
   .attr("y", function (d, i) {
-    return yScale(d.Qty);
+    return yScale(d.count);
   })
   .attr("fill", function (d, i) {
     return colors[i];

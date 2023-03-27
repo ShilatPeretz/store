@@ -12,6 +12,17 @@ const createOrder = async (date, userID, products, price) => {
   return await order.save();
 };
 
+const getAvgOrdersPerMonth = async () => {
+  return await Product.aggregate([
+    {
+      $group: {
+        _id: { $month: "$date" },
+        avg: { $avg: "$price" },
+      },
+    },
+  ]);
+};
+
 const getOrders = async () => {
   return await Order.find();
 };
@@ -53,4 +64,5 @@ module.exports = {
   getOrders,
   updateOrder,
   deleteOrder,
+  getAvgOrdersPerMonth,
 };

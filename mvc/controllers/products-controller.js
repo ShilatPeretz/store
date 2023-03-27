@@ -2,14 +2,15 @@ const productsServices = require("../services/products-service");
 
 //check return functions
 const createProduct = async (req, res) => {
+  console.log(req.body);
   const newProduct = await productsServices.createProduct(
+    req.body.title,
     req.body.description,
     req.body.category,
     req.body.color,
     req.body.size,
     req.body.price,
-    req.body.img,
-    req.body.stock
+    req.body.img
   );
   res.json(newProduct);
 };
@@ -26,7 +27,6 @@ const getProductsByCategory = async (req, res) => {
 
 const NumberOfProductsByCategory = async (req, res) => {
   const NumByCategory = await productsServices.NumberOfProductsByCategory();
-  console.log(NumByCategory);
   res.json(NumByCategory);
 };
 
@@ -39,18 +39,21 @@ const getProductById = async (req, res) => {
   res.json(Product);
 };
 
-const updateProductStock = async (req, res) => {
-  const Product = await productsServices.updateProductStock(
-    req.params.id,
-    req.body.num
-  );
+const getProductByTitle = async (req, res) => {
+  const Product = await productsServices.getProductByTitle(req.params.title);
   if (!Product) {
     return res.status(404).json({ errors: ["Product not found"] });
   }
 
   res.json(Product);
 };
+
 const updateProduct = async (req, res) => {
+  if (!req.body.description) {
+    res.status(400).json({
+      message: "title is required",
+    });
+  }
   if (!req.body.description) {
     res.status(400).json({
       message: "description is required",
@@ -66,7 +69,7 @@ const updateProduct = async (req, res) => {
       message: "color is required",
     });
   }
-  //given a string with comas
+  //array
   if (!req.body.size) {
     res.status(400).json({
       message: "size is required",
@@ -77,20 +80,15 @@ const updateProduct = async (req, res) => {
       message: "price is required",
     });
   }
-  if (!req.body.img) {
-    res.status(400).json({
-      message: "img path is required",
-    });
-  }
 
   const Product = await productsServices.updateProduct(
     req.params.id,
+    req.body.title,
     req.body.description,
     req.body.category,
     req.body.color,
     req.body.size,
-    req.body.price,
-    req.body.img
+    req.body.price
   );
   if (!Product) {
     return res.status(404).json({ errors: ["Product not found"] });
@@ -100,7 +98,7 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const product = await productsServices.deleteProduct(req.params.id);
+  const product = await productsServices.deleteProduct(req.params.title);
   if (!product) {
     return res.status(404).json({ errors: ["Product not found"] });
   }
@@ -115,5 +113,5 @@ module.exports = {
   getProductById,
   updateProduct,
   deleteProduct,
-  updateProductStock,
+  getProductByTitle,
 };

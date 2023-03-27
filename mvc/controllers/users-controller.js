@@ -49,6 +49,16 @@ function logOut(req, res) {
     res.redirect("http://localhost:3000/home-page");
   });
 }
+
+function logged(req, res, next) {
+  if (req.session.email != null) {
+    res.redirect(
+      `http://localhost:3000/home-page?admin=${req.session.isAdmin}`
+    );
+  } else {
+    res.redirect(`http://localhost:3000/home-page`);
+  }
+}
 //********************************************************
 
 const getUsers = async (req, res) => {
@@ -121,6 +131,7 @@ module.exports = {
   deleteUser,
   loginUser,
   isLoggedIn,
+  logged,
   logOut,
   foo,
 };

@@ -57,7 +57,6 @@ $("form.login").submit((e) => {
   }).done((data) => {
     console.log(data);
     if (data.user._id) {
-      alert("Logged in Succesfully");
       window.location.href = `http://localhost:3000/home-page?admin=${data.user.isAdmin}`;
     }
   });

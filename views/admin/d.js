@@ -1,42 +1,19 @@
 var salesData = [
-  { year: "short shirts", Qty: 30 },
-  { year: "short pants", Qty: 22 },
-  { year: "skirts", Qty: 34 },
-  { year: "swimmig suits", Qty: 12 },
-  { year: "long shirts", Qty: 14 },
-  { year: "long pants", Qty: 27 },
-  { year: "jackets", Qty: 10 },
-  { year: "hoodies", Qty: 10 },
+  { year: "2000", Qty: 1000 },
+  { year: "2001", Qty: 2330 },
+  { year: "2002", Qty: 4540 },
+  { year: "2003", Qty: 1239 },
+  { year: "2004", Qty: 4349 },
+  { year: "2005", Qty: 7039 },
+  { year: "2006", Qty: 1035 },
 ];
-//****************************************************************************************** */
-var tmp = [];
-const extractData = async () => {
-  $.ajax({
-    url: "http://localhost:3000/products/percategory",
-    method: "get",
-  }).done((data) => {
-    tmp = JSON.parse(JSON.stringify(data));
-    console.log(tmp);
-  });
-};
-extractData();
-//
-console.log(tmp);
-//************************************************************************************************ */
-var svg = d3.select("#svg1");
 
-var padding = { top: 10, right: 20, bottom: 30, left: 55 };
+var svg = d3.select("#svg2");
 
-var colors = [
-  "#CBE4DE",
-  "#0E8388",
-  "#2E4F4F",
-  "#2C3333",
-  "#CBE4DE",
-  "#0E8388",
-  "#2E4F4F",
-  "#2C3333",
-];
+var padding = { top: 20, right: 30, bottom: 30, left: 50 };
+
+//will return multiple colors
+var colors = d3.schemeCategory10;
 
 var chartArea = {
   width: parseInt(svg.style("width")) - padding.left - padding.right,
@@ -89,13 +66,6 @@ var yAxis = svg
   .attr("transform", "translate(" + padding.left + "," + padding.top + ")");
 //callimg the function and passing the selection
 yAxisFn(yAxis);
-
-//add lines to graph behind the rectangles
-var grid = svg
-  .append("g")
-  .attr("class", "grid")
-  .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
-  .call(d3.axisLeft(yScale).tickSize(-chartArea.width).tickFormat(""));
 
 //define rectangle group
 var rectGrp = svg

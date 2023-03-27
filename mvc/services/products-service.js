@@ -3,22 +3,22 @@ const Product = require("../models/products-model");
 //SERVICES
 //alert change
 const createProduct = async (
+  title,
   description,
   category,
   color,
   size,
   price,
-  img,
-  stock
+  img
 ) => {
   const product = new Product({
+    title: title,
     description: description,
     category: category,
     color: color,
     size: size,
     price: price,
     img: img,
-    stock: stock,
   });
 
   return await product.save();
@@ -30,6 +30,10 @@ const getProducts = async () => {
 
 const getProductById = async (id) => {
   return await Product.findById(id);
+};
+
+const getProductByTitle = async (title) => {
+  return await Product.findById(title);
 };
 
 const getProductsByCategory = async (category) => {
@@ -50,40 +54,31 @@ const NumberOfProductsByCategory = async () => {
 //alert change
 const updateProduct = async (
   id,
+  title,
   description,
   category,
   color,
   size,
   price,
-  img,
-  stock
+  img
 ) => {
   const product = await getProductById(id);
   if (!product) return null;
 
+  product.title = title;
   product.description = description;
   product.category = category;
   product.color = color;
   product.size = size;
   product.price = price;
   product.img = img;
-  product.stock = stock;
-  await product.save();
-  return product;
-};
-
-const updateProductStock = async (id, num) => {
-  const product = await getProductById(id);
-  if (!product) return null;
-
-  product.stock = product.stock - num;
   await product.save();
   return product;
 };
 
 //alert change
-const deleteProduct = async (id) => {
-  const Product = await getProductById(id);
+const deleteProduct = async (title) => {
+  const Product = await getProductByTitle(title);
   if (!Product) return null;
 
   await Product.remove();
@@ -97,6 +92,6 @@ module.exports = {
   getProductsByCategory,
   getProducts,
   updateProduct,
-  updateProductStock,
   deleteProduct,
+  getProductByTitle,
 };

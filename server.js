@@ -6,10 +6,6 @@ const userRouter = require("./mvc/routes/user-router");
 const accountRouter = require("./mvc/routes/my-account");
 const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
-//**********
-const newLocal = require("custom-env");
-newLocal.env(process.env.NODE_ENV, "./config");
-//******* */
 
 mongoose
   .connect(
