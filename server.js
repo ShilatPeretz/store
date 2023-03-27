@@ -22,7 +22,18 @@ mongoose
 
 app.use(cors());
 app.use(express.json()); // parses json format
+app.set("view engine", "ejs");
+//helps read the data sent in post request
 app.use(express.urlencoded({ extended: true })); // parses form-data format
+
+const session = require("express-session");
+app.use(
+  session({
+    secret: "foo",
+    saveUninitialized: false,
+    resave: false,
+  })
+);
 
 // try to match request to files in 'views' folder
 app.use(express.static("views"));

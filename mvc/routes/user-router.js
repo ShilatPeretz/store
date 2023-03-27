@@ -6,6 +6,8 @@ userRouter.post("/signup", UserController.createUser);
 
 userRouter.post("/login", UserController.loginUser);
 
-userRouter.post("/change", UserController.updateUser);
+userRouter.get("/isLogged", UserController.isLoggedIn, UserController.foo);
+
+userRouter.get("/logout", UserController.logOut);
 
 module.exports = userRouter;

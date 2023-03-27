@@ -22,8 +22,34 @@ const loginUser = async (req, res) => {
   if (!user) {
     return res.json({ message: "Wrong credentials" });
   }
+  await usersService.findUserEmail(req.body.email).then(function (result) {
+    req.session.email = result.email;
+    req.session.isAdmin = result.isAdmin;
+  });
   res.json({ message: "Logged in successfully", user });
 };
+
+//cookie functions **************************************
+function isLoggedIn(req, res, next) {
+  if (req.session.email != null) {
+    res.redirect(
+      `http://localhost:3000/home-page?admin=${req.session.isAdmin}`
+    );
+  } else {
+    res.redirect("http://localhost:3000/login-signup");
+  }
+}
+
+function foo(req, res) {
+  res.render("foo", { _id: req.session._id });
+}
+
+function logOut(req, res) {
+  req.session.destroy(() => {
+    res.redirect("http://localhost:3000/home-page");
+  });
+}
+//********************************************************
 
 const getUsers = async (req, res) => {
   const Users = await usersService.getUsers();
@@ -94,4 +120,7 @@ module.exports = {
   updateUser,
   deleteUser,
   loginUser,
+  isLoggedIn,
+  logOut,
+  foo,
 };

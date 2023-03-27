@@ -23,10 +23,9 @@ const findUserName = async (username) => {
   return await User.findOne({ username });
 };
 
-const findUserEmail = async (email) => {
+const findUserEmail = async (email, res) => {
   return await User.findOne({ email });
 };
-
 const getUserById = async (id) => {
   return await User.findById(id);
 };
