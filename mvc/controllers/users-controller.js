@@ -59,6 +59,14 @@ function logged(req, res, next) {
     res.redirect(`http://localhost:3000/home-page`);
   }
 }
+
+function isAdmin(req, res) {
+  if (req.session.admin == "true") {
+    res.json({ message: "true" });
+  } else {
+    res.json({ message: "false" });
+  }
+}
 //********************************************************
 
 const getUsers = async (req, res) => {
@@ -134,4 +142,5 @@ module.exports = {
   logged,
   logOut,
   foo,
+  isAdmin,
 };

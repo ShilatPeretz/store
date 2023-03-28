@@ -8,6 +8,8 @@ userRouter.post("/login", UserController.loginUser);
 
 userRouter.get("/isLogged", UserController.isLoggedIn, UserController.foo);
 
+userRouter.get("/isAdmin", UserController.isAdmin, UserController.foo);
+
 userRouter.get("/logged", UserController.logged, UserController.foo);
 
 userRouter.get("/logout", UserController.logOut);

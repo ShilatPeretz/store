@@ -19,6 +19,7 @@ const extractData = async () => {
     console.log(tmp);
   });
 };
+console.log(extractData);
 extractData();
 //
 console.log(tmp);
