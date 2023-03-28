@@ -35,3 +35,16 @@ const observer= new IntersectionObserver((entries) =>{
 
 const hiddenElements =document.querySelectorAll('.hidden-hide');
 hiddenElements.forEach((el) => observer.observe(el));
+
+
+
+//scroll button
+
+const scrollBtn = document.getElementById("scrollBtn");
+
+scrollBtn.addEventListener("click", function() {
+  window.scrollTo({
+    top: 1000,
+    behavior: "smooth"
+  });
+});
