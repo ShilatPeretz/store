@@ -14,9 +14,9 @@ const createProduct = async (req, res) => {
   res.json(newProduct);
 };
 
-const getProducts = async (req, res) => {
+const getProducts = async (req,res) => {
   const Products = await productsServices.getProducts();
-  res.json(Products);
+  return Products;
 };
 
 const getProductsByCategory = async (req, res) => {
@@ -30,12 +30,19 @@ const NumberOfProductsByCategory = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  const Product = await productsServices.getProductById(req.params.id);
-  if (!Product) {
-    return res.status(404).json({ errors: ["Product not found"] });
+  try{
+    const Product = await productsServices.getProductById(req.params.id);
+    if (!Product) {
+      return res.status(404).json({ errors: ["Product not found"] });
+    }
+  
+    res.json(Product);
+  }catch(err)
+  {
+    return res.status(404).json({ errors: ["Please enter a valid ID!"] });
   }
-
-  res.json(Product);
+  
+  
 };
 
 const getProductByTitle = async (req, res) => {
@@ -56,56 +63,21 @@ const productFilter = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  if (!req.body.description) {
-    res.status(400).json({
-      message: "title is required",
-    });
-  }
-  if (!req.body.description) {
-    res.status(400).json({
-      message: "description is required",
-    });
-  }
-  if (!req.body.category) {
-    res.status(400).json({
-      message: "category is required",
-    });
-  }
-  if (!req.body.color) {
-    res.status(400).json({
-      message: "color is required",
-    });
-  }
-  //array
-  if (!req.body.size) {
-    res.status(400).json({
-      message: "size is required",
-    });
-  }
-  if (!req.body.price) {
-    res.status(400).json({
-      message: "price is required",
-    });
-  }
-
   const Product = await productsServices.updateProduct(
-    req.params.id,
-    req.body.title,
-    req.body.description,
-    req.body.category,
-    req.body.color,
-    req.body.size,
-    req.body.price
-  );
+    req.params.title,
+    req.body.newTitle,
+    req.body.description,req.body.category,req.body.color,req.body.size,req.body.price);
   if (!Product) {
-    return res.status(404).json({ errors: ["Product not found"] });
+    return res.status(404).json({ errors: ["Product not found while editing"] });
   }
 
   res.json(Product);
 };
 
 const deleteProduct = async (req, res) => {
+  console.log("GOT AS PARAM: " + req.params.title);
   const product = await productsServices.deleteProduct(req.params.title);
+  
   if (!product) {
     return res.status(404).json({ errors: ["Product not found"] });
   }

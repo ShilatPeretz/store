@@ -6,16 +6,18 @@ const userRouter = require("./mvc/routes/user-router");
 const accountRouter = require("./mvc/routes/my-account");
 const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
+const ProductModel = require("./mvc/models/products-model");
+const session = require("express-session");
+const path = require('path')
 var http = require('http').createServer(app); 
 var io = require('socket.io')(http);
 // //**********
 // const newLocal = require("custom-env");
 // newLocal.env(process.env.NODE_ENV, "./config");
 // //******* */
-app.use(express.static("public"));
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/views/shopping-page/index.html");
-});
+
+
+app.set("view engine", "ejs");
 
 mongoose
   .connect(
@@ -26,13 +28,15 @@ mongoose
     console.log("Connected to mongoDb");
   });
 
+
+
 app.use(cors());
 app.use(express.json()); // parses json format
-app.set("view engine", "ejs");
+
 //helps read the data sent in post request
 app.use(express.urlencoded({ extended: true })); // parses form-data format
 
-const session = require("express-session");
+
 app.use(
   session({
     secret: "foo",
@@ -40,9 +44,9 @@ app.use(
     resave: false,
   })
 );
-
+app.use(express.static(path.join(__dirname,'public')));
 // try to match request to files in 'views' folder
-app.use(express.static("views"));
+
 
 app.use("/location", locationtRouter);
 app.use("/products", productRouter);
@@ -65,12 +69,14 @@ io.on('connection', (socket) => {
   });
 
   socket.on('addProduct', (msg) => {
-      socket.broadcast.emit('addProductFinal',msg);
+      io.emit('addProductFinal',msg);
   });
 
   socket.on('editProduct',(msg) => {
       io.emit('editProductFinal',msg);
-  })
+  });
+
+
 });
 
 http.listen(3000);
