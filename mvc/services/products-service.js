@@ -28,6 +28,36 @@ const getProducts = async () => {
   return await Product.find();
 };
 
+const productFilter = async (filter) => {
+  var tmp = {};
+  if (filter.color != null) {
+    tmp["color"] = filter.color;
+  }
+  tmp["category"] = "";
+  if (filter.category != null) {
+    tmp["category"] = filter.category;
+  }
+  var price = 100;
+  if (filter.price != null) {
+    price = filter.price;
+  }
+  var sizes = {};
+  if (filter.size != null) {
+    len = filter.size.length;
+    for (let i = 1; i <= len; i++) {
+      sizes[i] = filter.size[i - 1];
+    }
+  }
+  return await Product.find({
+    $and: [
+      { color: tmp["color"] },
+      { category: tmp["category"] },
+      { price: { $gt: 0, $lt: { price } } },
+      { size: { $all: sizes } },
+    ],
+  });
+};
+
 const getProductById = async (id) => {
   return await Product.findById(id);
 };
@@ -94,4 +124,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProductByTitle,
+  productFilter,
 };

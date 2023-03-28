@@ -13,4 +13,6 @@ productRouter.post("/createproduct", productController.createProduct);
 
 productRouter.get("/AvgPerMonth", orderController.getAvgOrdersPerMonth);
 
+productRouter.post("/productFilter", productController.productFilter);
+
 module.exports = productRouter;

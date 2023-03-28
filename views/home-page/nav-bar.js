@@ -8,6 +8,7 @@ const loggedIn = function () {
   $(".login").hide();
   $(".logout").show();
 };
+
 const loggedOut = function () {
   $(".admin").hide();
   $(".logout").hide();

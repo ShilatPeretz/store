@@ -2,7 +2,6 @@ const productsServices = require("../services/products-service");
 
 //check return functions
 const createProduct = async (req, res) => {
-  console.log(req.body);
   const newProduct = await productsServices.createProduct(
     req.body.title,
     req.body.description,
@@ -46,6 +45,14 @@ const getProductByTitle = async (req, res) => {
   }
 
   res.json(Product);
+};
+
+const productFilter = async (req, res) => {
+  const Products = await productsServices.productFilter(req.body);
+  if (!Products) {
+    return res.json({ massage: ["Products not found"] });
+  }
+  res.json(Products);
 };
 
 const updateProduct = async (req, res) => {
@@ -114,4 +121,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProductByTitle,
+  productFilter,
 };

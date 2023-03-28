@@ -1,6 +1,6 @@
 var salesData = [
   { year: "short shirts", Qty: 30 },
-  { year: "short pants", Qty: 22 },
+  { year: "short pants", Qty: 0 },
   { year: "skirts", Qty: 34 },
   { year: "swimmig suits", Qty: 12 },
   { year: "long shirts", Qty: 14 },
