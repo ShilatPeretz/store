@@ -8,14 +8,13 @@ const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
 const ProductModel = require("./mvc/models/products-model");
 const session = require("express-session");
-const path = require('path')
-var http = require('http').createServer(app); 
-var io = require('socket.io')(http);
+const path = require("path");
+var http = require("http").createServer(app);
+var io = require("socket.io")(http);
 // //**********
 // const newLocal = require("custom-env");
 // newLocal.env(process.env.NODE_ENV, "./config");
 // //******* */
-
 
 app.set("view engine", "ejs");
 
@@ -28,14 +27,11 @@ mongoose
     console.log("Connected to mongoDb");
   });
 
-
-
 app.use(cors());
 app.use(express.json()); // parses json format
 
 //helps read the data sent in post request
 app.use(express.urlencoded({ extended: true })); // parses form-data format
-
 
 app.use(
   session({
@@ -44,39 +40,34 @@ app.use(
     resave: false,
   })
 );
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, "public")));
 // try to match request to files in 'views' folder
-
 
 app.use("/location", locationtRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/account", accountRouter);
 
-const port = 3000;
-// app.listen(port, () =>
-//   console.log(`Server is listening: http://localhost:${port}/home-page/`)
-// );
+io.on("connection", (socket) => {
+  console.log("new connection");
 
-io.on('connection', (socket) => {
-  console.log('new connection');
-
-  socket.on('disconnect', () => {
-      console.log('client disconnected');
+  socket.on("disconnect", () => {
+    console.log("client disconnected");
   });
-  socket.on('removeProduct', (msg) =>{
-      io.emit('removeProdutFinal',msg);
+  socket.on("removeProduct", (msg) => {
+    io.emit("removeProdutFinal", msg);
   });
 
-  socket.on('addProduct', (msg) => {
-      io.emit('addProductFinal',msg);
+  socket.on("addProduct", (msg) => {
+    io.emit("addProductFinal", msg);
   });
 
-  socket.on('editProduct',(msg) => {
-      io.emit('editProductFinal',msg);
+  socket.on("editProduct", (msg) => {
+    io.emit("editProductFinal", msg);
   });
-
-
 });
 
-http.listen(3000);
+const port = 3000;
+http.listen(port, () =>
+  console.log(`Server is listening: http://localhost:${port}/home-page/`)
+);
