@@ -251,7 +251,7 @@ $("#manager-menu-form").submit(function(e)
         });
     }
 });
-
+let filters = {colors : [], sizes : [], maxPrice: 100, category : []};
 $("#staticBackdrop1").on('show.bs.modal',function(e)
 {
     $('input[name="flexRadioDefault"]:checked').prop('checked', false);
@@ -296,11 +296,21 @@ $("#staticBackdrop1").on('show.bs.modal',function(e)
 });
 
 $(".filter-btn").click(function(){
-    console.log("clicked!");
+    //console.log("clicked!");
+    var selectedColors = $('input[name=color]:checked').map(function() {
+        return $(this).parent("li").text().trim().toLowerCase();
+      }).get();
+      
+      
+      var selectedSizes = $('input[name=size]:checked').map(function() {
+        return $(this).parent("li").text().trim().toLowerCase();
+      }).get();
+      
+    filters = {maxPrice: $("#price").val(), colors: selectedColors, sizes: selectedSizes, category: filters.category};
     $.ajax({
         url: "/products/productFilter",
         type: "GET",
-        data: {maxPrice: $("#price").val(), colors: ['red','blue']},
+        data: {maxPrice: $("#price").val(), colors: selectedColors, sizes: selectedSizes, category: filters.category},
         success: function(res){
             $(".product").css('display','none');
             let filteredElements = [];
@@ -317,4 +327,59 @@ $(".filter-btn").click(function(){
         }
     });
     
+});
+
+$(".type-selector").click(function(){
+    if($(this).find('.image-layer').css('opacity') === '0.4')
+    {
+        $(this).find('.image-layer').animate({opacity: 0}, 100);
+        $.ajax({
+            url: "/products/productFilter",
+            type: "GET",
+            data: {maxPrice: filters.maxPrice, colors: filters.colors, sizes: filters.sizes},
+            success: function(res){
+                $(".product").css('display','none');
+                let filteredElements = [];
+                res.forEach(function(pr){
+                    filteredElements.push(pr.title);
+                });
+                $(".product").each(function(){
+                    let txt = $(this).find('h3').text();
+                    if(filteredElements.includes(txt))
+                    {
+                        $(this).css("display","block");
+                    }
+                });
+            }
+        });
+        filters.category = [];
+    }
+    if($('.image-layer').filter(function(){
+        return $(this).css('opacity') === '0.4';
+    }).length == 0)
+    {
+        
+        $(this).find('.image-layer').animate({opacity: 0.4}, 100);
+        $.ajax({
+            url: "/products/productFilter",
+            type: "GET",
+            data: {maxPrice: filters.maxPrice, colors: filters.colors, sizes: filters.sizes, category : $(this).attr('id')},
+            success: function(res){
+                $(".product").css('display','none');
+                let filteredElements = [];
+                res.forEach(function(pr){
+                    filteredElements.push(pr.title);
+                });
+                $(".product").each(function(){
+                    let txt = $(this).find('h3').text();
+                    if(filteredElements.includes(txt))
+                    {
+                        $(this).css("display","block");
+                    }
+                });
+            }
+        });
+        filters.category = [$(this).attr('id')];
+    }
+    //console.log("CLICKED1! " + $(this).find('.image-layer').css('opacity'));
 });

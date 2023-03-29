@@ -406,35 +406,35 @@
             Open Manager Menu
         </button>  
         <div class="type-filter-containter">
-            <div class="type-selector">
+            <div id="short pants" class="type-selector">
                 <img src="/opt1.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="short shirts" class="type-selector">
                 <img src="/opt2.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="skirts" class="type-selector">
                 <img src="/opt3.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="swimmig suits" class="type-selector">
                 <img src="/opt4.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="long shirts" class="type-selector">
                 <img src="/opt5.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="long pants" class="type-selector">
                 <img src="/opt6.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="jackets" class="type-selector">
                 <img src="/opt7.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
-            <div class="type-selector">
+            <div id="hoodies" class="type-selector">
                 <img src="/opt8.jpeg" style="width: 100%;min-width: 80px;">
                 <div class="image-layer"></div>
             </div>
@@ -473,39 +473,39 @@
                 <label style="text-decoration: underline;" class="form-check-label">Size:</label>
                 <div class="form-check">
                     <li>
-                        <input id = "small" class="form-check-input" type="checkbox" name="color" >
-                        <label for="small" class="form-check-label">Small</label>
+                        <input id = "small" class="form-check-input" type="checkbox" name="size" >
+                        <label for="small" class="form-check-label">S</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input id = "medium" class="form-check-input" type="checkbox" name="color" >
-                        <label for="medium" class="form-check-label">Medium</label>
+                        <input id = "medium" class="form-check-input" type="checkbox" name="size" >
+                        <label for="medium" class="form-check-label">M</label>
                     </li>
                 </div>
                 <div class="form-check">
                     <li>
-                        <input id = "large" class="form-check-input" type="checkbox" name="color" >
-                        <label for="large" class="form-check-label">Large</label>
+                        <input id = "large" class="form-check-input" type="checkbox" name="size" >
+                        <label for="large" class="form-check-label">L</label>
                     </li>
                 </div>
                 
                 
                 <li>
                     <div class="price-container">
-                        <label for="price">Price: (Starting From)</label>
+                        <label for="price">Price: (Range)</label>
                         
                         
-                        <span>$</span>
-                        <input type="range" id="price" name="price" min="0" max="1000" step="1" value="500" oninput="this.nextElementSibling.value = this.value">
-                        <output style="float:left;">500</output>
                         
-                        <span>$1000</span>
+                        <input type="range" id="price" name="price" min="1" max="100" step="1" value="100" oninput="this.nextElementSibling.value = this.value">
+                        <output >100</output><span>$</span>
+                        
+                        <span style="float:left;">$1</span>
                     </div>
                     
                 </li>
             </ul>
-            <button class="btn btn-secondary btn-sm">Apply Filters</button>
+            <button class="btn btn-secondary btn-sm filter-btn">Apply Filters</button>
         </div>
         <div class="products-grid">
             <div class="product" style="display: none;">
@@ -531,7 +531,7 @@
                     </svg>
                     
                     <div class="product-description" >
-                        <h3><%=elements[i].title %></h3>
+                        <h3 style="font-size: 2rem;"><%=elements[i].title %></h3>
                         <p style="margin-bottom: 0;"><%=elements[i].description %></p>
                         <p class="price-p">$<%=elements[i].price %></p>
                         
