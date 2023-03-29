@@ -123,67 +123,68 @@
         let city_arr =[];
         let latitude_arr =[];
         let longitude_arr =[];
-        let x=1;
         
-        $.ajax({
-        url: "/location/getlocations",
-        method: "get",
+        // $.ajax({
+        // url: "",
+        // method: "get",
         
-        }).done((data) => {
-            data.forEach(element => {
-                city_arr.push(element["city"]);
-                latitude_arr.push(element["latitude"]);
-                longitude_arr.push(element["longitude"]);
-                x=2;
-            });
+        // }).done((data) => {
+        //     data.forEach(element => {
+        //         city_arr.push(element["city"]);
+        //         latitude_arr.push(element["latitude"]);
+        //         longitude_arr.push(element["longitude"]);
+        //     });
 
             
             
-        });
+        // });
          
-        // console.log(city_arr);
+
+        function getData() {
+            return $.ajax({
+            url: "http://localhost:3000/location/getlocations",
+            method: "get",
+            async:false
+            });
+        }
+
+        async function test() {
+            try {
+                const res = await getData();
+                // console.log(Array.from(res));
+                Array.from(res).forEach(element => {
+                    city_arr.push(element["city"]);
+                    latitude_arr.push(element["latitude"]);
+                    longitude_arr.push(element["longitude"]);
+                });
+                
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        test(); 
+        
         function initMap() {
-            console.log(city_arr[0]);
+            for(let i=0;i<10;i++){
+                console.log(city_arr[i]);
+            }
             const Rishon = { lat: 31.961020, lng: 34.801620 };
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 11,
+                zoom: 10,
                 center: Rishon,
             });
-            var myLatlng = new google.maps.LatLng(latitude_arr[0],longitude_arr[0]);
-            var mrk = new google.maps.Marker({
-                position: myLatlng,
-                title:"Hello World!",
-                map:map
-            
-            });
-
-            const pin_position = {lat: Number(latitude_arr[0])  ,lng: Number(longitude_arr[0])};
-            
-            const marker = new google.maps.Marker({
+            for(let i = 0; i < latitude_arr.length ;i++){
+                
+                console.log(latitude_arr[i] + "," + longitude_arr[i]);
+                const pin_position = {lat: latitude_arr[i] ,lng: longitude_arr[i]};
+                const marker = new google.maps.Marker({
                 position: pin_position,
-                map: map,
-            });
+                map: map,   
+                });
             }
 
-            // for(let i = 0; i < latitude_arr.length;i++){
-                
-            //     console.log(latitude_arr[i] + "," + longitude_arr[i]);
-            //     const pin_position = {lat: latitude_arr[i] ,lng: longitude_arr[i]};
-            //     // const marker = new google.maps.Marker({
-            //     // position: pin_position,
-            //     // map: map,
-            //     // });
-            // }
-            // for(var i = 0; i< 10;i++ ){
-                
-            //     const pin_position = {lat:arr[i]["latitude"],lng:arr[i]["longitude"]}
-            //     const marker = new google.maps.Marker({
-            //     position: pin_position,
-            //     map: map,
-            //     gestureHandling: "greedy"
-            //     });
-            // }
-            
+        }
 
             window.initMap = initMap;
 
