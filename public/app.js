@@ -12,18 +12,38 @@ socket.on('addProductFinal',(msg) => {
     varNewProduct.find("p").eq(0).text(msg['description']);
     varNewProduct.find("p").eq(1).text("$" + msg['price']);
     varNewProduct.css("display","block");
-    $(".container").append(varNewProduct);
+    $(".products-grid").append(varNewProduct);
 });
 
 socket.on('editProductFinal', (msg) => {
-    console.log('THE ADMING EDITED',msg['oldTitle']);
-    editProduct(getProductByTitle(msg['oldTitle']),msg['title'],msg['description'],msg['price']);
+    console.log('THE ADMIN EDITED',msg['oldTitle']);
+    let product = getProductByTitle(msg['oldTitle']);
+    let title = product.find("h3").text();
+    let description = product.find("p").eq(0).text();
+    let price = product.find("p").eq(1).text().substring(1);
+    if(msg['title'] != "")
+    {
+        title = msg['title'];
+    }
+    
+    if(msg['description'] != "")
+    {
+        description = msg['description'];
+    }
+    if(msg['price'] != "")
+    {
+        price = msg['price'];
+    }
+    console.log("product:" + product, " title: " + title, " descri: " + description, " price: " + price);
+    editProduct(product,title, description, price);
 });
 
 
 $(document).on("click",".add-to-cart-btn",function (e) { 
     e.preventDefault();
+    
     var txt = $(this).parent(".product").find("h3").text();
+    //console.log(txt);
     var finalS = "<li class=\"bag-item list-group-item\">" + txt + "&ensp;" +
     "<b>" + $(this).parent(".product").find(".price-p").text() + "</b></li>";
     if($(".bag-list:contains('" + txt + "')").length == 0)
@@ -73,6 +93,20 @@ $(document).on("click",".delete-icn",function(e){
     if(confirm("Click OK if you sure you want to delete " + $(this).parent(".product").find("h3").text() + ", Cancel otherwise"))
     {
         socket.emit('removeProduct', {title: $(this).parent(".product").find("h3").text()});
+        try{
+            $.ajax({
+                url: "/products/"+$(this).parent(".product").find("h3").text(),
+                type: "DELETE",
+                success: function(res){
+                    console.log("SUCCESS!!!! DELETED ");
+                    
+                }
+            });
+        }catch(err)
+        {
+            console.log("ERROR!!!! " + err);
+        }
+        
     }
     
 });
@@ -107,30 +141,23 @@ function getProductByTitle(title)
     .filter(function(){return $(this).find("h3").text().trim() === title});
 }
 
-function editProduct(product, var1, var2, var3)
+function editProduct(product, newTitle, newDescription, newPrice)
 {
     var title = product.find("h3").text();
-    var price = product.find("p").eq(1).text();
+    var price = product.find("p").eq(1).text().substring(1);
     var originalTitle = title;
-    var originalPrice = price;
-    if(var1 != "")
-    {
-        product.find("h3").text(var1);
-        title = var1;
-    }
+    product.find("h3").text(newTitle);
+    product.find("p").eq(0).text(newDescription);
+    product.find("p").eq(1).text("$" + newPrice);
+    $(".bag-item").each(function(){
+        let str1 = originalTitle + " $" + price;
+        let str2 = $(this).text().trim();
+        if (str1.trim().replace(/\s/g, ' ') == str2.replace(/\s/g, ' ')){
+            let newString = newTitle + " $" + newPrice;
+            $(this).text(newString);
+        }
+    })
     
-    if(var2 != "")
-    {
-        product.find("p").eq(0).text(var2);
-    }
-    if(var3 != "")
-    {
-        product.find("p").eq(1).text("$" + var3);
-        price = var3;
-    }
-    //console.log($(".bag-list .bag-item:contains(" + originalTitle + ")").text());
-    $(".bag-list .bag-item:contains(" + originalTitle + ")").text(title + " ");
-    $(".bag-list .bag-item:contains(" + originalTitle + ")").append($("<b>").text("$" + price));
     updateTotalCost();
 }
 $("#manager-menu-form").submit(function(e)
@@ -150,47 +177,53 @@ $("#manager-menu-form").submit(function(e)
     });
     $("#staticBackdrop1").modal('toggle');
     
-    //console.log(valuesDict);
     var checkedValue = $('input[name=flexRadioDefault]:checked').closest('div').find("label").text().replace(/\s/g, '');
     if (checkedValue == "Edit")
     {
         if($(".product").length == 1)
         {
-            //console.log("nothing to edit");
             return;
         }
         var product = getProductByTitle(valuesDict[1]);
-        //console.log(product + " ," + valuesDict[1]);
         if (product.length == 0)
         {
-            //console.log("Not found!");
             return;
         }
         if(getProductByTitle(valuesDict[0]).length != 0)
         {
-            //console.log("THERE IS ALREDY ELEMENT");
             return;
         }
-        //TODO -
-        //1. Add original & new product title IF "Edit" is checked - DONE
-        //2. Finish the manager system 
+        console.log(valuesDict[3])
         socket.emit('editProduct', {oldTitle: valuesDict[1],title: valuesDict[0], description: valuesDict[2], price: valuesDict[3]});
-        
+        // $.ajax({
+        //     url: "/products/"+valuesDict[1],
+        //     type: "PUT",
+        //     data: {newTitle:valuesDict[0], description: valuesDict[2],category:"GAMING", color:'life', size: {0 : 'daniel', 1 : 'king'}, price:valuesDict[3], img: 'IMG'},
+        //     success: function(res){
+        //         console.log("SUCCESS!!!! ADDED " + JSON.stringify(res));
+        //     }
+        // });
     }
     else
     {
-        if($(".product:has(h3:contains(" + valuesDict[0] + "))").length != 0 && valuesDict[0] != "Product null")
+
+        if($(".product").filter(function(){return $(this).find("h3").text() === valuesDict[0];}
+        ).length != 0 && valuesDict[0] != "Product null")
         {
-            //console.log("There is already a product with the same name!");
+            console.log("There is already a product with the same name!");
             return;
         }
-        varNewProduct = $(".product").first().clone();
-        varNewProduct.find("h3").text(valuesDict[0]);
-        varNewProduct.find("p").eq(0).text(valuesDict[1]);
-        varNewProduct.find("p").eq(1).text("$" + valuesDict[2]);
-        varNewProduct.css("display","block");
-        $(".container").append(varNewProduct);
+        //var data = $.post("/products/createProduct", {title:"gaming", description: "of",category:"GAMING", color:'life', size: {0 : 'daniel', 1 : 'king'}, price:12000, img: 'IMG'});
+        //console.log("success! added " + JSON.stringify(data));
         socket.emit('addProduct',{title: valuesDict[0], description: valuesDict[1], price: valuesDict[2]});
+        $.ajax({
+            url: "/products/",
+            type: "POST",
+            data: {title:valuesDict[0], description: valuesDict[1],category:"GAMING", color:'life', size: {0 : 'daniel', 1 : 'king'}, price:valuesDict[2], img: 'IMG'},
+            success: function(res){
+                console.log("SUCCESS!!!! ADDED " + JSON.stringify(res));
+            }
+        });
     }
 });
 

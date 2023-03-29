@@ -63,7 +63,7 @@ const getProductById = async (id) => {
 };
 
 const getProductByTitle = async (title) => {
-  return await Product.findById(title);
+  return await Product.find({title : title});
 };
 
 const getProductsByCategory = async (category) => {
@@ -82,20 +82,11 @@ const NumberOfProductsByCategory = async () => {
 };
 
 //alert change
-const updateProduct = async (
-  id,
-  title,
-  description,
-  category,
-  color,
-  size,
-  price,
-  img
-) => {
-  const product = await getProductById(id);
+const updateProduct = async (title,newTitle,description,category,color,size,price,img) => {
+  const product = await getProductByTitle(title);
   if (!product) return null;
 
-  product.title = title;
+  product.title = newTitle;
   product.description = description;
   product.category = category;
   product.color = color;
@@ -108,11 +99,18 @@ const updateProduct = async (
 
 //alert change
 const deleteProduct = async (title) => {
-  const Product = await getProductByTitle(title);
-  if (!Product) return null;
-
-  await Product.remove();
-  return Product;
+  var x = await Product.findOneAndDelete({title: title}).then(product => {
+    if(!product)
+    {
+      return res.status(404).send('Product not found while deleting!');
+    }
+    console.log("RETURING DELETE: " + product);
+    return product;
+  }).catch(err => {
+    res.status(500).send("ERROR WHILE DELETING: " + err.message);
+  });
+  console.log("X: " + x);
+  return x;
 };
 
 module.exports = {
