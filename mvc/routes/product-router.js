@@ -11,19 +11,16 @@ productRouter.get("", (req, res) => {
 
 productRouter.get("/percategory", productController.NumberOfProductsByCategory);
 
-//productRouter.post("/changeproduct", productController.updateproduct);
 productRouter.post("/",productController.createProduct);
 
-productRouter.route("/:id")
-    .get(productController.getProductById);
+productRouter.get("/productFilter", productController.productFilter);
+
 
 productRouter.route("/:title").delete(productController.deleteProduct).put(productController.updateProduct);
 
 
-productRouter.post("/createorder", orderController.createOrder);
-
 productRouter.get("/AvgPerMonth", orderController.getAvgOrdersPerMonth);
 
-productRouter.post("/productFilter", productController.productFilter);
+
 
 module.exports = productRouter;

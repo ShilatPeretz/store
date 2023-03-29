@@ -28,34 +28,42 @@ const getProducts = async () => {
   return await Product.find();
 };
 
-const productFilter = async (filter) => {
-  var tmp = {};
-  if (filter.color != null) {
-    tmp["color"] = filter.color;
-  }
-  tmp["category"] = "";
-  if (filter.category != null) {
-    tmp["category"] = filter.category;
-  }
-  var price = 100;
-  if (filter.price != null) {
-    price = filter.price;
-  }
-  var sizes = {};
-  if (filter.size != null) {
-    len = filter.size.length;
-    for (let i = 1; i <= len; i++) {
-      sizes[i] = filter.size[i - 1];
-    }
-  }
-  return await Product.find({
-    $and: [
-      { color: tmp["color"] },
-      { category: tmp["category"] },
-      { price: { $gt: 0, $lt: { price } } },
-      { size: { $all: sizes } },
-    ],
+const productFilter = async (maxPrice, colorsQuery, sizeQuery) => {
+  return await Product.find({price: {$gte: 1, $lte: maxPrice}, color: colorsQuery, size: sizeQuery} ).
+  then(products => {
+    // console.log("FOUND PRICE FILTER: " + products);
+    return products;
+
+  }).catch(err => {
+    console.log("ERROR: " + err);
   });
+  // var tmp = {};
+  // if (filter.color != null) {
+  //   tmp["color"] = filter.color;
+  // }
+  // tmp["category"] = "";
+  // if (filter.category != null) {
+  //   tmp["category"] = filter.category;
+  // }
+  // var price = 100;
+  // if (filter.price != null) {
+  //   price = filter.price;
+  // }
+  // var sizes = {};
+  // if (filter.size != null) {
+  //   len = filter.size.length;
+  //   for (let i = 1; i <= len; i++) {
+  //     sizes[i] = filter.size[i - 1];
+  //   }
+  // }
+  // return await Product.find({
+  //   $and: [
+  //     { color: tmp["color"] },
+  //     { category: tmp["category"] },
+  //     { price: { $gt: 0, $lt: { price } } },
+  //     { size: { $all: sizes } },
+  //   ],
+  // });
 };
 
 const getProductById = async (id) => {
@@ -83,23 +91,26 @@ const NumberOfProductsByCategory = async () => {
 
 //alert change
 const updateProduct = async (title,newTitle,description,category,color,size,price,img) => {
-  const product = await getProductByTitle(title);
-  if (!product) return null;
 
-  product.title = newTitle;
-  product.description = description;
-  product.category = category;
-  product.color = color;
-  product.size = size;
-  product.price = price;
-  product.img = img;
-  await product.save();
-  return product;
+  const x = await Product.findOneAndUpdate(
+    {title : title},
+    {$set: {title: newTitle, description: description, category: category, color: color,
+    size: size, price: price, img: img}}).then(product => {
+      if(!product)
+      {
+        return res.status(404).send('Product not found while editing!');
+      }
+      return product;
+    }).catch(err => {
+      res.status(500).send("ERROR WHILE EDITING: " + err.message);
+      return null;
+    });
+  return x;
 };
 
 //alert change
 const deleteProduct = async (title) => {
-  var x = await Product.findOneAndDelete({title: title}).then(product => {
+  const x = await Product.findOneAndDelete({title: title}).then(product => {
     if(!product)
     {
       return res.status(404).send('Product not found while deleting!');

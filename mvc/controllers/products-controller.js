@@ -53,9 +53,26 @@ const getProductByTitle = async (req, res) => {
 
   res.json(Product);
 };
-
+const myJson = require('../../public/colors.json');
 const productFilter = async (req, res) => {
-  const Products = await productsServices.productFilter(req.body);
+  
+  let colorQuery = req.query.colors;
+  if(req.query.colors !== undefined)
+  {
+    colorQuery = {$in: req.query.colors};
+  }
+  else
+  {
+
+    let allColors = [];
+    for(let i = 0; i < myJson.length; i++)
+    {
+      allColors.push(myJson[i].toLowerCase());
+    }
+    //console.log("ALLCOLORS: " + allColors);
+    colorQuery = {$in: allColors};
+  }
+  const Products = await productsServices.productFilter(req.query.maxPrice,colorQuery);
   if (!Products) {
     return res.json({ massage: ["Products not found"] });
   }
@@ -66,7 +83,11 @@ const updateProduct = async (req, res) => {
   const Product = await productsServices.updateProduct(
     req.params.title,
     req.body.newTitle,
-    req.body.description,req.body.category,req.body.color,req.body.size,req.body.price);
+    req.body.description,
+    req.body.category
+    ,req.body.color,
+    req.body.size,
+    req.body.price);
   if (!Product) {
     return res.status(404).json({ errors: ["Product not found while editing"] });
   }
