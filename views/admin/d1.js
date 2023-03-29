@@ -1,29 +1,29 @@
-function buildGraph(salesData) {}
+var salesData = [
+  { year: "short shirts", Qty: 30 },
+  { year: "short pants", Qty: 0 },
+  { year: "skirts", Qty: 34 },
+  { year: "swimmig suits", Qty: 12 },
+  { year: "long shirts", Qty: 14 },
+  { year: "long pants", Qty: 27 },
+  { year: "jackets", Qty: 10 },
+  { year: "hoodies", Qty: 10 },
+];
 //****************************************************************************************** */
-function getData() {
-  return $.ajax({
-    url: "http://localhost:3000/products/AvgPerMonth",
+var tmp = [];
+const extractData = async () => {
+  $.ajax({
+    url: "http://localhost:3000/products/percategory",
     method: "get",
+  }).done((data) => {
+    tmp = JSON.parse(JSON.stringify(data));
+    console.log(tmp);
   });
-}
-
-async function test() {
-  try {
-    const res = await getData();
-    console.log(res);
-    var salesData = Array.from(res);
-    console.log(salesData);
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-test();
-
+};
+console.log(extractData);
+extractData();
+//
+console.log(tmp);
 //************************************************************************************************ */
-
-console.log(salesData);
-
 var svg = d3.select("#svg1");
 
 var padding = { top: 10, right: 20, bottom: 30, left: 55 };
@@ -62,7 +62,7 @@ var xScale = d3
   .scaleBand()
   .domain(
     salesData.map(function (d) {
-      return d._id;
+      return d.year;
     })
   )
   .range([0, chartArea.width])
@@ -118,7 +118,7 @@ rectGrp
     return chartArea.height - yScale(d.Qty);
   })
   .attr("x", function (d, i) {
-    return xScale(d._id);
+    return xScale(d.year);
   })
   .attr("y", function (d, i) {
     return yScale(d.Qty);

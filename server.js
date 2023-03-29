@@ -6,15 +6,15 @@ const userRouter = require("./mvc/routes/user-router");
 const accountRouter = require("./mvc/routes/my-account");
 const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
-var http = require('http').createServer(app); 
-var io = require('socket.io')(http);
+var http = require("http").createServer(app);
+var io = require("socket.io")(http);
 // //**********
 // const newLocal = require("custom-env");
 // newLocal.env(process.env.NODE_ENV, "./config");
 // //******* */
 app.use(express.static("public"));
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/views/shopping-page/index.html");
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/views/shopping-page/index.html");
 });
 
 mongoose
@@ -49,28 +49,25 @@ app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/account", accountRouter);
 
-const port = 3000;
-// app.listen(port, () =>
-//   console.log(`Server is listening: http://localhost:${port}/home-page/`)
-// );
+io.on("connection", (socket) => {
+  console.log("new connection");
 
-io.on('connection', (socket) => {
-  console.log('new connection');
-
-  socket.on('disconnect', () => {
-      console.log('client disconnected');
+  socket.on("disconnect", () => {
+    console.log("client disconnected");
   });
-  socket.on('removeProduct', (msg) =>{
-      io.emit('removeProdutFinal',msg);
+  socket.on("removeProduct", (msg) => {
+    io.emit("removeProdutFinal", msg);
   });
 
-  socket.on('addProduct', (msg) => {
-      socket.broadcast.emit('addProductFinal',msg);
+  socket.on("addProduct", (msg) => {
+    socket.broadcast.emit("addProductFinal", msg);
   });
 
-  socket.on('editProduct',(msg) => {
-      io.emit('editProductFinal',msg);
-  })
+  socket.on("editProduct", (msg) => {
+    io.emit("editProductFinal", msg);
+  });
 });
-
-http.listen(3000);
+const port = 3000;
+http.listen(port, () =>
+  console.log(`Server is listening: http://localhost:${port}/home-page/`)
+);

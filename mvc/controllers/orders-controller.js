@@ -3,18 +3,13 @@ const ProductController = require("../controllers/products-controller");
 
 //check return functions
 const createOrder = async (req, res) => {
+  console.log(req.body);
   const newOrder = await OrdersServices.createOrder(
     req.body.date,
     req.body.userID,
     req.body.products,
     req.body.price
   );
-  //go through products and decrease stock num
-  for (let p in products) {
-    var id = p;
-    var num = products[p];
-    ProductController.updateProductStock(id, num);
-  }
   res.json(newOrder);
 };
 
@@ -24,6 +19,7 @@ const getOrders = async (req, res) => {
 };
 
 const getAvgOrdersPerMonth = async (req, res) => {
+  console.log("made it!!");
   const orders = await OrdersServices.getAvgOrdersPerMonth();
   res.json(orders);
 };

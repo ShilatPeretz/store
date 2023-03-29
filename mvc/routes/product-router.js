@@ -11,6 +11,8 @@ productRouter.get("/percategory", productController.NumberOfProductsByCategory);
 
 productRouter.post("/createproduct", productController.createProduct);
 
+productRouter.post("/createorder", orderController.createOrder);
+
 productRouter.get("/AvgPerMonth", orderController.getAvgOrdersPerMonth);
 
 productRouter.post("/productFilter", productController.productFilter);

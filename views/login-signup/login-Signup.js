@@ -1,9 +1,9 @@
 $(".signup").hide();
 
 //return to home page
-$(".exit").click(function () {
-  window.location.href = "/home-page/";
-});
+//$(".exit").click(function () {
+// window.location.href = "/home-page/";
+//});
 
 $("#signup-form-link").click(function () {
   $(".login").fadeOut(100);
@@ -59,5 +59,27 @@ $("form.login").submit((e) => {
     if (data.user._id) {
       window.location.href = `http://localhost:3000/home-page?admin=${data.user.isAdmin}`;
     }
+  });
+});
+
+$(".exit").click(function () {
+  const date = new Date("2022-01-04");
+  const userID = "641f1e8c68ca110d43a4b847";
+  const products = [
+    "6421e5d8c3cbf7467bedb334",
+    "6421e65261fffaa1b437fab5",
+    "6421e7d421f2ee17cb4712f1",
+    "6421e8e533f9cb43948a4d0c",
+    "6421ea14da6d2feeb53a97c1",
+  ];
+  const price = 145;
+
+  const user = { date, userID, products, price };
+
+  $.ajax({
+    url: "http://localhost:3000/products/createorder",
+    method: "post",
+    data: user,
+    dataType: "json",
   });
 });
