@@ -14,7 +14,7 @@ const createProduct = async (req, res) => {
   res.json(newProduct);
 };
 
-const getProducts = async (req,res) => {
+const getProducts = async (req, res) => {
   const Products = await productsServices.getProducts();
   return Products;
 };
@@ -30,19 +30,16 @@ const NumberOfProductsByCategory = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  try{
+  try {
     const Product = await productsServices.getProductById(req.params.id);
     if (!Product) {
       return res.status(404).json({ errors: ["Product not found"] });
     }
-  
+
     res.json(Product);
-  }catch(err)
-  {
+  } catch (err) {
     return res.status(404).json({ errors: ["Please enter a valid ID!"] });
   }
-  
-  
 };
 
 const getProductByTitle = async (req, res) => {
@@ -53,26 +50,23 @@ const getProductByTitle = async (req, res) => {
 
   res.json(Product);
 };
-const myJson = require('../../public/colors.json');
+const myJson = require("../../public/colors.json");
 const productFilter = async (req, res) => {
-  
   let colorQuery = req.query.colors;
-  if(req.query.colors !== undefined)
-  {
-    colorQuery = {$in: req.query.colors};
-  }
-  else
-  {
-
+  if (req.query.colors !== undefined) {
+    colorQuery = { $in: req.query.colors };
+  } else {
     let allColors = [];
-    for(let i = 0; i < myJson.length; i++)
-    {
+    for (let i = 0; i < myJson.length; i++) {
       allColors.push(myJson[i].toLowerCase());
     }
     //console.log("ALLCOLORS: " + allColors);
-    colorQuery = {$in: allColors};
+    colorQuery = { $in: allColors };
   }
-  const Products = await productsServices.productFilter(req.query.maxPrice,colorQuery);
+  const Products = await productsServices.productFilter(
+    req.query.maxPrice,
+    colorQuery
+  );
   if (!Products) {
     return res.json({ massage: ["Products not found"] });
   }
@@ -84,12 +78,15 @@ const updateProduct = async (req, res) => {
     req.params.title,
     req.body.newTitle,
     req.body.description,
-    req.body.category
-    ,req.body.color,
+    req.body.category,
+    req.body.color,
     req.body.size,
-    req.body.price);
+    req.body.price
+  );
   if (!Product) {
-    return res.status(404).json({ errors: ["Product not found while editing"] });
+    return res
+      .status(404)
+      .json({ errors: ["Product not found while editing"] });
   }
 
   res.json(Product);
@@ -98,7 +95,7 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   console.log("GOT AS PARAM: " + req.params.title);
   const product = await productsServices.deleteProduct(req.params.title);
-  
+
   if (!product) {
     return res.status(404).json({ errors: ["Product not found"] });
   }

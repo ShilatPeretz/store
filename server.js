@@ -65,6 +65,10 @@ io.on("connection", (socket) => {
     io.emit("addProductFinal", msg);
   });
 
+  socket.on("addOrder", (msg) => {
+    io.emit("NotifyAddedOrder", msg);
+  });
+
   socket.on("editProduct", (msg) => {
     io.emit("editProductFinal", msg);
   });

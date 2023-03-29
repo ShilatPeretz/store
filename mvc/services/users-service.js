@@ -16,7 +16,7 @@ const getUsers = async () => {
 };
 
 const login = async (email, password) => {
-  return await User.findOne({ email, password });
+  return await User.findOne({ email, password }).select("-password");
 };
 
 const findUserName = async (username) => {

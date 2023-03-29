@@ -57,7 +57,8 @@ $("form.login").submit((e) => {
   }).done((data) => {
     console.log(data);
     if (data.user._id) {
-      window.location.href = `http://localhost:3000/home-page?admin=${data.user.isAdmin}`;
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.location.href = `http://localhost:3000/home-page`;
     }
   });
 });

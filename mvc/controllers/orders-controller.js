@@ -19,7 +19,6 @@ const getOrders = async (req, res) => {
 };
 
 const getAvgOrdersPerMonth = async (req, res) => {
-  console.log("made it!!");
   const orders = await OrdersServices.getAvgOrdersPerMonth();
   res.json(orders);
 };

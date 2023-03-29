@@ -1,225 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="style_navbar.css" />
     <link rel="stylesheet" type="text/css" href="style_footer.css" />
     <link rel="stylesheet" type="text/css" href="style_page.css" />
-    
-    
-
-
-
-
-
 
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
     <!-- bootstrap -->
-
+    <script src="/js/nav-bar.js" defer></script>
 
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-
-    <!-- nav -->
-    <section>
-        <nav id="header">
-            <input id="nav-toggle" type="checkbox">
-            <div class="logo"><img src="logo_shlusy.png" alt="logo" style="height: 100px;"></div>
-            <ul class="links">
-                <li><a class="home" href="http://localhost:3000/home-page/">Home</a></li>
-                <!-- where to go while pressing products-->
-                <li><a class="products" href="#Products">Products</a></li>
-                <!-- where to go while pressing about-->
-                <li><a class="about" href="http://localhost:3000/about-us/">About</a></li>
-                <li><a class="admin" style="display: none;" href="http://localhost:3000/admin/">Admin</a></li>
-                <li><a href="#Help">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-bag-check" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                            <path
-                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg>
-                    </a></li>
-                <li><a class="login" href="http://localhost:3000/users/isLogged">Log In</a></li>
-                <li><a class="logout" style="display: none;" href="http://localhost:3000/users/logout">Log Out</a></li>
-            </ul>
-            <label for="nav-toggle" class="icon-burger">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </label>
-        </nav>
-    </section>
-    <!-- nav -->
-
+  <body>
     <div id="con">
-        <div id="map" class="slash-pattern"></div> 
-        
+      <div id="map" class="slash-pattern"></div>
     </div>
-    
 
     <aside id="description">
-        <h1>We Are Shlusy's!</h1>
-        <p>We are a small group of dropshippers that <br> soon started expanding quickly <br> because of our <strong>great </strong> quality! </p>
-        <img src="https://sustainabilityforschools.org/images/22ca5e3187c2240df4c8f3559fb86616.jpg?crc=514338456" alt="">
+      <h1>We Are Shlusy's!</h1>
+      <p>
+        We are a small group of dropshippers that <br />
+        soon started expanding quickly <br />
+        because of our <strong>great </strong> quality!
+      </p>
+      <img
+        src="https://sustainabilityforschools.org/images/22ca5e3187c2240df4c8f3559fb86616.jpg?crc=514338456"
+        alt=""
+      />
     </aside>
-
-
 
     <!-- footer -->
     <footer class="footer slash-pattern">
+      <ul class="social-icons">
+        <li>
+          <a class="" href="#">
+            <img
+              class="social-icon-item"
+              src="https://cdn-icons-png.flaticon.com/512/725/725339.png"
+              alt=""
+            />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img
+              class="social-icon-item"
+              src="https://cdn-icons-png.flaticon.com/512/725/725350.png"
+              alt=""
+            />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img
+              class="social-icon-item"
+              src="https://cdn-icons-png.flaticon.com/512/2335/2335417.png"
+              alt=""
+            />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img
+              class="social-icon-item"
+              src="https://cdn-icons-png.flaticon.com/512/1322/1322104.png"
+              alt=""
+            />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img
+              class="social-icon-item"
+              src="https://cdn-icons-png.flaticon.com/512/1383/1383329.png"
+              alt=""
+            />
+          </a>
+        </li>
+      </ul>
 
-        <ul class="social-icons">
-            <li>
-                <a class="" href="#">
-                    <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/725/725339.png" alt="">
-                </a>
-            </li>
-            <li><a href="#">
-                    <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/725/725350.png" alt="">
-                </a></li>
-            <li><a href="#">
-                    <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/2335/2335417.png" alt="">
-                </a></li>
-            <li>
-                <a href="#">
-                    <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/1322/1322104.png" alt="">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/1383/1383329.png" alt="">
-                </a>
-            </li>
-        </ul>
-
-
-        <ul class="footer-menu">
-            <li class="menu-link"><a href="#">Home</a></li>
-            <li class="seperator">|</li>
-            <li class="menu-link"><a href="#">About</a></li>
-            <li class="seperator">|</li>
-            <li class="menu-link"><a href="#">Services</a></li>
-            <li class="seperator">|</li>
-            <li class="menu-link"><a href="#">Team</a></li>
-            <li class="seperator">|</li>
-            <li class="menu-link"><a href="#">Contact</a></li>
-
-        </ul>
+      <ul class="footer-menu">
+        <li class="menu-link"><a href="#">Home</a></li>
+        <li class="seperator">|</li>
+        <li class="menu-link"><a href="#">About</a></li>
+        <li class="seperator">|</li>
+        <li class="menu-link"><a href="#">Services</a></li>
+        <li class="seperator">|</li>
+        <li class="menu-link"><a href="#">Team</a></li>
+        <li class="seperator">|</li>
+        <li class="menu-link"><a href="#">Contact</a></li>
+      </ul>
     </footer>
     <!-- footer -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
-        // Initialize and add the map
-        let city_arr =[];
-        let latitude_arr =[];
-        let longitude_arr =[];
-        
-        // $.ajax({
-        // url: "",
-        // method: "get",
-        
-        // }).done((data) => {
-        //     data.forEach(element => {
-        //         city_arr.push(element["city"]);
-        //         latitude_arr.push(element["latitude"]);
-        //         longitude_arr.push(element["longitude"]);
-        //     });
+      // Initialize and add the map
+      let city_arr = [];
+      let latitude_arr = [];
+      let longitude_arr = [];
 
-            
-            
-        // });
-         
+      // $.ajax({
+      // url: "",
+      // method: "get",
 
-        function getData() {
-            return $.ajax({
-            url: "http://localhost:3000/location/getlocations",
-            method: "get",
-            async:false
-            });
+      // }).done((data) => {
+      //     data.forEach(element => {
+      //         city_arr.push(element["city"]);
+      //         latitude_arr.push(element["latitude"]);
+      //         longitude_arr.push(element["longitude"]);
+      //     });
+
+      // });
+
+      function getData() {
+        return $.ajax({
+          url: "http://localhost:3000/location/getlocations",
+          method: "get",
+          async: false,
+        });
+      }
+
+      async function test() {
+        try {
+          const res = await getData();
+          // console.log(Array.from(res));
+          Array.from(res).forEach((element) => {
+            city_arr.push(element["city"]);
+            latitude_arr.push(element["latitude"]);
+            longitude_arr.push(element["longitude"]);
+          });
+        } catch (err) {
+          console.log(err);
         }
+      }
 
-        async function test() {
-            try {
-                const res = await getData();
-                // console.log(Array.from(res));
-                Array.from(res).forEach(element => {
-                    city_arr.push(element["city"]);
-                    latitude_arr.push(element["latitude"]);
-                    longitude_arr.push(element["longitude"]);
-                });
-                
-            } catch (err) {
-                console.log(err);
-            }
+      test();
+
+      function initMap() {
+        for (let i = 0; i < 10; i++) {
+          console.log(city_arr[i]);
         }
-
-        test(); 
-        
-        function initMap() {
-            for(let i=0;i<10;i++){
-                console.log(city_arr[i]);
-            }
-            const Rishon = { lat: 31.961020, lng: 34.801620 };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                center: Rishon,
-            });
-            for(let i = 0; i < latitude_arr.length ;i++){
-                
-                console.log(latitude_arr[i] + "," + longitude_arr[i]);
-                const pin_position = {lat: latitude_arr[i] ,lng: longitude_arr[i]};
-                const marker = new google.maps.Marker({
-                position: pin_position,
-                map: map,   
-                });
-            }
-
+        const Rishon = { lat: 31.96102, lng: 34.80162 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 10,
+          center: Rishon,
+        });
+        for (let i = 0; i < latitude_arr.length; i++) {
+          console.log(latitude_arr[i] + "," + longitude_arr[i]);
+          const pin_position = { lat: latitude_arr[i], lng: longitude_arr[i] };
+          const marker = new google.maps.Marker({
+            position: pin_position,
+            map: map,
+          });
         }
+      }
 
-            window.initMap = initMap;
-
-        
-
-
-
-
-
+      window.initMap = initMap;
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"
+    ></script>
     <!-- bootstrap -->
 
     <!-- google maps -->
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOKsBup9vJLhp_OPYWc6e4RXRAAPaIu8&callback=initMap">
-        </script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvOKsBup9vJLhp_OPYWc6e4RXRAAPaIu8&callback=initMap"
+    ></script>
     <!-- google maps -->
-</body>
-
+  </body>
 </html>
