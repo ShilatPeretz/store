@@ -16,6 +16,9 @@ var io = require("socket.io")(http);
 // newLocal.env(process.env.NODE_ENV, "./config");
 // //******* */
 
+// try to match request to files in 'views' folder
+app.use(express.static("views"));
+
 app.set("view engine", "ejs");
 
 mongoose
