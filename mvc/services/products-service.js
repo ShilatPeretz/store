@@ -1,3 +1,4 @@
+const { response } = require("express");
 const Product = require("../models/products-model");
 
 //SERVICES
@@ -76,8 +77,7 @@ const updateProduct = async (title,newTitle,description,category,color,size,pric
       }
       return product;
     }).catch(err => {
-      res.status(500).send("ERROR WHILE EDITING: " + err.message);
-      return null;
+      return "ERROR";
     });
   return x;
 };

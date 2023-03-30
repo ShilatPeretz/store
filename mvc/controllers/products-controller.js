@@ -47,7 +47,8 @@ const getProductById = async (req, res) => {
 
 const getProductByTitle = async (req, res) => {
   const Product = await productsServices.getProductByTitle(req.params.title);
-  if (!Product) {
+  console.log("PRODUCT: " + typeof Product);
+  if (Object.keys(Product).length === 0) {
     return res.status(404).json({ errors: ["Product not found"] });
   }
 

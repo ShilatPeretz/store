@@ -388,4 +388,5 @@ aside {
     padding-left: 0.5rem;
     margin-left: 0.5rem;
     float: right;
+    box-shadow: -10px 0 10px -10px rgba(28, 150, 187, 0.5);
 }
