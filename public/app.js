@@ -102,6 +102,7 @@ $(document).on("click",".delete-icn",function(e){
             $.ajax({
                 url: "/products/"+$(this).parent(".product").find("h3").text(),
                 type: "DELETE",
+                async: false,
                 success: function(res){
                     console.log("SUCCESS!!!! DELETED ");
                     
@@ -248,6 +249,7 @@ $("#manager-menu-form").submit(function(e)
         $.ajax({
             url: "/products/"+valuesDict[1],
             type: "PUT",
+            async: false,
             data: {newTitle:title, description: description,category:category, color:color, size: size, price:price, img: img},
             success: function(res){
                 console.log("SUCCESS!!!! EDITED " + $("#manager-menu-form").find('option[value=' + valuesDict[1] +  ']').text(),valuesDict[1],title);
@@ -278,6 +280,7 @@ $("#manager-menu-form").submit(function(e)
         $.ajax({
             url: "/products/",
             type: "POST",
+            async: false,
             data: {title:valuesDict[0], description: valuesDict[1],category:$("#product-category-select").val(), color:$("#product-color-select").val().toLowerCase(), size: $('input[name=sizes-manager]:checked').map(function() {
                 return $(this).parent("li").text().trim().toLowerCase();
             }).get(), price:valuesDict[2], img: 'IMG'},
@@ -402,9 +405,12 @@ function filterProducts(maxPrice, colors, sizes, category)
     $.ajax({
         url: "/products/productFilter",
         type: "GET",
+        async: false,
         data: {maxPrice: maxPrice, colors: colors, sizes: sizes, category : category},
         success: function(res){
-            
+            res.forEach(function(){
+                console.log("res element: " + $(this));
+            });
             $(".product").css('display','none');
             let filteredElements = [];
             res.forEach(function(pr){
@@ -417,8 +423,11 @@ function filterProducts(maxPrice, colors, sizes, category)
                     $(this).show();
                 }
             });
+            console.log('finished filtering');
+            
         }
     });
+    
 }
 
 $(".filter-btn").click(function(){
@@ -442,6 +451,7 @@ $(".type-selector").click(function(){
     {
         $(this).find('.image-layer').animate({opacity: 0}, 100);
         //{maxPrice: filters.maxPrice, colors: filters.colors, sizes: filters.sizes}
+        console.log('calling filter products1');
         filterProducts(filters.maxPrice,filters.colors,filters.sizes,[]);
         filters.category = [];
     }
@@ -451,10 +461,13 @@ $(".type-selector").click(function(){
     {
         //{maxPrice: filters.maxPrice, colors: filters.colors, sizes: filters.sizes, category : $(this).attr('id')}
         $(this).find('.image-layer').animate({opacity: 0.4}, 100);
+        console.log('calling filter products2');
         filterProducts(filters.maxPrice, filters.colors, filters.sizes, $(this).attr('id'));
         filters.category = [$(this).attr('id')];
     }
+    console.log('calling SortIfNeeded');
     SortIfNeeded($(".sortItem").find("a.active").text());
+    
     //console.log("CLICKED1! " + $(this).find('.image-layer').css('opacity'));
 });
 function sortProductsAndShow(products, sortFunction)
@@ -468,8 +481,8 @@ function sortProductsAndShow(products, sortFunction)
 //CHECK PROBLEM WITH SORTING
 function SortIfNeeded(txt)
 {
+    console.log("VISIBLE: " + $(".product:visible"));
     let productsArray = $(".product:visible");
-    console.log("visible: " + productsArray);
     let sortingFunc = {};
     if(txt === "Price Low to High")
     {
@@ -490,16 +503,15 @@ function SortIfNeeded(txt)
     }
     else
     {
-        
+        console.log('going here 2');
         let visible = $(".product:visible");
        
         visible.hide();
         visible.show().css("order",0);
         return;
     }
-    
+    console.log("sorting func: " + sortingFunc);
     sortProductsAndShow(productsArray, sortingFunc);
-    
 }
 $(".sortItem").click(function(){
     if($(this).find("a").hasClass('active'))
