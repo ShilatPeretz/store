@@ -122,8 +122,16 @@ async function fetchDataAndDraw() {
 }
 async function init() {
   const socket = io();
-  socket.on("NotifyAddedOrder", () => {
-    console.log("NotifyAddedOrder");
+  socket.on("addProductFinal", () => {
+    console.log("NotifyAddedProduct");
+    fetchDataAndDraw();
+  });
+  socket.on("removeProdutFinal", () => {
+    console.log("NotifyRemovedProduct");
+    fetchDataAndDraw();
+  });
+  socket.on("editProduct", () => {
+    console.log("NotifyEditedProduct");
     fetchDataAndDraw();
   });
   await fetchDataAndDraw();
