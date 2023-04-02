@@ -2,7 +2,7 @@ const headerHtml = `
 <section>
         <nav id="header">
             <input id="nav-toggle" type="checkbox">
-            <div class="logo"><img src="images/logo_shlusy.png" alt="logo" style="height: 100px;"></div>
+            <div class="logo"><img src="../home-page/images/logo_shlusy.png" alt="logo" style="height: 100px;"></div>
             <ul class="links">
                 <li><a class="home" href="http://localhost:3000/users/logged">Home</a></li>
                 <!-- where to go while pressing products-->

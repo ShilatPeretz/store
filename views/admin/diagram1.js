@@ -1,4 +1,4 @@
-//****************************************************************************************** */
+//***** Avg amount of sales per order in each month ******************** */
 
 function getData() {
   return $.ajax({
@@ -9,7 +9,7 @@ function getData() {
 }
 
 function drawGraph(salesData) {
-  var svg = d3.select("#svg1");
+  var svg = d3.select("#svg2");
   var padding = { top: 10, right: 20, bottom: 30, left: 55 };
   var colors = [
     "#CBE4DE",
