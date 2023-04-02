@@ -1,3 +1,4 @@
+const { response } = require("express");
 const Product = require("../models/products-model");
 
 //SERVICES
@@ -28,42 +29,16 @@ const getProducts = async () => {
   return await Product.find();
 };
 
-const productFilter = async (maxPrice, colorsQuery, sizeQuery) => {
-  return await Product.find({price: {$gte: 1, $lte: maxPrice}, color: colorsQuery, size: sizeQuery} ).
+const productFilter = async (maxPrice, colorsQuery, sizesQuery, categoryQuery) => {
+  
+  return await Product.find({price: {$gte: 1, $lte: maxPrice}, color: colorsQuery, size: sizesQuery, category: categoryQuery} ).
   then(products => {
-    // console.log("FOUND PRICE FILTER: " + products);
     return products;
 
   }).catch(err => {
     console.log("ERROR: " + err);
   });
-  // var tmp = {};
-  // if (filter.color != null) {
-  //   tmp["color"] = filter.color;
-  // }
-  // tmp["category"] = "";
-  // if (filter.category != null) {
-  //   tmp["category"] = filter.category;
-  // }
-  // var price = 100;
-  // if (filter.price != null) {
-  //   price = filter.price;
-  // }
-  // var sizes = {};
-  // if (filter.size != null) {
-  //   len = filter.size.length;
-  //   for (let i = 1; i <= len; i++) {
-  //     sizes[i] = filter.size[i - 1];
-  //   }
-  // }
-  // return await Product.find({
-  //   $and: [
-  //     { color: tmp["color"] },
-  //     { category: tmp["category"] },
-  //     { price: { $gt: 0, $lt: { price } } },
-  //     { size: { $all: sizes } },
-  //   ],
-  // });
+
 };
 
 const getProductById = async (id) => {
@@ -102,8 +77,7 @@ const updateProduct = async (title,newTitle,description,category,color,size,pric
       }
       return product;
     }).catch(err => {
-      res.status(500).send("ERROR WHILE EDITING: " + err.message);
-      return null;
+      return "ERROR";
     });
   return x;
 };

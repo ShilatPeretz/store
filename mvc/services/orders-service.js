@@ -13,14 +13,14 @@ const createOrder = async (date, userID, products, price) => {
 };
 
 const getAvgOrdersPerMonth = async () => {
-  return Order.aggregate([
+  return await Order.aggregate([
     {
       $group: {
-        _id: { $month: "$date" }, // group by month of order
-        avgPrice: { $avg: "$price" }, // calculate average price
+        _id: { $month: "$date" },
+        avg: { $avg: "$price" },
       },
     },
-  ]).sort("_id");
+  ]);
 };
 
 const getOrders = async () => {

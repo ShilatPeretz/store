@@ -14,7 +14,7 @@
     height: 600px;
 }
 html, body { height: 100%; width: 100%; margin: 0; }
-.container {
+.products-grid {
     display: flex;
     flex-wrap: wrap;
     position: relative;
@@ -160,7 +160,7 @@ html, body { height: 100%; width: 100%; margin: 0; }
 {
     position: relative;
     font-family: 'Nunito', sans-serif;
-    font-size: 2vw;
+    
     margin: 0;
     color: #0652DD;
     top:0;
@@ -356,10 +356,7 @@ svg:hover
     min-height: 70px;
 }
 
-.type-selector:hover .image-layer
-{
-    opacity: 0.4;
-}
+
 .image-layer
 {
     position: absolute;
@@ -391,4 +388,5 @@ aside {
     padding-left: 0.5rem;
     margin-left: 0.5rem;
     float: right;
+    box-shadow: -10px 0 10px -10px rgba(28, 150, 187, 0.5);
 }
