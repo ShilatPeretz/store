@@ -1,27 +1,60 @@
 const { Router } = require("express");
 const productRouter = Router();
 const productController = require("../controllers/products-controller");
-const orderController = require("../controllers/orders-controller");
-const countries = require('../../public/countires.json');
-const sizes = require('../../public/size.json');
-const colors = require('../../public/colors.json');
-const categories = require('../../public/category.json');
-productRouter.get("", (req, res) => {
-    productController.getProducts().then((data) => {
-        res.render("../mvc/views/shopping-page/index.ejs", {elements: data, countries : countries, sizes: sizes, colors: colors, categories: categories})
-    });
+const statusMSG = require('../../public/json/status-messages.json');
+
+productRouter.get("/",async (req, res, next) => {
+    res.locals.products = await productController.getProducts();
+    console.log('passing');
+    next();
 });
 
-productRouter.get("/percategory", productController.NumberOfProductsByCategory);
+productRouter.get("/percategory",function(req, res, next){
+    if(req.session && req.session.isAdmin)
+    {
+        next();
+    }
+    else
+    {
+        res.render(__dirname + "/../views/error/error",{status: 403, msg: statusMSG[403]});
+    }
+}, productController.NumberOfProductsByCategory);
 
-productRouter.post("/",productController.createProduct);
-productRouter.get("/AvgPerMonth", orderController.getAvgOrdersPerMonth);
+productRouter.post("/",function(req, res, next){
+    if(req.session && req.session.isAdmin)
+    {
+        next();
+    }
+    else
+    {
+        res.status(400).send("error while creating a product");
+    }
+},productController.createProduct);
+
 productRouter.get("/productFilter", productController.productFilter);
-
+//maybe problem with filter is here - consider removing middle functions for post,put and delete functions.
 
 productRouter.route("/:title")
-.delete(productController.deleteProduct)
-.put(productController.updateProduct)
+.delete(function(req, res, next){
+    if(req.session && req.session.isAdmin)
+    {
+        next();
+    }
+    else
+    {
+        res.status(400).send("error while deleting a product");
+    }
+},productController.deleteProduct)
+.put(function(req, res, next){
+    if(req.session && req.session.isAdmin)
+    {
+        next();
+    }
+    else
+    {
+        res.status(400).send("error while editing a product");
+    }
+},productController.updateProduct)
 .get(productController.getProductByTitle);
 
 

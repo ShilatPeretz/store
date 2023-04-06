@@ -54,9 +54,9 @@ const getProductByTitle = async (req, res) => {
 
   res.json(Product);
 };
-const colorJSON = require('../../public/colors.json');
-const sizeJSON = require('../../public/size.json');
-const categoryJSON = require('../../public/category.json');
+const colorJSON = require('../../public/json/colors.json');
+const sizeJSON = require('../../public/json/size.json');
+const categoryJSON = require('../../public/json/category.json');
 const productFilter = async (req, res) => {
   let colorQuery = req.query.colors;
   let sizeQuery = req.query.sizes;

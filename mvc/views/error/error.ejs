@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> <%= status %> Status</title>
+	<style>
+		body {
+			background-color: #f8f9fa;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 50px 30px;
+			text-align: center;
+		}
+		h1 {
+			font-size: 72px;
+			margin: 0 0 30px;
+			color: #dc3545;
+		}
+		p {
+			margin: 0 0 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1><%= status %></h1>
+		<p><%= msg %></p>
+		<p>Seems like there is some status code.</p>
+	</div>
+</body>
+</html>

@@ -6,9 +6,12 @@ const userRouter = require("./mvc/routes/user-router");
 const accountRouter = require("./mvc/routes/my-account");
 const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
-const ProductModel = require("./mvc/models/products-model");
+const pagesRouter = require("./mvc/routes/pages-router");
+const ordersRouter = require("./mvc/routes/orders-router");
 const session = require("express-session");
+const cookieParser = require('cookie-parser');
 const path = require("path");
+const crypto = require('crypto');
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 // //**********
@@ -17,8 +20,8 @@ var io = require("socket.io")(http);
 // //******* */
 
 // try to match request to files in 'views' folder
-app.use(express.static("views"));
-
+app.use(cookieParser());
+app.use(express.static("mvc/views"));
 app.set("view engine", "ejs");
 
 mongoose
@@ -38,18 +41,40 @@ app.use(express.urlencoded({ extended: true })); // parses form-data format
 
 app.use(
   session({
-    secret: "foo",
+    secret: crypto.randomBytes(32).toString('hex'),
     saveUninitialized: false,
     resave: false,
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
 // try to match request to files in 'views' folder
+app.use(function(req, res, next){
+  console.log('req: ' + Object.keys(req.session))
+  res.locals.isAdmin = false;
+  let loggedIn = false;
+  if(req.session && req.session.user)
+  {
+      loggedIn = true;
+      console.log(Object.keys(req.session));
+
+      res.locals.username = req.session.user.username;
+  }
+  if(req.session && req.session.isAdmin)
+  {
+      res.locals.isAdmin = true;
+  }
+  // console.log('session: ' + Object.keys(req.session));
+  res.locals.loggedIn = loggedIn;
+  console.log(res.locals.loggedIn);
+  next();
+});
 
 app.use("/location", locationtRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/account", accountRouter);
+app.use("/orders",ordersRouter);
+app.use("/", pagesRouter);
 
 io.on("connection", (socket) => {
   console.log("new connection");

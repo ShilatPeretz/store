@@ -1,9 +1,8 @@
-const OrdersServices = require("../services/Orders-service");
-const ProductController = require("../controllers/products-controller");
+const OrdersServices = require("../services/orders-service");
 
 //check return functions
 const createOrder = async (req, res) => {
-  console.log(req.body);
+  console.log("body:",req.body);
   const newOrder = await OrdersServices.createOrder(
     req.body.date,
     req.body.userID,
