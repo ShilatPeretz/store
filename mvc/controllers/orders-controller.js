@@ -4,7 +4,6 @@ const OrdersServices = require("../services/orders-service");
 const createOrder = async (req, res) => {
   console.log("body:", req.body);
   const newOrder = await OrdersServices.createOrder(
-    req.body.date,
     req.body.userID,
     req.body.products,
     req.body.price

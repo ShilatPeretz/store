@@ -2,12 +2,11 @@ const Order = require("../models/orders-model");
 
 //SERVICES
 //alert change
-const createOrder = async (date, userID, products, price) => {
+const createOrder = async (userID, products, price) => {
   const order = new Order({
-    date: date,
-    userID: userID,
-    products: products,
-    price: price,
+    userID,
+    products,
+    price,
   });
   return await order.save();
 };

@@ -1,5 +1,7 @@
 const socket = io();
 
+const cart = [];
+
 socket.on("removeProdutFinal", (msg) => {
   console.log("THE ADMIN DELETED", msg);
   removeProduct(msg["title"]);
@@ -73,19 +75,25 @@ socket.on("editProductFinal", (msg) => {
 $(document).on("click", ".add-to-cart-btn", function (e) {
   e.preventDefault();
 
-  var txt = $(this).parent(".product").find("h3").text();
-  //console.log(txt);
+  const productElement = $(this).parent(".product");
+
+  const productId = productElement.attr("id");
+  const productName = productElement.find("h3").text();
+  const currency = $("#currency-select").val();
+  const price = productElement.find(".price-value").text();
+  cart.push({ price, currency, productName, productId });
+
   var finalS =
     "<li class='bag-item list-group-item'>\
     <span style='float: left;' class='bag-item-title'>" +
-    txt +
+    productName +
     "</span><span style='float: right;' class='bag-item-price'><b>" +
-    $("#currency-select").val() +
+    currency +
     " " +
-    $(this).parent(".product").find(".price-value").text() +
+    price +
     "</b></span></li>";
 
-  if ($(".bag-list:contains('" + txt + "')").length == 0) {
+  if ($(".bag-list:contains('" + productName + "')").length == 0) {
     $(".cart-content").find("ul").prepend(finalS);
     if ($(".checkout-btn").attr("disabled")) {
       $(".checkout-btn").attr("disabled", false);
@@ -679,11 +687,8 @@ $(".sortItem").click(function () {
 });
 
 $(".checkoutForm").submit(function (e) {
-  // e.preventDefault();
-  alert(
-    "Thank you for your purchase! of " + $(".total-bag-value").find("li").text()
-  );
-  let userID = "";
+  e.preventDefault();
+
   $.ajax({
     url: "/users/",
     type: "GET",
@@ -694,46 +699,30 @@ $(".checkoutForm").submit(function (e) {
     },
   });
   if (userID.length === 0) {
-    return;
+    return alert("Please login to make a purchase");
   }
-  const productsArr = $(".bag-item")
-    .map(function () {
-      return $(this).text().split(" ")[0];
-    })
-    .get();
 
-  let idArr = [];
-  productsArr.forEach(function (product) {
-    $.ajax({
-      url: "/products/" + product,
-      type: "GET",
-      async: false,
-      success: function (res) {
-        console.log(res[0], Object.keys(res));
-        idArr.push(res[0]._id);
-      },
-    });
+  $.ajax({
+    url: "/orders/",
+    type: "POST",
+    data: JSON.stringify({
+      userID: userId,
+      products: cart,
+      price: parseInt($(".total-bag-value").text().slice(0, -1)),
+    }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+
+    success: function (res) {
+      console.log("SUCCESS!!!! ADDED " + JSON.stringify(res));
+      alert(
+        "Thank you for your purchase! of " +
+          $(".total-bag-value").find("li").text()
+      );
+      cart = [];
+      //TODO: delete the products from the cart in page
+    },
   });
-  console.log("all IDS: " + idArr);
-  if (userID.length !== 0) {
-    // req.body.userID,
-    // req.body.products,
-    // req.body.price
-
-    $.ajax({
-      url: "/orders/",
-      type: "POST",
-      async: false,
-      data: {
-        userID: userID,
-        products: idArr,
-        price: parseInt($(".total-bag-value").text().slice(0, -1)),
-      },
-      success: function (res) {
-        console.log("SUCCESS!!!! ADDED " + JSON.stringify(res));
-      },
-    });
-  }
 });
 var current = "USD";
 var originalPrices = [];
