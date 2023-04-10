@@ -118,7 +118,12 @@
         </div>
     </div>
     <div class="top-nav-bar" style="margin-top: 140px;">
-        
+        <div class="form-group">
+            <label for="currency-select">Select currency:</label>
+            <select class="form-select" id="currency-select" >
+            </select>
+          </div>
+          
         <div class="dropdown" >
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Sort By
@@ -135,11 +140,10 @@
                 <path fill-rule="evenodd" d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
                 <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
             </svg>
-            <div class="cart-content">
-                <ul class="list-group bag-list" style="font-size: 0.8rem;width: 150px;">
-                    
+            <div class="cart-content" style="font-size: 2rem;width: auto;">
+                <ul class="list-group bag-list" style="width: 200px;">
                     <li class="list-group-item" style="color:#777;font-size: 1.1rem;"><p style="display:inline;border-bottom:1px dotted black;">Total Cost:</p></li>
-                    <li class="list-group-item total-bag-value" style="font-size: 1.05rem;">0$</li>
+                    <li class="list-group-item total-bag-value" style="font-size: 1.05rem;">0 USD</li>
                     <li class="list-group-item">
                         <button type="button" class="btn btn-primary checkout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Procceed to checkout</button>
                     </li>
@@ -228,15 +232,16 @@
         </div>
         <div class="products-grid">
             <div class="product" style="display: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash delete-icn" viewBox="0 0 16 16" style="position:absolute;background-color:white;right:0;display:none;">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg>
-                
+                    
                 <div class="product-description" >
-                    <h3>Product null</h3>
-                    <p style="margin-bottom: 0;">Description of product null</p>
-                    <p class="price-p">NULL</p>
+                    <h3 style="font-size: 2rem;">NULL</h3>
+                    
+                    <p>Description of NULL</p>
+                    <div class="currency-container">
+                        <span class="price-symbol">USD</span>
+                        <span class="price-value">NULL</span>
+                    </div>
+                    
                     
                 </div>
                 <img src="/images/tree-736885_960_720.jpg" alt="Product 1">
@@ -247,8 +252,13 @@
                     
                     <div class="product-description" >
                         <h3 style="font-size: 2rem;"><%=elements[i].title %></h3>
-                        <p style="margin-bottom: 0;"><%=elements[i].description %></p>
-                        <p class="price-p">$<%=elements[i].price %></p>
+                        
+                        <p ><%=elements[i].description %></p>
+                        <div class="currency-container">
+                            <span class="price-symbol">USD</span>
+                            <span class="price-value"><%=elements[i].price %></span>
+                        </div>
+                        
                         
                     </div>
                     <img src="/images/tree-736885_960_720.jpg" alt="Product 1">

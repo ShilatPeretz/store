@@ -28,6 +28,7 @@ pagesRouter.get('/home-page',function(req, res){
 });
 
 pagesRouter.get('/admin',function(req, res, next){
+    console.log('isAdmin: ' + req.session.isAdmin);
     if(req.session && req.session.isAdmin)
     {
         next();

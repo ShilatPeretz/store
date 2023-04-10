@@ -28,8 +28,17 @@ function addProduct(title, description, price)
 {
     let varNewProduct = $(".product").first().clone();
     varNewProduct.find("h3").text(title);
-    varNewProduct.find("p").eq(0).text(description);
-    varNewProduct.find("p").eq(1).text("$" + price);
+    varNewProduct.find("p").text(description);
+    let multiplier = 1;
+    fetch("https://api.apilayer.com/exchangerates_data/convert?to=" + $("#currency-select").val() + "&from=USD&amount=1", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        multiplier = result.result;
+        varNewProduct.find("span").eq(0).text($("#currency-select").val());
+        varNewProduct.find("span").eq(1).text((price * multiplier).toFixed(4));
+      })
+      .catch(error => console.log('error', error));
+    
     varNewProduct.css("display","block");
     $(".products-grid").append(varNewProduct);
     
@@ -38,8 +47,8 @@ socket.on('editProductFinal', (msg) => {
     
     let product = getProductByTitle(msg['oldTitle']);
     let title = product.find("h3").text();
-    let description = product.find("p").eq(0).text();
-    let price = product.find("p").eq(1).text().substring(1);
+    let description = product.find("p").text();
+    let price = product.find("span").eq(1).text();
     if(msg['title'] != "")
     {
         title = msg['title'];
@@ -64,8 +73,10 @@ $(document).on("click",".add-to-cart-btn",function (e) {
     
     var txt = $(this).parent(".product").find("h3").text();
     //console.log(txt);
-    var finalS = "<li class=\"bag-item list-group-item\">" + txt + "    " +
-    "<b>" + $(this).parent(".product").find(".price-p").text() + "</b></li>";
+    var finalS = "<li class='bag-item list-group-item'>\
+    <span style='float: left;' class='bag-item-title'>" + txt + "</span><span style='float: right;' class='bag-item-price'><b>" +
+    $("#currency-select").val() + ' ' + $(this).parent(".product").find('.price-value').text() + "</b></span></li>";
+    
     if($(".bag-list:contains('" + txt + "')").length == 0)
     {
         $(".cart-content").find("ul").prepend(finalS);
@@ -96,9 +107,11 @@ function updateTotalCost()
 {
     var finalAmount = 0.0;
     Array.from($(".cart-content").find(".bag-item")).forEach(item => {
-        finalAmount += parseFloat(item.innerHTML.split("$")[1].split("<")[0]);
+        const sploitted = $(item).find("span");
+        console.log('splitted:',$(sploitted[0]).text(),'ada:',$(sploitted[1]).text());
+        finalAmount += parseFloat($(sploitted[1]).text().split(' ')[1]);
     });
-    finalAmount = finalAmount.toFixed(2);
+    finalAmount = finalAmount.toFixed(3);
     $(".total-bag-value").html("<li class=\"list-group-item total-bag-value\" style=\"font-size: 1.05rem;\">" +
     finalAmount + "$</li>");
     console.log('new amount: ' + finalAmount, typeof finalAmount, finalAmount === 0.00, finalAmount === 0);
@@ -152,17 +165,23 @@ function getProductByTitle(title)
 function editProduct(product, newTitle, newDescription, newPrice)
 {
     var title = product.find("h3").text();
-    var price = product.find("p").eq(1).text().substring(1);
+    var price = parseFloat(product.find("span").eq(1).text());
     var originalTitle = title;
+    let multiplier = 1;
     product.find("h3").text(newTitle);
-    product.find("p").eq(0).text(newDescription);
-    product.find("p").eq(1).text("$" + newPrice);
+    product.find("p").text(newDescription);
+    fetch("https://api.apilayer.com/exchangerates_data/convert?to=" + $("#currency-select").val() + "&from=USD&amount=1", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        multiplier = result.result;
+        product.find("span").eq(0).text($("#currency-select").val());
+        product.find("span").eq(1).text((price * multiplier).toFixed(4));
+    }).catch(error => console.log('error', error));
+    //add the const to USD every time the user changes currency.
     $(".bag-item").each(function(){
-        let str1 = originalTitle + " $" + price;
-        let str2 = $(this).text().trim();
-        if (str1.trim().replace(/\s/g, ' ') == str2.replace(/\s/g, ' ')){
-            let newString = newTitle + " $" + newPrice;
-            $(this).text(newString);
+        let title = $(this).find(".bag-item-title").text();
+        if (title == originalTitle){
+            $(this).find(".bag-item-price").text($("#currency-select").val() + " " + (multiplier * price).toFixed(4))
         }
     })
     
@@ -205,9 +224,9 @@ $("#manager-menu-form").submit(function(e)
         let msg = {oldTitle: valuesDict[1],title: valuesDict[0], description: valuesDict[2], price: valuesDict[3]};
         socket.emit('editProduct', msg);
         let title = product.find("h3").text();
-        let description = product.find("p").eq(0).text();
-        let price = product.find("p").eq(1).text().substring(1);
-        console.log('price: ' + price + ", " + product.find("p").eq(1).text());
+        let description = product.find("p").text();
+        let price = product.find("span").eq(1).text();
+        //console.log('price: ' + price + ", " + product.find("p").eq(1).text());
         let category = $("#product-category-select").val();
         let color = $("#product-color-select").val().toLowerCase();
         let size = $('input[name=sizes-manager]:checked').
@@ -275,7 +294,8 @@ $("#manager-menu-form").submit(function(e)
                 console.log("SUCCESS!!!! ADDED " + JSON.stringify(res));
             }
         });
-        
+        let newOption = $('<option></option>').val(valuesDict[0]).text(valuesDict[0]);
+        $("#product-title-select").append(newOption);
         //console.log('newTITLE: ' + '/products/' + valuesDict[0]);
         
     }
@@ -505,8 +525,8 @@ function SortIfNeeded(txt)
     if(txt === "Price Low to High")
     {
         sortingFunc = function(p1, p2){
-            let priceA = parseInt($(p1).find(".price-p").text().substring(1).trim());
-            let priceB = parseInt($(p2).find(".price-p").text().substring(1).trim());
+            let priceA = parseInt($(p1).find(".price-value").text());
+            let priceB = parseInt($(p2).find(".price-value").text());
             return priceA - priceB;
         }
         console.log("GOING HERE");
@@ -514,8 +534,8 @@ function SortIfNeeded(txt)
     else if(txt === "Price High to Low")
     {
         sortingFunc = function(p1, p2){
-            let priceA = parseInt($(p1).find(".price-p").text().substring(1).trim());
-            let priceB = parseInt($(p2).find(".price-p").text().substring(1).trim());
+            let priceA = parseInt($(p1).find(".price-value").text());
+            let priceB = parseInt($(p2).find(".price-value").text());
             return priceB - priceA;
         }
     }
@@ -596,4 +616,68 @@ $(".checkoutForm").submit(function(e){
         });
     }
     
+});
+var current = "USD";
+var originalPrices = [];
+var myHeaders = new Headers();
+myHeaders.append("apikey", "onuUVZLQxrbZUB7rCOPkh7xOHOGZgM2J");
+var requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders
+};
+
+$(document).ready(async function(){
+
+    
+    await fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        // Get the select element
+        var selectElement = $('#currency-select');
+        // Loop through the symbols object and create an option element for each currency
+        $.each(result.symbols, function(symbol, name) {
+            //console.log('symbol:',symbol,name)
+            var optionElement = $('<option>').val(symbol).text(name + " (" + symbol + ")");
+            selectElement.append(optionElement);
+        });
+    })
+    .catch(error => console.log('error', error));
+    $("#currency-select option[value='USD']").prop('selected',true);
+    // $(".product").each(function(){//make the price exact
+    //     console.log($(this).text());
+    // })
+    
+});
+
+$("#currency-select").change(function() {
+
+    console.log('from: ' + $(this).val() + " to: " + current);
+    
+    let multiplier = 1;
+    let currency = $(this).val(); // assign $(this) to a variable
+    fetch("https://api.apilayer.com/exchangerates_data/convert?to=" + currency + "&from=" + current +  "&amount=1", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        multiplier = result.result;
+        console.log('multiplier: ', multiplier);
+  
+        $(".price-symbol").text(currency); // use the variable instead of $(this)
+  
+        $(".price-value").each(function() {
+          $(this).text((parseFloat($(this).text()) * multiplier).toFixed(4));
+        });
+        
+        $(".bag-item").each(function() {
+            let oldPrice = $(this).find(".bag-item-price").text();
+            let newPrice = parseFloat(oldPrice.split(' ')[1]) * multiplier;
+            let formattedPrice = $("#currency-select").val() + " " + newPrice.toFixed(4);
+            console.log('formatted: ',formattedPrice);
+            $(this).find(".bag-item-price").text(formattedPrice);
+        });
+          
+        $(".total-bag-value").text((parseFloat($(".total-bag-value").text()) * multiplier).toFixed(4) + " " + currency); // use the variable instead of $(this)
+        current = currency;
+      })
+      .catch(error => console.log('error', error));
 });
