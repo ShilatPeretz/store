@@ -1,5 +1,5 @@
 const User = require("../models/users-model");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 //SERVICES
 const createUser = async (username, email, password) => {
   const user = new User({
@@ -41,7 +41,7 @@ const getUsers = async () => {
 const comparePasswords = async (password, hashedPassword) => {
   const matching = await bcrypt.compare(password, hashedPassword);
   return matching;
-}
+};
 
 const findUserName = async (username) => {
   return await User.findOne({ username });

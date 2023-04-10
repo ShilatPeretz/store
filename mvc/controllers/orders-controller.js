@@ -2,7 +2,7 @@ const OrdersServices = require("../services/orders-service");
 
 //check return functions
 const createOrder = async (req, res) => {
-  console.log("body:",req.body);
+  console.log("body:", req.body);
   const newOrder = await OrdersServices.createOrder(
     req.body.date,
     req.body.userID,

@@ -1,8 +1,8 @@
 const usersService = require("../services/users-service");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const createUser = async (req, res) => {
   let tmp = await usersService.findUserName(req.body.username);
-  console.log('password: ' + req.body.password);
+  console.log("password: " + req.body.password);
   if (tmp) {
     return res.send("Username is taken");
   }
@@ -16,49 +16,44 @@ const createUser = async (req, res) => {
     req.body.email,
     hashedPassword
   );
-  res.json(newUser);//consider adding statuses
+  res.json(newUser); //consider adding statuses
 };
 
 const getIdByUsername = async (req, res) => {
   const username = req.session.user.username;
   const user = await usersService.findUserName(username);
-  if(!user)
-  {
-    return res.status(404).send('User not found!');
+  if (!user) {
+    return res.status(404).send("User not found!");
   }
   const userId = user._id;
-  res.json({userId});
+  res.json({ userId });
 };
 
 const loginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log('username',username,'password',password);
+  console.log("username", username, "password", password);
   const user = await usersService.findUserName(username);
-  if(!user)
-  {
-    return res.send('User not found');
-    
+  if (!user) {
+    return res.send("User not found");
   }
-  const isMatching = await usersService.comparePasswords(password, user.password);
-  if (!isMatching)
-  {
-    return res.send('Password is incorrect!');
+  const isMatching = await usersService.comparePasswords(
+    password,
+    user.password
+  );
+  if (!isMatching) {
+    return res.send("Password is incorrect!");
   }
   req.session.user = user;
   //res.cookie('usernameCookie', username, { maxAge: 900000, httpOnly: true, secure: true });
-  console.log('created a cookie!');
-  if(user.isAdmin)
-  {
-      req.session.isAdmin = true;
-  }
-  else
-  {
-      req.session.isAdmin = false;
+  console.log("created a cookie!");
+  if (user.isAdmin) {
+    req.session.isAdmin = true;
+  } else {
+    req.session.isAdmin = false;
   }
 
   res.json(user);
-
 };
 
 //cookie functions **************************************
@@ -74,18 +69,13 @@ const loginUser = async (req, res) => {
 //   }
 // }
 
-
 function logOut(req, res) {
+  res.clearCookie("usernameCookie");
 
-  res.clearCookie('usernameCookie');
-
-  req.session.destroy(function(err){
-
-    if(err) res.status(500).send('error while logging out',err);
-    else res.status(200).send('successfully logged out!');
-    
+  req.session.destroy(function (err) {
+    if (err) res.status(500).send("error while logging out", err);
+    else res.status(200).send("successfully logged out!");
   });
-
 }
 
 // function logged(req, res, next) {

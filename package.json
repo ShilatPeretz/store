@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "prettify": "npx prettier . --write"
   },
   "dependencies": {
     "cors": "^2.8.5",

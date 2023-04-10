@@ -22,45 +22,52 @@ const chartWidth = width - margin.left - margin.right;
 const chartHeight = height - margin.top - margin.bottom;
 
 // Create the SVG element
-const svg = d3.select("#chart")
+const svg = d3
+  .select("#chart")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
 
 // Define the x scale
-const x = d3.scaleBand()
-  .domain(salesData.map(d => d.month))
+const x = d3
+  .scaleBand()
+  .domain(salesData.map((d) => d.month))
   .range([margin.left, chartWidth + margin.left])
   .padding(0.1);
 
 // Define the y scale
-const y = d3.scaleLinear()
-  .domain([0, d3.max(salesData, d => d.sales)])
+const y = d3
+  .scaleLinear()
+  .domain([0, d3.max(salesData, (d) => d.sales)])
   .range([chartHeight, 0]);
 
 // Create the bars
-svg.append("g")
+svg
+  .append("g")
   .selectAll("rect")
   .data(salesData)
   .join("rect")
-  .attr("x", d => x(d.month))
-  .attr("y", d => y(d.sales))
+  .attr("x", (d) => x(d.month))
+  .attr("y", (d) => y(d.sales))
   .attr("width", x.bandwidth())
-  .attr("height", d => chartHeight - y(d.sales))
+  .attr("height", (d) => chartHeight - y(d.sales))
   .attr("fill", "steelblue");
 
 // Create the x-axis
-svg.append("g")
+svg
+  .append("g")
   .attr("transform", `translate(${margin.left}, ${height - margin.bottom})`)
   .call(d3.axisBottom(x));
 
 // Create the y-axis
-svg.append("g")
+svg
+  .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`)
   .call(d3.axisLeft(y));
 
 // Add the chart title
-svg.append("text")
+svg
+  .append("text")
   .attr("x", width / 2)
   .attr("y", margin.top / 2)
   .attr("text-anchor", "middle")

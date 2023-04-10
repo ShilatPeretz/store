@@ -29,16 +29,24 @@ const getProducts = async () => {
   return await Product.find();
 };
 
-const productFilter = async (maxPrice, colorsQuery, sizesQuery, categoryQuery) => {
-  
-  return await Product.find({price: {$gte: 1, $lte: maxPrice}, color: colorsQuery, size: sizesQuery, category: categoryQuery} ).
-  then(products => {
-    return products;
-
-  }).catch(err => {
-    console.log("ERROR: " + err);
-  });
-
+const productFilter = async (
+  maxPrice,
+  colorsQuery,
+  sizesQuery,
+  categoryQuery
+) => {
+  return await Product.find({
+    price: { $gte: 1, $lte: maxPrice },
+    color: colorsQuery,
+    size: sizesQuery,
+    category: categoryQuery,
+  })
+    .then((products) => {
+      return products;
+    })
+    .catch((err) => {
+      console.log("ERROR: " + err);
+    });
 };
 
 const getProductById = async (id) => {
@@ -46,7 +54,7 @@ const getProductById = async (id) => {
 };
 
 const getProductByTitle = async (title) => {
-  return await Product.find({title : title});
+  return await Product.find({ title: title });
 };
 
 const getProductsByCategory = async (category) => {
@@ -65,18 +73,37 @@ const NumberOfProductsByCategory = async () => {
 };
 
 //alert change
-const updateProduct = async (title,newTitle,description,category,color,size,price,img) => {
-
+const updateProduct = async (
+  title,
+  newTitle,
+  description,
+  category,
+  color,
+  size,
+  price,
+  img
+) => {
   const x = await Product.findOneAndUpdate(
-    {title : title},
-    {$set: {title: newTitle, description: description, category: category, color: color,
-    size: size, price: price, img: img}}).then(product => {
-      if(!product)
-      {
-        return res.status(404).send('Product not found while editing!');
+    { title: title },
+    {
+      $set: {
+        title: newTitle,
+        description: description,
+        category: category,
+        color: color,
+        size: size,
+        price: price,
+        img: img,
+      },
+    }
+  )
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send("Product not found while editing!");
       }
       return product;
-    }).catch(err => {
+    })
+    .catch((err) => {
       return "ERROR";
     });
   return x;
@@ -84,16 +111,17 @@ const updateProduct = async (title,newTitle,description,category,color,size,pric
 
 //alert change
 const deleteProduct = async (title) => {
-  const x = await Product.findOneAndDelete({title: title}).then(product => {
-    if(!product)
-    {
-      return res.status(404).send('Product not found while deleting!');
-    }
-    console.log("RETURING DELETE: " + product);
-    return product;
-  }).catch(err => {
-    res.status(500).send("ERROR WHILE DELETING: " + err.message);
-  });
+  const x = await Product.findOneAndDelete({ title: title })
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send("Product not found while deleting!");
+      }
+      console.log("RETURING DELETE: " + product);
+      return product;
+    })
+    .catch((err) => {
+      res.status(500).send("ERROR WHILE DELETING: " + err.message);
+    });
   console.log("X: " + x);
   return x;
 };
