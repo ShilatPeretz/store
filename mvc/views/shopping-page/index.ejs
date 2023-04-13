@@ -317,67 +317,50 @@
     </div>
 
     <div class="filter-and-grid">
-      <div class="filter" style="user-select: none">
-        <h2>Filter by:</h2>
-        <ul class="list-group">
-          <label style="text-decoration: underline" class="form-check-label"
-            >Colors:</label
-          >
-          <% for( let i = 0; i < colors.length; i++ ) { %>
-          <div class="form-check">
-            <li>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="color"
-                id="<%= colors[i] %>"
-              />
-              <label for="<%= colors[i] %>" class="form-check-label"
-                ><%= colors[i] %></label
-              >
-            </li>
-          </div>
-          <% } %>
-          <label style="text-decoration: underline" class="form-check-label"
-            >Size:</label
-          >
-          <% for( let i = 0; i < sizes.length; i++ ) { %>
-          <div class="form-check">
-            <li>
-              <input
-                id="<%= sizes[i] %>"
-                class="form-check-input"
-                type="checkbox"
-                name="size"
-              />
-              <label for="<%= sizes[i] %>" class="form-check-label"
-                ><%= sizes[i] %></label
-              >
-            </li>
-          </div>
-          <% } %>
-          <li>
-            <div class="price-container">
-              <label for="price">Price: (Range)</label>
-              <input
-                type="range"
-                id="price"
-                name="price"
-                min="1"
-                max="100"
-                step="1"
-                value="100"
-                oninput="this.nextElementSibling.value = this.value"
-              />
-              <output>100</output><span>$</span>
+      <div class="filter" style="user-select: none;">
+          <h2>Filter by</h2>
+          <ul class="list-group">
+          
+              <label style="text-decoration: underline;" class="form-check-label">Colors:</label>
 
-              <span style="float: left">$1</span>
-            </div>
-          </li>
-        </ul>
-        <button class="btn btn-secondary btn-sm filter-btn">
-          Apply Filters
-        </button>
+
+
+          <div class="control-group">
+              <% for( let i = 0; i < colors.length; i++ ) { %>
+                  <div class="form-check">
+                      <li>
+                          <input class="form-check-input" type="checkbox" name="color" id="<%= colors[i] %>">
+                          <label for="<%= colors[i] %>" class="form-check-label"><%= colors[i] %></label>
+                      </li>
+                  </div>
+              <% } %>
+          </div>
+              <label style="text-decoration: underline;" class="form-check-label">Size:</label>
+
+          <div class="control-group">
+              <% for( let i = 0; i < sizes.length; i++ ) { %>
+                  <div class="form-check">
+                      <li>
+                          <input id = "<%= sizes[i] %>" class="form-check-input" type="checkbox" name="size" >
+                          <label for="<%= sizes[i] %>" class="form-check-label"><%= sizes[i] %></label>
+                      </li>
+                  </div>
+              <% } %>
+          </div>
+
+              <li>
+                  <div class="price-container">
+                      <label for="price">Price: (Range)</label>
+                      <span style="text-align: left; ">$1</span>
+                      <input type="range" id="price" name="price" min="1" max="100" step="1" value="100" oninput="this.nextElementSibling.value = this.value">
+                      <output >100</output><span>$</span>
+                      
+                      
+                  </div>
+                  
+              </li>
+          </ul>
+          <button class="btn btn-secondary btn-sm filter-btn">Apply Filters</button>
       </div>
       <div class="products-grid">
         <div class="product" style="display: none">
