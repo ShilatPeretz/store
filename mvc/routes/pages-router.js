@@ -48,7 +48,13 @@ pagesRouter.get('/products',function(req, res){
     {
         isAdmin = true;
     }
-    res.render("../mvc/views/shopping-page/index.ejs", {elements: products, countries : countries, sizes: sizes, colors: colors, categories: categories, isAdmin : isAdmin})
+    let isLoggedV = false;
+    if(req.session && req.session.user)
+    {
+        isLoggedV = true;
+    }
+    //console.log('isLoggedV',isLoggedV,req.session,Object.keys(req.session));
+    res.render("../mvc/views/shopping-page/index.ejs", {elements: products, countries : countries, sizes: sizes, colors: colors, categories: categories, isAdmin : isAdmin, isLogged: isLoggedV})
     delete res.locals.products;
 });
 

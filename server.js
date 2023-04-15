@@ -8,12 +8,14 @@ const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
 const pagesRouter = require("./mvc/routes/pages-router");
 const ordersRouter = require("./mvc/routes/orders-router");
+const twitterRouter = require("./mvc/routes/twitter-router");
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const path = require("path");
 const crypto = require('crypto');
 var http = require("http").createServer(app);
-var io = require("socket.io")(http);
+const io = require("socket.io")(http);
+
 // //**********
 // const newLocal = require("custom-env");
 // newLocal.env(process.env.NODE_ENV, "./config");
@@ -75,12 +77,16 @@ app.use("/users", userRouter);
 app.use("/account", accountRouter);
 app.use("/orders",ordersRouter);
 app.use("/", pagesRouter);
+//app.use('/twitter',twitterRouter );
+let usersOnline = 0;
 
 io.on("connection", (socket) => {
+  usersOnline++;
   console.log("new connection");
 
   socket.on("disconnect", () => {
     console.log("client disconnected");
+    usersOnline--;
   });
   socket.on("removeProduct", (msg) => {
     io.emit("removeProdutFinal", msg);
@@ -97,9 +103,17 @@ io.on("connection", (socket) => {
   socket.on("editProduct", (msg) => {
     io.emit("editProductFinal", msg);
   });
+
+  socket.on("getUsersOnline", () => {
+    console.log('users1: ' + usersOnline);
+    socket.emit("usersOnline", usersOnline);
+  });
+
+
 });
 
 const port = 3000;
 http.listen(port, () =>
   console.log(`Server is listening: http://localhost:${port}/home-page/`)
 );
+

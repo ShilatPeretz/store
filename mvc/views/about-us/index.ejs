@@ -16,11 +16,15 @@
       crossorigin="anonymous"
     />
     <!-- bootstrap -->
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+    </script>
     <title>Document</title>
   </head>
 
   <body>
+
     <%- include ("../navbar/navbar.ejs");%>
     <div id="con">
       <div id="map" class="slash-pattern"></div>

@@ -203,10 +203,25 @@ async function hashString(str) {
     return hashHex;
 }
 
-$(".bag-list").on("click",".bag-item",function (e) {
-    e.preventDefault();
+$(".bag-list").on("click",".bag-item", async function (e) {
+    const isValidated = await validateCart(JSON.parse(localStorage.getItem("cart")), localStorage.getItem("cartValidator"));
+    if(!isValidated){localStorage.clear();$(".bag-item").remove();return;}
+    const products = JSON.parse(localStorage.getItem('cart'));
+    products.splice(products.indexOf($(this).find(".bag-item-title").text()), 1);
+    console.log(products,products.length);
     $(this).remove();
     updateTotalCost();
+    if (products.length === 0){localStorage.clear();return;}
+    localStorage.setItem('cart', JSON.stringify(products));
+    let cartSTR = '';
+    products.forEach(item => cartSTR += item);
+    cartSTR = cartSTR.split('').reverse().join('');
+    hashString(cartSTR).then((h) => {
+        localStorage.setItem('cartValidator',h);
+    });
+    e.preventDefault();
+    
+    
 });
 
 
@@ -222,7 +237,7 @@ function updateTotalCost()
     $(".total-bag-value").html("<li class=\"list-group-item total-bag-value\" style=\"font-size: 1.05rem;\">" +
     finalAmount + "$</li>");
     console.log('new amount: ' + finalAmount, typeof finalAmount, finalAmount === 0.00, finalAmount === 0);
-    if(finalAmount === "0.00")
+    if($(".bag-item").length === 0)
     {
         $(".checkout-btn").attr('disabled',true);
     }
@@ -387,8 +402,8 @@ $("#manager-menu-form").submit(function(e)
             return;
         }
         socket.emit('addProduct',{title: valuesDict[0], description: valuesDict[1], price: valuesDict[2], color: $("#product-color-select").val().toLowerCase(),
-    category:$("#product-category-select").val(), sizes: $('input[name=sizes-manager]:checked').map(function() {
-        return $(this).parent("li").text().trim().toLowerCase();}).get()});
+        category:$("#product-category-select").val(), sizes: $('input[name=sizes-manager]:checked').map(function() {
+            return $(this).parent("li").text().trim().toLowerCase();}).get()});
         $.ajax({
             url: "/products/",
             type: "POST",
@@ -402,8 +417,7 @@ $("#manager-menu-form").submit(function(e)
         });
         let newOption = $('<option></option>').val(valuesDict[0]).text(valuesDict[0]);
         $("#product-title-select").append(newOption);
-        //console.log('newTITLE: ' + '/products/' + valuesDict[0]);
-        
+
     }
     else
     {
@@ -726,7 +740,7 @@ var current = "USD";
 var originalPrices = [];
 var FROM_USD_TO_CURRENT = 1;
 var myHeaders = new Headers();
-myHeaders.append("apikey", "L48wbC9BDkfAqvaUsv7mZrsGIW17HVK0");
+myHeaders.append("apikey", "Y0L7VXCGvn7U1lvbe7kP80lc27rwVJ19");
 var requestOptions = {
     method: 'GET',
     redirect: 'follow',
@@ -822,5 +836,5 @@ $("#currency-select").change(function() {
 $(".checkout-btn").click(async function(){
     const isValidated = await validateCart(JSON.parse(localStorage.getItem("cart")), localStorage.getItem("cartValidator"));
     if(!isValidated){$("#staticBackdrop").modal('hide');localStorage.clear();return;};
-    $(".bag-item").remove();
+    
 });

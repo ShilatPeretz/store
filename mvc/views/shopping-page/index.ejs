@@ -163,15 +163,9 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-5 mb-3">
                   <label for="cc-expiration">Expiration</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cc-expiration"
-                    placeholder=""
-                    required=""
-                  />
+                  <input class="inputCard form-control" name="expiry" id="expiry" type="month" required/>
                   <div class="invalid-feedback">Expiration date required</div>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -253,17 +247,15 @@
             >
               0 USD
             </li>
-            <li class="list-group-item list-items">
-              <button
-                type="button"
-                class="btn btn-primary checkout-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
-                disabled
-              >
-                Procceed to checkout
-              </button>
-            </li>
+            <% if (isLogged) { %>
+              <li class="list-group-item">
+                  <button type="button" class="btn btn-primary checkout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Procceed to checkout</button>
+              </li>
+            <% } else{ %>
+              <li class="list-group-item">
+                  <button type="button" class="btn btn-primary ">You have to be logged in if you want to checkout!</button>
+              </li>
+            <% }%>
           </ul>
         </div>
       </div>
