@@ -19,7 +19,7 @@ const getAvgOrdersPerMonth = async () => {
         avg: { $avg: "$price" },
       },
     },
-  ]);
+  ]).sort("_id");
 };
 
 const getOrders = async () => {

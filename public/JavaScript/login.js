@@ -8,7 +8,6 @@ $("form").submit(function (e) {
     success: function (res) {
       console.log("RES " + res + ", " + typeof res);
       if (typeof res !== "string") {
-        //localStorage.setItem('username', username);
         window.location.href = "/home-page";
       } else {
         $(".errorMSG").text(res);
