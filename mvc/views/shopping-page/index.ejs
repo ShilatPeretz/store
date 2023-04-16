@@ -1,583 +1,252 @@
 <!DOCTYPE html>
-<html style="font-size: 100%; overflow-x: hidden">
-  <head>
-    <title>Shop Page</title>
-    <link rel="stylesheet" type="text/css" href="/CSS/styles.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="/about-us/style_navbar.css" /> -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <script src="/socket.io/socket.io.js"></script>
-  </head>
-  <body style="min-width: 1100px">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="style_navbar.css" /> -->
+    <link rel="stylesheet" type="text/css" href="style_home.css" />
+    <link rel="stylesheet" type="text/css" href="style_footer.css" />
+
+    <script defer src="animation.js"></script>
+
+    <title>Document</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- bootstrap -->
+</head>
+
+<body>
     <%- include ("../navbar/navbar.ejs");%>
 
-    <div
-      class="modal fade"
-      id="staticBackdrop"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Checkout</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form autocomplete="off" class="checkoutForm">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="firstName">First name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    placeholder=""
-                    value=""
-                    required=""
-                  />
-                  <div class="invalid-feedback">
-                    Valid first name is required.
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="lastName">Last name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastName"
-                    placeholder=""
-                    value=""
-                    required=""
-                  />
-                  <div class="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  placeholder="you@example.com"
-                  value="default@gmail.com"
-                  required=""
-                />
-                <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
-                </div>
-              </div>
+    <!-- first section -->
+    <section id="poster">
 
-              <div class="mb-3">
-                <label for="address">Address</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  placeholder="1234 Main St"
-                  required=""
-                />
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="country">Country</label>
-                  <select
-                    class="custom-select d-block w-100"
-                    id="country"
-                    required=""
-                  >
-                    <option value="">Choose country</option>
-                    <% for( let i = 0; i < countries.length; i++ ) { %>
-                    <option value="<%= countries[i].code %>">
-                      <%= countries[i].name %>
-                    </option>
-                    <% } %>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="zip">Zip</label>
-                  <input
-                    class="form-control"
-                    id="zip"
-                    placeholder=""
-                    required
-                    type="tel"
-                    pattern="[0-9]{5}"
-                    maxlength="5"
-                  />
-                  <div class="invalid-feedback">Zip code required.</div>
-                </div>
-              </div>
-              <hr class="mb-4" />
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="cc-name">Name on card</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="cc-name"
-                    placeholder=""
-                    required=""
-                    maxlength="13"
-                  />
-                  <small class="text-muted"
-                    >Full name as displayed on card</small
-                  >
-                  <div class="invalid-feedback">Name on card is required</div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="cc-number">Credit card number</label>
-                  <input
-                    id="cc-number"
-                    class="form-control"
-                    type="tel"
-                    inputmode="numeric"
-                    pattern="[0-9]{13,16}"
-                    autocomplete="cc-number"
-                    maxlength="16"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    Credit card number is required
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="cc-expiration">Expiration</label>
-                  <input class="inputCard form-control" name="expiry" id="expiry" type="month" required/>
-                  <div class="invalid-feedback">Expiration date required</div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="cc-expiration">CVV</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cc-cvv"
-                    placeholder=""
-                    required
-                    maxlength="3"
-                    pattern="[0-9]{3}"
-                  />
-                  <div class="invalid-feedback">Security code required</div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="submit-btn" type="submit">Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="top-nav-bar" style="margin-top: 140px">
-      <div class="form-group">
-        <label for="currency-select">Select currency:</label>
-        <select class="form-select" id="currency-select"></select>
-      </div>
+        <h4 class="run-animation-3">Nothing Is The Same Without Shlusys</h4>
+        <br><br>
 
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Sort By
-        </button>
-        <ul class="dropdown-menu">
-          <li class="sortItem">
-            <a class="dropdown-item" href="#">Price Low to High</a>
-          </li>
-          <li class="sortItem">
-            <a class="dropdown-item" href="#">Price High to Low</a>
-          </li>
-          <li class="sortItem">
-            <a class="dropdown-item active" href="#">Rate</a>
-          </li>
-        </ul>
-      </div>
-      <div class="cart-container">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="bi bi-bag-dash"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"
-          />
-          <path
-            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
-          />
-        </svg>
-        <div class="cart-content" style="font-size: 2rem; width: auto">
-          <ul class="list-group bag-list" style="width: 200px">
-            <li class="list-group-item list-items" style="color: #777; font-size: 1.1rem">
-              <p style="display:inline;border-bottom:1px dotted black; font-weight: 1000; font-family: 'PT Sans Narrow';">
-                Total Cost:
-              </p>
-            </li>
-            <li
-              class="list-group-item total-bag-value list-items"
-              style="font-size: 1.05rem"
-            >
-              0 USD
-            </li>
-            <% if (isLogged) { %>
-              <li class="list-group-item">
-                  <button type="button" class="btn btn-primary checkout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Procceed to checkout</button>
-              </li>
-            <% } else{ %>
-              <li class="list-group-item">
-                  <button type="button" class="btn btn-primary ">You have to be logged in if you want to checkout!</button>
-              </li>
-            <% }%>
-          </ul>
-        </div>
-      </div>
+        <h2 class="run-animation-1">Insanly High Quality </h2>
+        <h3 class="run-animation-1">Half The Price On All Items</h3>
+        <p class="run-animation-2">The most silky smooth webs that you have ever felt, with insane quality</p>
 
-      <% if (isAdmin) { %>
-      <button
-        id="manager-menu-button"
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop1"
-      >
-        Open Manager Menu
-      </button>
-      <% } %>
 
-      <div class="type-filter-containter">
-        <div id="short pants" class="type-selector">
-          <img src="/images/opt1.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
+        <button id="scrollBtn" class="button run-animation-4">Shop now</button>
+
+    </section>
+    <!-- first section -->
+
+
+    <br><br><br><br><br>
+
+
+    <section id="items_grid">
+        <div>
+
+
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+
+
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/413/413524.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Short Shirts</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/6483/6483254.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Short Pants</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1774/1774762.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Skirts</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/6228/6228271.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Swimming Suits</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1720/1720851.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Long Shirts</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3126/3126113.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Long Pants</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2806/2806119.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Jackets</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+                <div class="col">
+                    <button>
+                        <div class="card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5257/5257945.png" class="card-img-top"
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Hoodies</h5>
+                            </div>
+                        </div>
+
+                    </button>
+
+                </div>
+
+
+
+            </div>
+
         </div>
-        <div id="short shirts" class="type-selector">
-          <img src="/images/opt2.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
+
+
+
+
         </div>
-        <div id="skirts" class="type-selector">
-          <img src="/images/opt3.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="swimmig suits" class="type-selector">
-          <img src="/images/opt4.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="long shirts" class="type-selector">
-          <img src="/images/opt5.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="long pants" class="type-selector">
-          <img src="/images/opt6.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="jackets" class="type-selector">
-          <img src="/images/opt7.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="hoodies" class="type-selector">
-          <img src="/images/opt8.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-      </div>
+
+
+
+
+    </section>
+
+    
+    
+    <div>
+        <section id="shirt_presentation">
+
+            <div>
+                
+                
+                <img id="shirt-1" class="hidden-hide" src="images/shirt_dark.png" alt="">
+                <img id="shirt-2" class="hidden-hide" src="images/shirt_mid.png" alt="">
+                <img id="shirt-3" class="hidden-hide" src="images/shirt_light.png" alt="">
+                
+                
+            </div>
+
+
+        </section>
+        <h1 id = "shirt-text" class="hidden-hide">All clothes, One place. </h1>
     </div>
 
-    <div class="filter-and-grid">
-      <div class="filter" style="user-select: none;">
-          <h2>Filter by</h2>
-          <ul class="list-group">
-          
-              <label style="text-decoration: underline;" class="form-check-label">Colors:</label>
-
-
-
-          <div class="control-group">
-              <% for( let i = 0; i < colors.length; i++ ) { %>
-                  <div class="form-check">
-                      <li>
-                          <input class="form-check-input" type="checkbox" name="color" id="<%= colors[i] %>">
-                          <label for="<%= colors[i] %>" class="form-check-label"><%= colors[i] %></label>
-                      </li>
-                  </div>
-              <% } %>
-          </div>
-              <label style="text-decoration: underline;" class="form-check-label">Size:</label>
-
-          <div class="control-group">
-              <% for( let i = 0; i < sizes.length; i++ ) { %>
-                  <div class="form-check">
-                      <li>
-                          <input id = "<%= sizes[i] %>" class="form-check-input" type="checkbox" name="size" >
-                          <label for="<%= sizes[i] %>" class="form-check-label"><%= sizes[i] %></label>
-                      </li>
-                  </div>
-              <% } %>
-          </div>
-
+    <section id = "bottom-part">
+        <footer class="footer slash-pattern">
+        
+            <ul class="social-icons">
               <li>
-                  <div class="price-container">
-                      <label for="price">Price: (Range)</label>
-                      <span style="text-align: left; ">$1</span>
-                      <input type="range" id="price" name="price" min="1" max="100" step="1" value="100" oninput="this.nextElementSibling.value = this.value">
-                      <output >100</output><span>$</span>
-                      
-                      
-                  </div>
-                  
-              </li>
-          </ul>
-          <button class="btn btn-secondary btn-sm filter-btn">Apply Filters</button>
-      </div>
-      <div class="products-grid">
-        <div class="product" style="display: none">
-          <div class="product-description">
-            <h3 style="font-size: 2rem">NULL</h3>
+                <a class="" href="#">
+                  <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/725/725339.png" alt="">
+                </a></li>
+              <li><a href="#">
+                <img  class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/725/725350.png" alt="">
+                </a></li>
+              <li><a href="#">
+                <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/2335/2335417.png" alt="">
+                </a></li>
+              <li>
+                <a href="#">
+                <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/1322/1322104.png" alt="">
+                </a></li>
+                <li>
+                  <a href="#">
+                  <img class="social-icon-item" src="https://cdn-icons-png.flaticon.com/512/1383/1383329.png" alt="">
+                  </a></li>
+            </ul>
+    
+    
+            <ul class="footer-menu">
+              <li class="menu-link"><a href="#">Home</a></li>
+              <li class="seperator">|</li>
+              <li class="menu-link"><a href="#">About</a></li>
+              <li class="seperator">|</li>
+              <li class="menu-link"><a href="#">Services</a></li>
+              <li class="seperator">|</li>
+              <li class="menu-link"><a href="#">Team</a></li>
+              <li class="seperator">|</li>
+              <li class="menu-link"><a  href="#">Contact</a></li>
+        
+            </ul>
+        </footer>
 
-            <p>Description of NULL</p>
-            <div class="currency-container">
-              <span class="price-symbol">USD</span>
-              <span class="price-value">NULL</span>
-            </div>
-          </div>
-          <img src="/images/tree-736885_960_720.jpg" alt="Product 1" />
-          <button class="add-to-cart-btn">Add to cart</button>
-        </div>
-        <% for( let i = 0; i < elements.length; i++ ) { %>
-        <div id="<%= elements[i]._id %>" class="product">
-          <div class="product-description">
-            <h3 style="font-size: 2rem"><%=elements[i].title %></h3>
 
-            <p><%=elements[i].description %></p>
-            <div class="currency-container">
-              <span class="price-symbol">USD</span>
-              <span class="price-value"><%=elements[i].price %></span>
-            </div>
-          </div>
-          <img src="/images/tree-736885_960_720.jpg" alt="Product 1" />
-          <button class="add-to-cart-btn">Add to cart</button>
-        </div>
+    </section>
 
-        <% } %>
-      </div>
-    </div>
 
-    <div
-      class="modal fade"
-      id="staticBackdrop1"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              Admin Menu
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form autocomplete="off" id="manager-menu-form">
-            <div class="modal-body">
-              <aside>
-                <div class="mb-3">
-                  <label for="new-name-field-manager">New Title:</label>
-                  <input
-                    type="text"
-                    class="form-control edit-mode-aside"
-                    id="new-name-field-manager"
-                    name="new-name-field-manager"
-                    placeholder=""
-                  />
-                </div>
-              </aside>
-              <div class="col-md-6 mb-3" style="display: none">
-                <label for="name-field-manager">Title:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="name-field-manager"
-                  name="name-field-manager"
-                  placeholder=""
-                />
-              </div>
-              <div class="col-md-6 mb-3">
-                <select class="form-select" id="product-title-select">
-                  <% for( let i = 0; i < elements.length; i++ ) { %>
-                  <option value="<%= elements[i].title %>">
-                    <%= elements[i].title %>
-                  </option>
-                  <% } %>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="product-category-select">Choose A category:</label>
-                <select
-                  class="custom-select d-block w-100"
-                  id="product-category-select"
-                >
-                  <% for( let i = 0; i < categories.length; i++ ) { %>
-                  <option><%= categories[i] %></option>
-                  <% } %>
-                </select>
-              </div>
-              <aside>
-                <div class="col-md-8 mb-3">
-                  <label for="product-color-select">Choose A color:</label>
-                  <select
-                    class="custom-select d-block w-100"
-                    id="product-color-select"
-                  >
-                    <% for( let i = 0; i < colors.length; i++ ) { %>
-                    <option><%= colors[i] %></option>
-                    <% } %>
-                  </select>
-                </div>
-              </aside>
-              <div class="col-md-6 mb-3">
-                <label for="product-size-select">Choose sizes:</label>
-                <% for( let i = 0; i < sizes.length; i++ ) { %>
-                <div class="form-check">
-                  <li style="list-style: none">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="sizes-manager"
-                      id="<%= sizes[i] %>-manager"
-                    />
-                    <label
-                      for="<%= sizes[i] %>-manager"
-                      class="form-check-label"
-                      ><%= sizes[i] %></label
-                    >
-                  </li>
-                </div>
-                <% } %>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="description-field-manager">Description:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="description-field-manager"
-                  name="description-field-manager"
-                  placeholder=""
-                />
-              </div>
-              <div class="input-group mb-3">
-                <span for="price-field-manager" class="input-group-text"
-                  >Price</span
-                >
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  max="99"
-                  class="form-control"
-                  id="price-field-manager"
-                  name="price-field-manager"
-                />
-                <span class="input-group-text">$</span>
-              </div>
-              <aside>
-                <div class="form-check">
-                  <input
-                    class="form-check-input edit-add-delete"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    checked
-                    required
-                  />
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Edit
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input edit-add-delete"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault2"
-                  />
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Add
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input edit-add-delete"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault3"
-                  />
-                  <label class="form-check-label" for="flexRadioDefault3">
-                    Delete
-                  </label>
-                </div>
-              </aside>
-              <button
-                style="margin-left: 20%"
-                type="submit"
-                class="btn btn-secondary"
-                id="manager-menu-form-submit-btn"
-              >
-                Save & Close
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="/JavaScript/app.js"></script>
-  </body>
+
+
+
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- nav bar -->
+    
+</body>
+
 </html>
