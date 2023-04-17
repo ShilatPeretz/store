@@ -4,13 +4,17 @@ $("#home").click(function () {
 
 $("#details").click(function () {
   $(".section-orders").fadeOut(100);
+  $(".section-recipt").fadeOut(100);
   $(".section-details").delay(100).fadeIn(100);
 });
 
 $("#orders").click(function () {
   $(".section-details").fadeOut(100);
+  $(".section-recipt").fadeOut(100);
   $(".section-orders").delay(100).fadeIn(100);
 });
+
+//change account details
 let tmp = "";
 let username = "";
 let password = "";
@@ -60,3 +64,8 @@ function openChange() {
   $(".changedetails .email-input").prop("disabled", false);
   $(".changedetails .password-input").prop("disabled", false);
 }
+
+//view orders
+// $("#get-information").click(function () {
+//   const orderID = 3;
+// });

@@ -12,14 +12,18 @@ function drawGraph(salesData) {
   var svg = d3.select("#svg2");
   var padding = { top: 10, right: 20, bottom: 30, left: 55 };
   var colors = [
-    "#CBE4DE",
-    "#0E8388",
-    "#2E4F4F",
-    "#2C3333",
-    "#CBE4DE",
-    "#0E8388",
-    "#2E4F4F",
-    "#2C3333",
+    "#FFF4E0",
+    "#FFBF9B",
+    "#B46060",
+    "#4D4D4D",
+    "#FFF4E0",
+    "#FFBF9B",
+    "#B46060",
+    "#4D4D4D",
+    "#FFF4E0",
+    "#FFBF9B",
+    "#B46060",
+    "#4D4D4D",
   ];
 
   var chartArea = {

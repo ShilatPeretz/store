@@ -5,6 +5,7 @@ const sizes = require("../../public/json/size.json");
 const colors = require("../../public/json/colors.json");
 const categories = require("../../public/json/category.json");
 const statusMSG = require("../../public/json/status-messages.json");
+const ordersController = require("../controllers/orders-controller");
 
 pagesRouter.get(
   "/login",
@@ -75,6 +76,11 @@ pagesRouter.get("/about-us", function (req, res) {
 
 pagesRouter.get("/my-account", function (req, res) {
   res.render("../mvc/views/my-account/index.ejs");
+  // const userOrders = ordersController.getOrdersByUser(req.session._id);
+  // console.log(userOrders);
+  // res.render("../mvc/views/my-account/index.ejs", {
+  //   userOrders: userOrders,
+  // });
 });
 
 module.exports = pagesRouter;
