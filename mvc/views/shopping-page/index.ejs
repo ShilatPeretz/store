@@ -163,9 +163,15 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-5 mb-3">
+                <div class="col-md-3 mb-3">
                   <label for="cc-expiration">Expiration</label>
-                  <input class="inputCard form-control" name="expiry" id="expiry" type="month" required/>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cc-expiration"
+                    placeholder=""
+                    required=""
+                  />
                   <div class="invalid-feedback">Expiration date required</div>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -247,15 +253,17 @@
             >
               0 USD
             </li>
-            <% if (isLogged) { %>
-              <li class="list-group-item">
-                  <button type="button" class="btn btn-primary checkout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Procceed to checkout</button>
-              </li>
-            <% } else{ %>
-              <li class="list-group-item">
-                  <button type="button" class="btn btn-primary ">You have to be logged in if you want to checkout!</button>
-              </li>
-            <% }%>
+            <li class="list-group-item list-items">
+              <button
+                type="button"
+                class="btn btn-primary checkout-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                disabled
+              >
+                Procceed to checkout
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -272,40 +280,128 @@
       </button>
       <% } %>
 
-      <div class="type-filter-containter">
-        <div id="short pants" class="type-selector">
-          <img src="/images/opt1.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
+      <div class="type-filter-containter ">
+        <div id ='items_grid'>
+        
+        
+          <div class="row row-cols-16 row-cols-md-8 g-2">
+        
+        
+            <div class="col" >
+              <button  id="short shirts" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/413/413524.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Short Shirts</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="short pants" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/6483/6483254.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Short Pants</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="skirts" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/1774/1774762.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Skirts</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="swimmig suits" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/6228/6228271.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Swimming Suits</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+                
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="long shirts" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/1720/1720851.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Long Shirts</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="long pants" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3126/3126113.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Long Pants</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="jackets" class="type-selector">
+                <div class="card">
+                  <img src="https://cdn-icons-png.flaticon.com/512/2806/2806119.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Jackets</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+            <div class="col">
+              <button id="hoodies" class="type-selector">
+                <div class="card" >
+                  <img src="https://cdn-icons-png.flaticon.com/512/5257/5257945.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Hoodies</h5>
+                  </div>
+                  <div class="image-layer"></div>
+                </div>
+        
+              </button>
+        
+            </div>
+        
+        
+        
+          </div>
+        
         </div>
-        <div id="short shirts" class="type-selector">
-          <img src="/images/opt2.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
+        
+        
+        
+        
         </div>
-        <div id="skirts" class="type-selector">
-          <img src="/images/opt3.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="swimmig suits" class="type-selector">
-          <img src="/images/opt4.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="long shirts" class="type-selector">
-          <img src="/images/opt5.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="long pants" class="type-selector">
-          <img src="/images/opt6.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="jackets" class="type-selector">
-          <img src="/images/opt7.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-        <div id="hoodies" class="type-selector">
-          <img src="/images/opt8.jpeg" style="width: 100%; min-width: 80px" />
-          <div class="image-layer"></div>
-        </div>
-      </div>
     </div>
 
     <div class="filter-and-grid">
@@ -581,3 +677,4 @@
     <script src="/JavaScript/app.js"></script>
   </body>
 </html>
+
