@@ -54,14 +54,13 @@ const getUserById = async (id) => {
   return await User.findById(id);
 };
 
-const updateUser = async (id, username, email, password) => {
+const updateUser = async (id, NewUsername, NewEmail, NewPassword) => {
   const user = await getUserById(id);
   if (!user) return null;
 
-  //check if user name or email don't exist
-  user.username = username;
-  user.email = email;
-  user.password = password;
+  user.username = NewUsername;
+  user.email = NewEmail;
+  user.password = NewPassword;
   await user.save();
   return user;
 };

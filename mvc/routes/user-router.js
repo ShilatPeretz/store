@@ -7,20 +7,8 @@ userRouter.post("/signup", UserController.createUser);
 
 userRouter.post("/login", UserController.loginUser);
 
-// userRouter.post("/isLogged",function(req, res, next){
-//     if(req.session && req.session.isAdmin)
-//     {
-//         next();
-//     }
-//     else
-//     {
-//         res.render(__dirname + "/../views/error/error",{status: 403, msg: statusMSG[403]});
-//     }
-// }, UserController.isLoggedIn);
-
-// userRouter.get("/isAdmin", UserController.isAdmin, UserController.foo);
-
-// userRouter.get("/logged", UserController.logged, UserController.foo);
+userRouter.post("/updateUser", UserController.updateUser);
+userRouter.post("/validuser", UserController.validateUser);
 
 userRouter.get(
   "/",

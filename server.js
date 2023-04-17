@@ -8,11 +8,11 @@ const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
 const pagesRouter = require("./mvc/routes/pages-router");
 const ordersRouter = require("./mvc/routes/orders-router");
-const twitterRouter = require("./mvc/routes/twitter-router");
+//const twitterRouter = require("./mvc/routes/twitter-router");
 const session = require("express-session");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const path = require("path");
-const crypto = require('crypto');
+const crypto = require("crypto");
 var http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
@@ -43,27 +43,25 @@ app.use(express.urlencoded({ extended: true })); // parses form-data format
 
 app.use(
   session({
-    secret: crypto.randomBytes(32).toString('hex'),
+    secret: crypto.randomBytes(32).toString("hex"),
     saveUninitialized: false,
     resave: false,
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
 // try to match request to files in 'views' folder
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
   //console.log('req: ' + Object.keys(req.session))
   res.locals.isAdmin = false;
   let loggedIn = false;
-  if(req.session && req.session.user)
-  {
-      loggedIn = true;
-      //console.log(Object.keys(req.session));
+  if (req.session && req.session.user) {
+    loggedIn = true;
+    //console.log(Object.keys(req.session));
 
-      res.locals.username = req.session.user.username;
+    res.locals.username = req.session.user.username;
   }
-  if(req.session && req.session.isAdmin)
-  {
-      res.locals.isAdmin = true;
+  if (req.session && req.session.isAdmin) {
+    res.locals.isAdmin = true;
   }
   // console.log('session: ' + Object.keys(req.session));
   res.locals.loggedIn = loggedIn;
@@ -75,7 +73,7 @@ app.use("/location", locationtRouter);
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/account", accountRouter);
-app.use("/orders",ordersRouter);
+app.use("/orders", ordersRouter);
 app.use("/", pagesRouter);
 //app.use('/twitter',twitterRouter );
 let usersOnline = 0;
@@ -105,15 +103,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getUsersOnline", () => {
-    console.log('users1: ' + usersOnline);
+    console.log("users1: " + usersOnline);
     socket.emit("usersOnline", usersOnline);
   });
-
-
 });
 
 const port = 3000;
 http.listen(port, () =>
   console.log(`Server is listening: http://localhost:${port}/home-page/`)
 );
-

@@ -1,5 +1,6 @@
 const usersService = require("../services/users-service");
 const cookieParser = require("cookie-parser");
+
 const createUser = async (req, res) => {
   let tmp = await usersService.findUserName(req.body.username);
   console.log("password: " + req.body.password);
@@ -56,18 +57,22 @@ const loginUser = async (req, res) => {
   res.json(user);
 };
 
-//cookie functions **************************************
-// function isLoggedIn(req, res) {
-//   if(req.session.userId)
-//   {
-//     const user = usersService.getUserById(req.session.userId);
-//     res.json(user);
-//   }
-//   else
-//   {
-//     res.send('Not logged in!');
-//   }
-// }
+const validateUser = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const user = await usersService.findUserName(username);
+  if (!user) {
+    return res.json({ message: "User Not Found" });
+  }
+  const isMatching = await usersService.comparePasswords(
+    password,
+    user.password
+  );
+  if (!isMatching) {
+    return res.json({ message: "Password is incorrect!" });
+  }
+  return res.json({ message: "OK" });
+};
 
 function logOut(req, res) {
   res.clearCookie("usernameCookie");
@@ -77,25 +82,6 @@ function logOut(req, res) {
     else res.status(200).send("successfully logged out!");
   });
 }
-
-// function logged(req, res, next) {
-//   if (req.session.email != null) {
-//     res.redirect(
-//       `http://localhost:3000/home-page?admin=${req.session.isAdmin}`
-//     );
-//   } else {
-//     res.redirect(`http://localhost:3000/home-page`);
-//   }
-// }
-
-// function isAdmin(req, res) {
-//   if (req.session.admin == "true") {
-//     res.json({ message: "true" });
-//   } else {
-//     res.json({ message: "false" });
-//   }
-// }
-//********************************************************
 
 const getUsers = async (req, res) => {
   const Users = await usersService.getUsers();
@@ -112,36 +98,39 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  if (!req.body.username) {
-    res.status(400).json({
-      message: "user name is required",
-    });
+  const user = usersService.findUserName(req.body.username);
+  const hashedPassword = await usersService.hashPassword(req.body.password, 8);
+  var NewDetails = {
+    NewUsername: req.body.username,
+    NewEmail: user.email,
+    NewPassword: hashedPassword,
+  };
+  if (req.body.NewUsername) {
+    NewDetails["NewUsername"] = req.body.NewUsername;
+    var tmp = await usersService.findUserName(req.body.NewUsername);
+    console.log(tmp);
+    if (tmp) {
+      return res.json({ message: "User name is taken" });
+    }
   }
-  if (!req.body.email) {
-    res.status(400).json({
-      message: "email is required",
-    });
+  if (req.body.NewEmail) {
+    NewDetails["NewEmail"] = req.body.NewEmail;
+    var tmp = await usersService.findUserEmail(req.body.NewEmail);
+    if (tmp) {
+      return res.json({ message: "Email is already in use" });
+    }
   }
-  if (!req.body.password) {
-    res.status(400).json({
-      message: "password is required",
-    });
+  if (req.body.NewPassword) {
+    NewDetails["NewPassword"] = await usersService.hashPassword(
+      req.body.NewPassword,
+      8
+    );
   }
-
-  var tmp = await usersService.findUserName(req.body.username);
-  if (tmp._id) {
-    return res.json({ message: "User name is taken" });
-  }
-  var tmp = await usersService.findUserEmail(req.body.email);
-  if (tmp._id) {
-    return res.json({ message: "Email is already in use" });
-  }
-
+  return;
   const User = await usersService.updateUser(
     req.params.id,
     req.body.username,
-    req.body.email,
-    req.body.password
+    NewDetails
   );
   if (!User) {
     return res.status(404).json({ errors: ["User not found"] });
@@ -168,4 +157,5 @@ module.exports = {
   loginUser,
   logOut,
   getIdByUsername,
+  validateUser,
 };

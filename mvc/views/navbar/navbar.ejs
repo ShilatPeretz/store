@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/CSS/style_navbar.css" />
-</head>
-<body>
+  </head>
+  <body>
     <nav id="header">
-        <input id="nav-toggle" type="checkbox">
-        <div class="logo"><img src="../home-page/images/logo_shlusy.png" alt="logo" style="height: 100px;"></div>
-        <ul class="links">
-            <li><a class="home" href="http://localhost:3000/home-page/">Home</a></li>
-            <!-- where to go while pressing products-->
-            <li><a class="products" href="http://localhost:3000/products/">Products</a></li>
-            <!-- where to go while pressing about-->
-            <li><a class="about" href="/about-us">About</a></li>
-            <li><a class="admin" style="display: none;" href="http://localhost:3000/admin/">Admin</a></li>
-            <li ><a href="#Help">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="height:40px ;" fill="currentColor"
-                        class="bi bi-bag-check" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                        <path
-                            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                    </svg>
-                </a></li>
-                <% if (!locals.loggedIn) { %>
-                    <li><a class="login" href="http://localhost:3000/login">Log In</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
-                    </li>
-                <% } else {%>
-                    <li><a class="logout" href="#">Log Out</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link welcome-a">Welcome <%= locals.username %></a>
-                    </li>
-                    
-                <% } %>
-                
-                <% if (locals.isAdmin) { %>
-                    <li class="nav-item adminBtn">
-                        <a class="nav-link" href="/admin">Admin</a>
-                    </li>
-                <% } %>
-            
-            
-        </ul>
-        <label for="nav-toggle" class="icon-burger">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </label>
+      <input id="nav-toggle" type="checkbox" />
+      <div class="logo">
+        <img
+          src="../home-page/images/logo_shlusy.png"
+          alt="logo"
+          style="height: 100px"
+        />
+      </div>
+      <ul class="links">
+        <li>
+          <a class="home" href="http://localhost:3000/home-page/">Home</a>
+        </li>
+        <!-- where to go while pressing products-->
+        <li>
+          <a class="products" href="http://localhost:3000/products/"
+            >Products</a
+          >
+        </li>
+        <!-- where to go while pressing about-->
+        <li><a class="about" href="/about-us">About</a></li>
+        <li>
+          <a
+            class="admin"
+            style="display: none"
+            href="http://localhost:3000/admin/"
+            >Admin</a
+          >
+        </li>
+
+        <% if (!locals.loggedIn) { %>
+        <li><a class="login" href="http://localhost:3000/login">Log In</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">Register</a>
+        </li>
+        <% } else {%>
+        <li><a class="logout" href="#">Log Out</a></li>
+        <% } %> <% if (locals.isAdmin) { %>
+        <li class="nav-item adminBtn">
+          <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        <% } %> <% if (locals.loggedIn) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/my-account">my account</a>
+          <!-- place href -->
+        </li>
+        <% } %>
+      </ul>
+      <label for="nav-toggle" class="icon-burger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </label>
     </nav>
     <script src="/JavaScript/navbar.js"></script>
-</body>
+  </body>
 </html>
