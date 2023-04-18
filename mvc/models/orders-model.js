@@ -24,4 +24,14 @@ const OrderSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Orders", OrderSchema);
+const Orders = mongoose.model("Orders", OrderSchema);
+module.exports = Orders;
+
+// (async function () {
+//   const orders = await Orders.find();
+//   for (const order of orders) {
+//     if (!order.currency) {
+//       await Orders.findByIdAndRemove(order._id);
+//     }
+//   }
+// })();

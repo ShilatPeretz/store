@@ -76,3 +76,11 @@ h1 {
     rgba(246, 243, 255, 1)
   );
 }
+
+.remove-recipt {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  height: 25px;
+  width: 25px;
+}

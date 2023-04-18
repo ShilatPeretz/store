@@ -18,6 +18,8 @@ ordersRouter.get(
   orderController.getAvgOrdersPerMonth
 );
 
+ordersRouter.get("/items/:orderId", orderController.getOrderItemsByOrderId);
+
 ordersRouter.post(
   "/",
   function (req, res, next) {

@@ -25,6 +25,8 @@ userRouter.get(
   UserController.getIdByUsername
 );
 
+userRouter.get("/user/:userID", UserController.getUser);
+
 userRouter.post("/logout", UserController.logOut);
 
 module.exports = userRouter;

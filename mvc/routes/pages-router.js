@@ -5,7 +5,7 @@ const sizes = require("../../public/json/size.json");
 const colors = require("../../public/json/colors.json");
 const categories = require("../../public/json/category.json");
 const statusMSG = require("../../public/json/status-messages.json");
-const ordersController = require("../controllers/orders-controller");
+const OrdersServices = require("../services/orders-service");
 
 pagesRouter.get(
   "/login",
@@ -74,13 +74,16 @@ pagesRouter.get("/about-us", function (req, res) {
   res.render("../mvc/views/about-us/index.ejs");
 });
 
-pagesRouter.get("/my-account", function (req, res) {
-  res.render("../mvc/views/my-account/index.ejs");
-  // const userOrders = ordersController.getOrdersByUser(req.session._id);
-  // console.log(userOrders);
-  // res.render("../mvc/views/my-account/index.ejs", {
-  //   userOrders: userOrders,
-  // });
+pagesRouter.get("/my-account", async function (req, res) {
+  const userId = req.session.user?._id;
+  if (!userId) {
+    return res.redirect("/login");
+  }
+  const userOrders = await OrdersServices.getOrdersByUser(userId);
+  console.log(userOrders);
+  res.render("../mvc/views/my-account/index.ejs", {
+    userOrders,
+  });
 });
 
 module.exports = pagesRouter;

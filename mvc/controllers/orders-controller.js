@@ -1,4 +1,5 @@
 const OrdersServices = require("../services/orders-service");
+const { getProductById } = require("../services/products-service");
 
 //check return functions
 const createOrder = async (req, res) => {
@@ -30,6 +31,21 @@ const getOrderById = async (req, res) => {
   }
 
   res.json(order);
+};
+
+const getOrderItemsByOrderId = async (req, res) => {
+  const order = await OrdersServices.getOrderById(req.params.orderId);
+  if (!order) {
+    return res.status(404).json({ errors: ["Order not found"] });
+  }
+
+  const products = [];
+  for (const productId of order.products) {
+    const product = await getProductById(productId);
+    products.push(product);
+  }
+
+  res.json({ ...order._doc, products });
 };
 
 const updateOrder = async (req, res) => {
@@ -71,4 +87,5 @@ module.exports = {
   updateOrder,
   deleteOrder,
   getAvgOrdersPerMonth,
+  getOrderItemsByOrderId,
 };
