@@ -704,7 +704,7 @@ input[type="range"]{
     flex-direction: row;
     justify-content: space-evenly !important;
     
-    margin-left: 20%;
+    margin-left: 0;
     margin-bottom: 20px;
     padding: 20px;
     

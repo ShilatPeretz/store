@@ -22,7 +22,7 @@ body {
 
   background-color: #90bbcb;
   width: 101%;
-  height: 101vh;
+  height: 110vh;
   font-family: "Merriweather Sans";
   text-align: center;
   color: rgb(63, 63, 63);
@@ -57,8 +57,9 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
+  margin-top: 5%;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   transition: all 0.5s ease;
   border: #6b6b6b;
@@ -99,16 +100,13 @@ body {
   width: 200px;
 }
 
-@media screen and (max-width: 1000px) {
-  #map {
-    height: 400px;
-    width: 500px;
-  }
+@media screen and (max-width: 1200px) {
 
   #description {
     font-size: 50px;
-    height: 70vh;
+    height: 80vh;
   }
+
   #description h1 {
     font-size: 50px;
   }
@@ -116,7 +114,8 @@ body {
     font-size: 25px;
   }
   #description img {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 200px;
   }
 }
