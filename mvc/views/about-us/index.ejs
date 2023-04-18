@@ -18,13 +18,12 @@
     <!-- bootstrap -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
+      const socket = io();
     </script>
     <title>Document</title>
   </head>
 
   <body>
-
     <%- include ("../navbar/navbar.ejs");%>
     <div id="con">
       <div id="map" class="slash-pattern"></div>
@@ -44,67 +43,7 @@
     </aside>
 
     <!-- footer -->
-    <footer class="footer slash-pattern">
-      <ul class="social-icons">
-        <li>
-          <a class="" href="#">
-            <img
-              class="social-icon-item"
-              src="https://cdn-icons-png.flaticon.com/512/725/725339.png"
-              alt=""
-            />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img
-              class="social-icon-item"
-              src="https://cdn-icons-png.flaticon.com/512/725/725350.png"
-              alt=""
-            />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img
-              class="social-icon-item"
-              src="https://cdn-icons-png.flaticon.com/512/2335/2335417.png"
-              alt=""
-            />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img
-              class="social-icon-item"
-              src="https://cdn-icons-png.flaticon.com/512/1322/1322104.png"
-              alt=""
-            />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img
-              class="social-icon-item"
-              src="https://cdn-icons-png.flaticon.com/512/1383/1383329.png"
-              alt=""
-            />
-          </a>
-        </li>
-      </ul>
-
-      <ul class="footer-menu">
-        <li class="menu-link"><a href="#">Home</a></li>
-        <li class="seperator">|</li>
-        <li class="menu-link"><a href="#">About</a></li>
-        <li class="seperator">|</li>
-        <li class="menu-link"><a href="#">Services</a></li>
-        <li class="seperator">|</li>
-        <li class="menu-link"><a href="#">Team</a></li>
-        <li class="seperator">|</li>
-        <li class="menu-link"><a href="#">Contact</a></li>
-      </ul>
-    </footer>
+    <%- include ("../footer/footer.ejs");%>
     <!-- footer -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
