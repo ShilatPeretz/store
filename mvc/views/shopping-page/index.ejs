@@ -99,7 +99,9 @@
                 <div class="col-md-5 mb-3">
                   <label for="country">Country</label>
                   <select
+                  class="form-select"
                     class="custom-select d-block w-100"
+                    
                     id="country"
                     required=""
                   >
@@ -189,7 +191,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button class="submit-btn" type="submit">Submit</button>
+                <button class="submit-button-design" type="submit" style="margin-right: 42%;">Submit</button>
               </div>
             </form>
           </div>
@@ -197,7 +199,7 @@
       </div>
     </div>
     <div class="top-nav-bar" style="margin-top: 140px">
-      <div class="form-group">
+      <div class="form-group crncy-input">
         <label for="currency-select">Select currency:</label>
         <select class="form-select" id="currency-select"></select>
       </div>
@@ -507,7 +509,6 @@
           </div>
           <form autocomplete="off" id="manager-menu-form">
             <div class="modal-body">
-              <aside>
                 <div class="mb-3">
                   <label for="new-name-field-manager">New Title:</label>
                   <input
@@ -518,7 +519,6 @@
                     placeholder=""
                   />
                 </div>
-              </aside>
               <div class="col-md-6 mb-3" style="display: none">
                 <label for="name-field-manager">Title:</label>
                 <input
@@ -530,6 +530,7 @@
                 />
               </div>
               <div class="col-md-6 mb-3">
+                <label for="product-title-select">All Products:</label>
                 <select class="form-select" id="product-title-select">
                   <% for( let i = 0; i < elements.length; i++ ) { %>
                   <option value="<%= elements[i].title %>">
@@ -541,7 +542,7 @@
               <div class="col-md-6 mb-3">
                 <label for="product-category-select">Choose A category:</label>
                 <select
-                  class="custom-select d-block w-100"
+                class="form-select"
                   id="product-category-select"
                 >
                   <% for( let i = 0; i < categories.length; i++ ) { %>
@@ -549,11 +550,10 @@
                   <% } %>
                 </select>
               </div>
-              <aside>
-                <div class="col-md-8 mb-3">
+                <div class="col-md-6 mb-3">
                   <label for="product-color-select">Choose A color:</label>
                   <select
-                    class="custom-select d-block w-100"
+                  class="form-select"
                     id="product-color-select"
                   >
                     <% for( let i = 0; i < colors.length; i++ ) { %>
@@ -561,11 +561,11 @@
                     <% } %>
                   </select>
                 </div>
-              </aside>
               <div class="col-md-6 mb-3">
                 <label for="product-size-select">Choose sizes:</label>
+                <div class="radio-manager-group">
                 <% for( let i = 0; i < sizes.length; i++ ) { %>
-                <div class="form-check">
+                <div class="form-check ">
                   <li style="list-style: none">
                     <input
                       class="form-check-input"
@@ -582,14 +582,16 @@
                 </div>
                 <% } %>
               </div>
-              <div class="col-md-6 mb-3">
+              </div>
+              <div class="mb-3">
                 <label for="description-field-manager">Description:</label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control edit-mode-aside"
                   id="description-field-manager"
                   name="description-field-manager"
                   placeholder=""
+
                 />
               </div>
               <div class="input-group mb-3">
@@ -606,9 +608,9 @@
                   name="price-field-manager"
                 />
                 <span class="input-group-text">$</span>
-              </div>
-              <aside>
-                <div class="form-check">
+              </div >
+              <div class="radio-manager-group">
+                <div class="form-check form-check-admin">
                   <input
                     class="form-check-input edit-add-delete"
                     type="radio"
@@ -621,7 +623,7 @@
                     Edit
                   </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check form-check-admin">
                   <input
                     class="form-check-input edit-add-delete"
                     type="radio"
@@ -632,7 +634,7 @@
                     Add
                   </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check form-check-admin">
                   <input
                     class="form-check-input edit-add-delete"
                     type="radio"
@@ -642,13 +644,14 @@
                   <label class="form-check-label" for="flexRadioDefault3">
                     Delete
                   </label>
-                </div>
-              </aside>
+              </div>
+            </div>
               <button
                 style="margin-left: 20%"
                 type="submit"
                 class="btn btn-secondary"
                 id="manager-menu-form-submit-btn"
+                
               >
                 Save & Close
               </button>
@@ -677,4 +680,3 @@
     <script src="/JavaScript/app.js"></script>
   </body>
 </html>
-
