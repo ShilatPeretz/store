@@ -2,13 +2,9 @@ const Order = require("../models/orders-model");
 
 //SERVICES
 //alert change
-const createOrder = async (userID, products, price) => {
-  const order = new Order({
-    userID,
-    products,
-    price,
-  });
-  return await order.save();
+const createOrder = async (order) => {
+  const newOrder = new Order(order);
+  return await newOrder.save();
 };
 
 const getAvgOrdersPerMonth = async () => {

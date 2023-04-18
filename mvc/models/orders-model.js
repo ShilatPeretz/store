@@ -18,6 +18,10 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  currency: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Orders", OrderSchema);

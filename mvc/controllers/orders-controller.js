@@ -3,11 +3,8 @@ const OrdersServices = require("../services/orders-service");
 //check return functions
 const createOrder = async (req, res) => {
   console.log("body:", req.body);
-  const newOrder = await OrdersServices.createOrder(
-    req.body.userID,
-    req.body.products,
-    req.body.price
-  );
+  const orderDetails = req.body;
+  const newOrder = await OrdersServices.createOrder(orderDetails);
   res.json(newOrder);
 };
 
