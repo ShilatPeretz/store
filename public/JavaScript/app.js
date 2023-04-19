@@ -513,6 +513,16 @@ $("#manager-menu-form").submit(function (e) {
       .val(valuesDict[0])
       .text(valuesDict[0]);
     $("#product-title-select").append(newOption);
+    
+    $.ajax({
+      url: "/twitter/addProduct",
+      type: "POST",
+      async: false,
+      data: {title : valuesDict[0], price: valuesDict[2]},
+      success: function(res){
+          console.log("posted a new tweet with the new product");
+      }
+    
   } else {
     let title = $("#product-title-select").val();
     deleteProduct(title);
