@@ -91,14 +91,13 @@ $("body")
         async: false,
       });
       const date = orderData.date.slice(0, 10);
-      $(".recipt-total").text(orderData.price + " " + orderData.currency);
+      $(".recipt-total").text(orderData.price + " USD");
       $(".recipt-username").text(user.username);
       $(".recipt-id").text("Recipt id: " + orderData._id);
       $(".recipt-order-date").text("Order Date: " + date);
       $(".recipt-user-email").text("User email: " + user.email);
-      $(".recipt-total-price").text(
-        "Total " + orderData.price + " " + orderData.currency
-      );
+      $(".recipt-total-price").text("Total " + orderData.price + " USD");
+      $(".recipt-paid-in").text("Paid in: " + orderData.currency);
       for (const product of orderData.products) {
         let p = `<div class="card shadow-0 border mb-4">
         <div class="card-body">
@@ -128,7 +127,7 @@ $("body")
             class="text-center d-flex justify-content-end align-items-center"
             style="margin-right: 20px"
           >
-            <p class="text-muted mb-0 small">Price:${product.price} ${orderData.currency}</p>
+            <p class="text-muted mb-0 small">Price:${product.price} USD</p>
           </div>
         </div>
       </div>`;

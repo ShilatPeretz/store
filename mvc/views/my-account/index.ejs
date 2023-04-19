@@ -36,9 +36,7 @@
             Order Date: <%= userOrders[i].date.toLocaleDateString('en-GB') %>
           </h5>
           <p class="card-text">Order Number: <%= userOrders[i]._id %></p>
-          <p class="card-text">
-            Price: <%= userOrders[i].price %> <%= userOrders[i].currency %>
-          </p>
+          <p class="card-text">Price: <%= userOrders[i].price %> USD</p>
           <a
             id="<%= userOrders[i]._id %>"
             href="#"
@@ -103,6 +101,9 @@
                   <p class="text-muted mb-0">
                     <span class="fw-bold me-4">Delivery Charges</span> Free
                   </p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="text-muted mb-0 recipt-paid-in"></p>
                 </div>
               </div>
               <div
