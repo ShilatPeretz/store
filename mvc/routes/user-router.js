@@ -18,14 +18,14 @@ userRouter.get(
     if (req.session && req.session.user) {
       console.log("nexting");
       next();
-    } else {
-      res.status(400).send("error while a get request");
+    } 
+    else {
+      res.render(__dirname + "/../views/error/error");
     }
   },
   UserController.getIdByUsername
 );
 
-userRouter.get("/user/:userID", UserController.getUser);
 
 userRouter.post("/logout", UserController.logOut);
 

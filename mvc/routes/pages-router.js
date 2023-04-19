@@ -4,7 +4,6 @@ const countries = require("../../public/json/countries.json");
 const sizes = require("../../public/json/size.json");
 const colors = require("../../public/json/colors.json");
 const categories = require("../../public/json/category.json");
-const statusMSG = require("../../public/json/status-messages.json");
 const OrdersServices = require("../services/orders-service");
 
 pagesRouter.get(
@@ -15,8 +14,7 @@ pagesRouter.get(
     } else {
       res.redirect("/home-page");
     }
-  },
-  function (req, res) {
+  },function(req, res){
     res.render("../mvc/views/login/login.ejs");
   }
 );
@@ -35,11 +33,9 @@ pagesRouter.get(
     //console.log('isAdmin: ' + req.session.isAdmin);
     if (req.session && req.session.isAdmin) {
       next();
-    } else {
-      res.render(__dirname + "/../views/error/error", {
-        status: 403,
-        msg: statusMSG[403],
-      });
+    }
+    else {
+      res.render(__dirname + "/../views/error/error");
     }
   },
   function (req, res) {
@@ -58,7 +54,6 @@ pagesRouter.get("/products", function (req, res) {
     isLoggedV = true;
   }
   //console.log('isLoggedV',isLoggedV,req.session,Object.keys(req.session));
-
   res.render("../mvc/views/shopping-page/index.ejs", {
     elements: products,
     countries: countries,

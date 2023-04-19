@@ -30,20 +30,21 @@ const getIdByUsername = async (req, res) => {
   res.json({ userId });
 };
 
+
 const loginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   console.log("username", username, "password", password);
   const user = await usersService.findUserName(username);
   if (!user) {
-    return res.send("User not found");
+    return res.send("One of the details is incorrect!");
   }
   const isMatching = await usersService.comparePasswords(
     password,
     user.password
   );
   if (!isMatching) {
-    return res.send("Password is incorrect!");
+    return res.send("One of the details is incorrect!");
   }
   req.session.user = user;
   //res.cookie('usernameCookie', username, { maxAge: 900000, httpOnly: true, secure: true });

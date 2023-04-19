@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const productRouter = Router();
 const productController = require("../controllers/products-controller");
-const statusMSG = require('../../public/json/status-messages.json');
+
 
 productRouter.get("/", async (req, res, next) => {
     res.locals.products = await productController.getProducts();
@@ -18,9 +18,8 @@ productRouter.get("/percategory",function(req, res, next){
     {
         next();
     }
-    else
-    {
-        res.render(__dirname + "/../views/error/error",{status: 403, msg: statusMSG[403]});
+    else {
+        res.render(__dirname + "/../views/error/error");
     }
 }, productController.NumberOfProductsByCategory);
 

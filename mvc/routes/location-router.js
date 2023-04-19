@@ -10,11 +10,6 @@ locationRouter.post(
   function (req, res, next) {
     if (req.session && req.session.isAdmin) {
       next();
-    } else {
-      res.render(__dirname + "/../views/error/error", {
-        status: 403,
-        msg: statusMSG[403],
-      });
     }
   },
   locationController.createLocation

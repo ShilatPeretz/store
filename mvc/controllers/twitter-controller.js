@@ -1,6 +1,6 @@
 const Twitter = require('twitter');
 const client = new Twitter({
-  consumer_key: '  consumer_key',
+  consumer_key: 'consumer_key',
   consumer_secret: 'consumer_secret',
   access_token_key: 'access_token_key',
   access_token_secret: 'access_token_secret'
@@ -37,8 +37,8 @@ const postOnlineUsers = async (req,res) => {
 
 const postWhenAddingProduct = async (req, res) => {
 
-  let upload = new products has been added:\n title : ${req.body.title},
-   price: ${req.body.price}$;
+  let upload = `new products has been added:\n title : ${req.body.title},
+   price: ${req.body.price}$`;
   const tweet = { status: upload};
 
   // // Post the tweet

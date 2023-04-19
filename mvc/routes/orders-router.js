@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const ordersRouter = Router();
 const orderController = require("../controllers/orders-controller");
-const statusMSG = require("../../public/json/status-messages.json");
+
 
 ordersRouter.get(
   "/AvgPerMonth",
@@ -9,10 +9,7 @@ ordersRouter.get(
     if (req.session && req.session.isAdmin) {
       next();
     } else {
-      res.render(__dirname + "/../views/error/error", {
-        status: 403,
-        msg: statusMSG[403],
-      });
+      res.render(__dirname + "/../views/error/error");
     }
   },
   orderController.getAvgOrdersPerMonth
