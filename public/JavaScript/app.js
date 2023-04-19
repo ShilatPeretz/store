@@ -125,6 +125,10 @@ $(document).on("click", ".add-to-cart-btn", function (e) {
   if (!isNameExisting) {
     return;
   }
+  if(!confirm(`Are you sure you want to add ${txt} to your cart?`))
+  {
+    return;
+  }
   //console.log(txt);
   var finalS =
     "<li class='bag-item list-group-item'>\
@@ -243,19 +247,13 @@ function updateTotalCost() {
   var finalAmount = 0.0;
   Array.from($(".cart-content").find(".bag-item")).forEach((item) => {
     const sploitted = $(item).find("span");
-    console.log(
-      "splitted:",
-      $(sploitted[0]).text(),
-      "ada:",
-      $(sploitted[1]).text()
-    );
     finalAmount += parseFloat($(sploitted[1]).text().split(" ")[1]);
   });
   finalAmount = finalAmount.toFixed(3);
   $(".total-bag-value").html(
     '<li class="list-group-item total-bag-value" style="font-size: 1.05rem;">' +
-      finalAmount +
-      "$</li>"
+      finalAmount + ' ' + $("#currency-select").val() +
+      "</li>"
   );
   console.log(
     "new amount: " + finalAmount,
@@ -513,16 +511,15 @@ $("#manager-menu-form").submit(function (e) {
       .val(valuesDict[0])
       .text(valuesDict[0]);
     $("#product-title-select").append(newOption);
-    
     $.ajax({
-      url: "/twitter/addProduct",
-      type: "POST",
-      async: false,
-      data: {title : valuesDict[0], price: valuesDict[2]},
-      success: function(res){
-          console.log("posted a new tweet with the new product");
-      }
-    
+            url: "/twitter/addProduct",
+            type: "POST",
+            async: false,
+            data: {title : valuesDict[0], price: valuesDict[2]},
+            success: function(res){
+                console.log("posted a new tweet with the new product");
+            }
+        });
   } else {
     let title = $("#product-title-select").val();
     deleteProduct(title);
