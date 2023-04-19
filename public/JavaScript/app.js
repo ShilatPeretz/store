@@ -278,7 +278,7 @@ function removeProduct(title) {
 }
 function deleteProduct(deletedTitle) {
   console.log(
-    "the option: " + $(".form-select option[value=" + deletedTitle + "]")
+    "the option: " + $(`.form-select option[value="${deletedTitle}"]`)
   );
   if (
     confirm(
