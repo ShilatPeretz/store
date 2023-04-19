@@ -8,7 +8,7 @@ const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
 const pagesRouter = require("./mvc/routes/pages-router");
 const ordersRouter = require("./mvc/routes/orders-router");
-const twitterRouter = require("./mvc/routes/twitter-router");
+const twitterRouter = require("./mvc/routes/twitter-router");``
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -49,6 +49,7 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
+let usersOnline = 0;
 // try to match request to files in 'views' folder
 app.use(function (req, res, next) {
   //console.log('req: ' + Object.keys(req.session))
@@ -65,6 +66,7 @@ app.use(function (req, res, next) {
   }
   // console.log('session: ' + Object.keys(req.session));
   res.locals.loggedIn = loggedIn;
+
   //console.log(res.locals.loggedIn);
   next();
 });
@@ -76,15 +78,19 @@ app.use("/account", accountRouter);
 app.use("/orders", ordersRouter);
 app.use("/", pagesRouter);
 app.use('/twitter',twitterRouter );
-let usersOnline = 0;
+app.use(function(req, res){
+  res.render(__dirname + "/mvc/views/error/error.ejs");
+});
 
 io.on("connection", (socket) => {
   usersOnline++;
+  io.emit('userCounter',usersOnline);
   console.log("new connection");
 
   socket.on("disconnect", () => {
     console.log("client disconnected");
     usersOnline--;
+    io.emit('userCounter',usersOnline);
   });
   socket.on("removeProduct", (msg) => {
     io.emit("removeProdutFinal", msg);
@@ -103,7 +109,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getUsersOnline", () => {
-    console.log("users1: " + usersOnline);
     socket.emit("usersOnline", usersOnline);
   });
 });
