@@ -22,7 +22,7 @@ body {
 
   background-color: #90bbcb;
   width: 101%;
-  height: 110vh;
+  height: 1900px;
   font-family: "Merriweather Sans";
   text-align: center;
   color: rgb(63, 63, 63);
@@ -82,12 +82,12 @@ body {
   transition: all 0.5s ease;
 }
 #side-info {
-  display: flex;
+  text-align: center;
   align-items: center;
   margin-right: 300px;
 }
 .side-object {
-  display: flex;
+  text-align: center;
   justify-content: space-between;
   align-items: center;
 }
@@ -104,7 +104,7 @@ body {
 
   #description {
     font-size: 50px;
-    height: 80vh;
+    height: 1600px;
   }
 
   #description h1 {
@@ -118,4 +118,19 @@ body {
     height: 200px;
     margin-bottom: 200px;
   }
+  
+  video{
+    margin-top: 500px;
+    width:500px;
+    height: 400px;
+    
+    }
+
+
+}
+video{
+margin-top: 500px;
+width:800px;
+height: 600px;
+
 }
