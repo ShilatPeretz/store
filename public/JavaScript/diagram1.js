@@ -9,6 +9,7 @@ function getData() {
 }
 
 function drawGraph(salesData) {
+  console.log('starting');
   var svg = d3.select("#svg2");
   var padding = { top: 10, right: 20, bottom: 30, left: 55 };
   var colors = [
@@ -25,12 +26,12 @@ function drawGraph(salesData) {
     "#B46060",
     "#4D4D4D",
   ];
-
+  
   var chartArea = {
     width: parseInt(svg.style("width")) - padding.left - padding.right,
     height: parseInt(svg.style("height")) - padding.top - padding.bottom,
   };
-
+  
   //define maximum height
   var yScale = d3
     .scaleLinear()
@@ -89,7 +90,7 @@ function drawGraph(salesData) {
   console.log({ translateValues });
   //define rectangle group
   var rectGrp = svg.append("g").attr("transform", translateValues);
-
+  
   //select all rectangle elements
   //using append+enter function we will append rectangles
   //define the height of each rect
@@ -119,14 +120,13 @@ async function fetchDataAndDraw() {
   try {
     const res = await getData();
     const data = JSON.parse(JSON.stringify(res));
-    console.log(data);
+    console.log("gooddata",data,d3);
     drawGraph(data);
   } catch (err) {
     console.log(err);
   }
 }
-async function init() {
-  const socket = io();
+async function init1() {
   socket.on("NotifyAddedOrder", () => {
     console.log("NotifyAddedOrder");
     fetchDataAndDraw();
@@ -134,4 +134,4 @@ async function init() {
   await fetchDataAndDraw();
 }
 
-init();
+

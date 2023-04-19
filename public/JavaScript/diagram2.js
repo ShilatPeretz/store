@@ -114,14 +114,14 @@ async function fetchDataAndDraw() {
   try {
     const res = await getData();
     const data = JSON.parse(JSON.stringify(res));
-    console.log(data);
+    console.log("data",data);
     drawGraph(data);
   } catch (err) {
     console.log(err);
   }
 }
 async function init() {
-  const socket = io();
+  
   socket.on("addProductFinal", () => {
     console.log("NotifyAddedProduct");
     fetchDataAndDraw();
@@ -136,5 +136,3 @@ async function init() {
   });
   await fetchDataAndDraw();
 }
-
-init();
