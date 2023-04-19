@@ -167,13 +167,17 @@
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <label for="cc-expiration">Expiration</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cc-expiration"
-                    placeholder=""
-                    required=""
-                  />
+                  <input class="inputCard form-control" name="expiry" id="expiry" type="month" required />
+                  <script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                          const expiryInput = document.getElementById('expiry');
+                          const currentDate = new Date();
+                          const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                          const currentYear = currentDate.getFullYear();
+                          const minDate = `${currentYear}-${currentMonth}`;
+                          expiryInput.min = minDate;
+                      });
+                  </script>
                   <div class="invalid-feedback">Expiration date required</div>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -242,33 +246,22 @@
             d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
           />
         </svg>
-        <div class="cart-content" style="font-size: 2rem; width: auto">
-          <ul class="list-group bag-list" style="width: 200px">
-            <li class="list-group-item list-items" style="color: #777; font-size: 1.1rem">
-              <p style="display:inline;border-bottom:1px dotted black; font-weight: 1000; font-family: 'PT Sans Narrow';">
-                Total Cost:
-              </p>
-            </li>
-            <li
-              class="list-group-item total-bag-value list-items"
-              style="font-size: 1.05rem"
-            >
-              0 USD
-            </li>
-            <li class="list-group-item list-items">
-              <button
-                type="button"
-                class="btn btn-primary checkout-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
-                disabled
-              >
-                Procceed to checkout
-              </button>
-            </li>
+        <div class="cart-content" style="font-size: 2rem;width: auto;">
+          <ul class="list-group bag-list" style="width: 200px;">
+              <li class="list-group-item" style="color:#777;font-size: 1.1rem;"><p style="display:inline;border-bottom:1px dotted black;">Total Cost:</p></li>
+              <li class="list-group-item total-bag-value" style="font-size: 1.05rem;">0 USD</li>
+              <% if (isLogged) { %>
+                  <li class="list-group-item">
+                      <button type="button" class="btn btn-primary checkout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Procceed to checkout</button>
+                  </li>
+              <% } else{ %>
+                  <li class="list-group-item">
+                      <button type="button" class="btn btn-primary ">You have to be logged in if you want to checkout!</button>
+                  </li>
+              <% }%>
           </ul>
-        </div>
       </div>
+  </div>
 
       <% if (isAdmin) { %>
       <button
