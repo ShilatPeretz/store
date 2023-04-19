@@ -1,43 +1,21 @@
-$("#home").click(function () {
-  window.location.href = "/";
-});
+$(document).ready(function () {
+  const passwordInput = $("#newPassword");
+  const togglePassword = $(".password-toggle");
 
-$("#details").click(function () {
-  $(".section-orders").fadeOut(100);
-  $(".section-recipt").fadeOut(100);
-  $(".section-details").delay(100).fadeIn(100);
-});
-
-$("#orders").click(function () {
-  $(".section-details").fadeOut(100);
-  $(".section-recipt").fadeOut(100);
-  $(".section-orders").delay(100).fadeIn(100);
-});
-
-//change account details
-let tmp = "";
-let username = "";
-let password = "";
-$("form.enterdetails").submit((e) => {
-  e.preventDefault();
-  username = $(".enterdetails .username-input").val();
-  password = $(".enterdetails .password-input").val();
-
-  const user = { username, password };
-  $.ajax({
-    url: "http://localhost:3000/users/validuser",
-    method: "post",
-    data: user,
-    dataType: "json",
-  }).done((data) => {
-    if (data.message == "OK") {
-      tmp = "ok";
-      openChange();
+  togglePassword.on("click", function () {
+    const icon = $(this);
+    console.log(icon);
+    if (passwordInput.attr("type") === "password") {
+      passwordInput.attr("type", "text");
+      icon.removeClass("fa-eye").addClass("fa-eye-slash");
     } else {
-      alert(data.message);
+      passwordInput.attr("type", "password");
+      icon.removeClass("fa-eye-slash").addClass("fa-eye");
     }
   });
 });
+
+
 
 $(".remove-recipt").click(() => {
   $(".section-recipt").hide();
@@ -45,25 +23,6 @@ $(".remove-recipt").click(() => {
   $(".products-section").html(` `);
 });
 
-$("form.changedetails").submit((e) => {
-  e.preventDefault();
-  if (tmp != "ok") {
-    alert("please enter user details first!");
-    return;
-  }
-  const NewUsername = $(".changedetails .username-input").val();
-  const NewEmail = $(".changedetails .email-input").val();
-  const NewPassword = $(".changedetails .password-input").val();
-
-  const user = { username, password, NewUsername, NewEmail, NewPassword };
-
-  $.ajax({
-    url: "http://localhost:3000/users/updateUser",
-    method: "post",
-    data: user,
-    dataType: "json",
-  });
-});
 
 function openChange() {
   $(".changedetails .username-input").prop("disabled", false);
@@ -95,7 +54,6 @@ $("body")
       $(".recipt-username").text(user.username);
       $(".recipt-id").text("Recipt id: " + orderData._id);
       $(".recipt-order-date").text("Order Date: " + date);
-      $(".recipt-user-email").text("User email: " + user.email);
       $(".recipt-total-price").text("Total " + orderData.price + " USD");
       $(".recipt-paid-in").text("Paid in: " + orderData.currency);
       for (const product of orderData.products) {
@@ -135,3 +93,17 @@ $("body")
       }
     });
   });
+$(".changePasswordForm").submit(function(e){
+  e.preventDefault();
+  let newPassword = $("#newPassword").val();
+  let currentPassword = $("#currentPassword").val();
+  console.log(newPassword,currentPassword)
+  $.ajax({
+    type: "PUT",
+    url: "/users/changePass",
+    data: {password:currentPassword, newPassword: newPassword},
+    success: function(req, res){
+      console.log("changed pas!");
+    }
+  });
+})

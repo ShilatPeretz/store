@@ -30,6 +30,22 @@ const getIdByUsername = async (req, res) => {
   res.json({ userId });
 };
 
+const changePassword = async (req ,res) => {
+  const currentPassword = req.body.password;
+  const isMatching = await usersService.comparePasswords(
+    currentPassword,
+    req.session.user.password
+  );
+  if (!isMatching){
+    return res.send("Passwords don't match!");
+  }
+  const newPassword = req.body.newPassword;
+  
+  const newHashed = await usersService.hashPassword(newPassword,8);
+  console.log('PPPP:',currentPassword,newPassword,newHashed,req.session.user.id,req.session.user._id);
+  const user = await usersService.updateUser(req.session.user._id,'','',newHashed);
+  res.json(user);
+}
 
 const loginUser = async (req, res) => {
   const username = req.body.username;
@@ -98,47 +114,6 @@ const getUser = async (req, res) => {
   res.json(User);
 };
 
-const updateUser = async (req, res) => {
-  const user = usersService.findUserName(req.body.username);
-  const hashedPassword = await usersService.hashPassword(req.body.password, 8);
-  var NewDetails = {
-    NewUsername: req.body.username,
-    NewEmail: user.email,
-    NewPassword: hashedPassword,
-  };
-  if (req.body.NewUsername) {
-    NewDetails["NewUsername"] = req.body.NewUsername;
-    var tmp = await usersService.findUserName(req.body.NewUsername);
-    console.log(tmp);
-    if (tmp) {
-      return res.json({ message: "User name is taken" });
-    }
-  }
-  if (req.body.NewEmail) {
-    NewDetails["NewEmail"] = req.body.NewEmail;
-    var tmp = await usersService.findUserEmail(req.body.NewEmail);
-    if (tmp) {
-      return res.json({ message: "Email is already in use" });
-    }
-  }
-  if (req.body.NewPassword) {
-    NewDetails["NewPassword"] = await usersService.hashPassword(
-      req.body.NewPassword,
-      8
-    );
-  }
-  return;
-  const User = await usersService.updateUser(
-    req.params.id,
-    req.body.username,
-    NewDetails
-  );
-  if (!User) {
-    return res.status(404).json({ errors: ["User not found"] });
-  }
-
-  res.json(User);
-};
 
 const deleteUser = async (req, res) => {
   const User = await usersService.deleteUser(req.params.id);
@@ -153,10 +128,10 @@ module.exports = {
   createUser,
   getUsers,
   getUser,
-  updateUser,
   deleteUser,
   loginUser,
   logOut,
   getIdByUsername,
   validateUser,
+  changePassword,
 };

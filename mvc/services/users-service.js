@@ -58,9 +58,19 @@ const updateUser = async (id, NewUsername, NewEmail, NewPassword) => {
   const user = await getUserById(id);
   if (!user) return null;
 
-  user.username = NewUsername;
-  user.email = NewEmail;
-  user.password = NewPassword;
+  if(NewUsername !== '')
+  {
+    user.username = NewUsername;
+  }
+  if(NewEmail !== '')
+  {
+    user.email = NewEmail;
+  }
+  if(NewPassword !== '')
+  {
+    user.password = NewPassword;
+  }
+  
   await user.save();
   return user;
 };

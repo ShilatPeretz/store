@@ -7,7 +7,7 @@ userRouter.post("/signup", UserController.createUser);
 
 userRouter.post("/login", UserController.loginUser);
 
-userRouter.post("/updateUser", UserController.updateUser);
+//userRouter.post("/updateUser", UserController.updateUser);
 userRouter.post("/validuser", UserController.validateUser);
 
 userRouter.get(
@@ -28,5 +28,10 @@ userRouter.get(
 
 
 userRouter.post("/logout", UserController.logOut);
-
+userRouter.put('/changePass',function(req,res,next){
+  if (req.session && req.session.user)
+  {
+    next();
+  }
+},UserController.changePassword);
 module.exports = userRouter;
