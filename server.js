@@ -8,7 +8,7 @@ const productRouter = require("./mvc/routes/product-router");
 const locationtRouter = require("./mvc/routes/location-router");
 const pagesRouter = require("./mvc/routes/pages-router");
 const ordersRouter = require("./mvc/routes/orders-router");
-//const twitterRouter = require("./mvc/routes/twitter-router");
+const twitterRouter = require("./mvc/routes/twitter-router");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -75,7 +75,7 @@ app.use("/users", userRouter);
 app.use("/account", accountRouter);
 app.use("/orders", ordersRouter);
 app.use("/", pagesRouter);
-//app.use('/twitter',twitterRouter );
+app.use('/twitter',twitterRouter );
 let usersOnline = 0;
 
 io.on("connection", (socket) => {
