@@ -58,6 +58,7 @@ pagesRouter.get("/products", function (req, res) {
     isLoggedV = true;
   }
   //console.log('isLoggedV',isLoggedV,req.session,Object.keys(req.session));
+
   res.render("../mvc/views/shopping-page/index.ejs", {
     elements: products,
     countries: countries,
